@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { checkExistingUser, createUser } from "../../../actions/users";
-import { validateCampaignActive } from "../../../actions/campaign";
+import { checkExistingUser, createUser } from "@/actions/users";
+import { validateCampaignActive } from "@/actions/campaign";
 
 export async function POST(request: Request) {
   try {

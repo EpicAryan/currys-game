@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { claimGift } from "../../../../actions/gifts";
-import { updateStreakAfterClaim } from "../../../../actions/streak";
-import { getCampaignConfig } from "../../../../actions/campaign";
+import { claimGift } from "@/actions/gifts";
+import { updateStreakAfterClaim } from "@/actions/streak";
+import { getCampaignConfig } from "@/actions/campaign";
 
 export async function POST(request: Request) {
   try {

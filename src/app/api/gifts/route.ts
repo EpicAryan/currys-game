@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { getCampaignConfig } from "../../../actions/campaign";
-import { getGiftStatus } from "../../../actions/gifts";
-import { calculateStreak } from "../../../actions/streak";
+import { getCampaignConfig } from "@/actions/campaign";
+import { getGiftStatus } from "@/actions/gifts";
+import { calculateStreak } from "@/actions/streak";
 
 export async function GET(request: Request) {
   try {
