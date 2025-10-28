@@ -1,9 +1,10 @@
+import TechmasPromp from "@/components/techmas-promo";
 
 
 export default function Home() {
   return (
-    <div className="text-6xl">
-      Hello World
+    <div>
+      <TechmasPromp/>
     </div>
   );
 }
