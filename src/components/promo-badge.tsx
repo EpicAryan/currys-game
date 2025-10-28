@@ -10,7 +10,8 @@ interface PrizeConfig {
 interface BadgeProps {
   day: number;
   isActive: boolean;
-  isUnlocked: boolean;
+  isAvailable: boolean;
+  isMissed: boolean;
   prize?: PrizeConfig;
   onClick?: () => void;
 }
@@ -18,25 +19,33 @@ interface BadgeProps {
 export const Badge: React.FC<BadgeProps> = ({
   day,
   isActive,
-  isUnlocked,
+  isAvailable,
+  isMissed,
   prize,
   onClick,
 }) => {
   const ribbonImage =
     day % 2 === 0 ? "/prize/silver-ribbon.png" : "/prize/bronze-ribbon.png";
 
+  const isUnlocked = isAvailable;
+  const isClickable = isAvailable;
+
   return (
     <button
       onClick={onClick}
-      disabled={!isUnlocked}
-      className="group relative w-full overflow-visible transition-transform duration-300"
-      aria-label={`Day ${day} ${isUnlocked ? "unlocked" : "locked"}`}
+      disabled={!isClickable}
+      className={`group relative w-full overflow-visible transition-transform duration-300 ${
+        isClickable ? "cursor-pointer hover:scale-105" : "cursor-not-allowed"
+      }`}
+      aria-label={`Day ${day} ${isAvailable ? "available" : isMissed ? "missed" : "locked"}`}
     >
-      {/* Badge Container */}
       <div className="relative h-full w-full overflow-visible">
-        {/* Active/Unlocked Badge */}
-        {isActive && (
-          <div className="absolute inset-0 -z-10 scale-105 rounded-full bg-[#CFC8F7] opacity-90 blur-sm lg:blur-lg" />
+        {isUnlocked && (
+          <div
+            className={`absolute inset-0 -z-10 scale-105 rounded-full bg-[#CFC8F7] opacity-90 blur-sm lg:blur-lg ${
+              isActive ? "animate-pulse" : ""
+            }`}
+          />
         )}
 
         {/* Main Badge Circle */}
@@ -44,7 +53,9 @@ export const Badge: React.FC<BadgeProps> = ({
           className={`relative flex size-20 items-center justify-center rounded-full transition-all duration-300 md:size-30 xl:size-34 2xl:size-40 ${
             isUnlocked
               ? "circle overflow-visible"
-              : "overflow-hidden bg-gradient-to-br from-[#3F3358] to-[#2D2541]"
+              : isMissed
+                ? "overflow-hidden bg-gradient-to-br from-[#37297A] to-[#352481]"
+                : "overflow-hidden bg-gradient-to-br from-[#3F3358] to-[#2D2541]"
           }`}
         >
           {/* Day Number */}
@@ -52,7 +63,9 @@ export const Badge: React.FC<BadgeProps> = ({
             className={`font-currys absolute left-1.5 z-0 transition-opacity duration-300 md:left-3 xl:left-5 ${
               isUnlocked
                 ? "opacity-0"
-                : "text-4xl text-[#686188] md:text-5xl xl:text-6xl 2xl:text-[80px]"
+                : isMissed
+                  ? "text-4xl text-[#686188] line-through md:text-5xl xl:text-6xl 2xl:text-[80px]"
+                  : "text-4xl text-[#686188] md:text-5xl xl:text-6xl 2xl:text-[80px]"
             }`}
           >
             {day}
@@ -82,7 +95,7 @@ export const Badge: React.FC<BadgeProps> = ({
                   }}
                 />
 
-                {/* Center Icon  */}
+                {/* Center Icon */}
                 <div className="relative z-10 aspect-square w-16 md:w-24 xl:w-28 2xl:w-30">
                   <Image
                     src={ribbonImage}
@@ -94,7 +107,7 @@ export const Badge: React.FC<BadgeProps> = ({
                 </div>
               </>
             ) : (
-              // Prize for unlocked badge
+              // Prize for available badge
               <div className="relative z-30 flex h-auto w-full items-center justify-center">
                 {prize ? (
                   <Image
@@ -109,7 +122,7 @@ export const Badge: React.FC<BadgeProps> = ({
                   <div className="aspect-square w-[50%]">
                     <Image
                       src={ribbonImage}
-                      alt="unlocked"
+                      alt="available"
                       width={121}
                       height={121}
                       className="h-full w-full animate-pulse object-contain"
@@ -120,6 +133,7 @@ export const Badge: React.FC<BadgeProps> = ({
             )}
           </div>
 
+          {/* Day Number Badge */}
           {isUnlocked && (
             <div className="circle absolute -right-1 bottom-0 z-40 flex size-7 items-center justify-center rounded-full shadow-lg md:-right-2 md:size-11 xl:size-12 2xl:-right-1 2xl:bottom-1 2xl:size-13">
               <span className="font-currys text-xs font-bold text-white md:text-xl xl:text-3xl">

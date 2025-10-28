@@ -4,33 +4,75 @@ import React from "react";
 import { Badge } from "./promo-badge";
 import BackButton from "./ui/back-button";
 import CircleBackground from "./ui/circular-bg";
+import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
+import { PRIZE_CONFIGS } from "@/lib/promo-prizes";
 
 const TechmasPromp = () => {
-  const [unlockedDays, setUnlockedDays] = React.useState<number[]>([1]);
-  const [activeDay, setActiveDay] = React.useState<number>(1);
+  const { gifts } = useCurrentCampaign();
+  const [activeDay, setActiveDay] = React.useState<number | null>(null);
 
-  const handleBadgeClick = (day: number) => {
-    if (unlockedDays.includes(day)) {
+  const handleBadgeClick = (
+    day: number,
+    available: boolean,
+    missed: boolean,
+  ) => {
+    if (available && !missed) {
       setActiveDay(day);
       console.log(`Opened day ${day}`);
+      // TODO: Navigate to game/claim page
+    } else if (missed) {
+      console.log(`Day ${day} was missed`);
+      // TODO: Show missed message
+    } else {
+      console.log(`Day ${day} is still locked`);
+      // TODO: Show locked message
     }
   };
+
+  const giftMap = React.useMemo(() => {
+    const map = new Map();
+    gifts.forEach((gift) => {
+      map.set(gift.dayNumber, gift);
+    });
+    return map;
+  }, [gifts]);
+
+  const badges = Array.from({ length: 12 }, (_, i) => {
+    const day = i + 1;
+    const giftStatus = giftMap.get(day);
+
+    const isAvailable = giftStatus?.available ?? false;
+    const isMissed = giftStatus?.missed ?? false;
+
+    return (
+      <Badge
+        key={day}
+        day={day}
+        isActive={activeDay === day}
+        isAvailable={isAvailable}
+        isMissed={isMissed}
+        prize={PRIZE_CONFIGS[day]}
+        onClick={() => handleBadgeClick(day, isAvailable, isMissed)}
+      />
+    );
+  });
 
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
       <CircleBackground />
-      <div className="absolute top-6 md:top-8 xl:top-10 left-10">
-        <BackButton/>
+      <div className="absolute top-6 left-10 z-40 md:top-8 xl:top-10">
+        <BackButton />
       </div>
+
       {/* Currys Logo */}
-      <div className="absolute top-0 right-8 z-0 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white md:size-32 md:right-12 lg:right-[10vw] xl:size-44 2xl:size-50">
+      <div className="absolute top-0 right-8 z-40 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white md:right-12 md:size-32 lg:right-[10vw] xl:size-44 2xl:size-50">
         <h5 className="font-currys text-2xl font-semibold tracking-wide text-[#3D2683] md:text-4xl lg:text-5xl xl:text-6xl">
           currys
         </h5>
       </div>
 
       {/* Header Text */}
-      <div className="font-currys w-full pt-20 text-center lg:pt-12 xl:pt-16 2xl:pt-20">
+      <div className="font-currys relative z-10 w-full pt-20 text-center lg:pt-12 xl:pt-16 2xl:pt-20">
         <h1
           className="text-3xl font-semibold tracking-wide text-white md:text-5xl xl:text-6xl 2xl:text-7xl"
           style={{
@@ -47,27 +89,20 @@ const TechmasPromp = () => {
         </p>
       </div>
 
-      {/* Badge Grid - Added overflow-visible */}
+      {/* Badge Grid */}
       <div className="relative z-30 mx-auto mt-12 max-w-6xl overflow-visible">
-        <div className="grid grid-cols-3 space-y-5 gap-x-12 place-self-center lg:grid-cols-4 xl:gap-x-15 overflow-visible">
-          {Array.from({ length: 12 }, (_, i) => i + 1).map((day) => (
-            <Badge
-              key={day}
-              day={day}
-              isActive={day === activeDay}
-              isUnlocked={unlockedDays.includes(day)}
-              prize={
-                day === 1
-                  ? {
-                      src: "/prize/first-prize.png",
-                      width: 220,
-                      height: 168,
-                      className: "w-23 md:w-34 xl:w-40 2xl:w-46 translate-x-2 xl:translate-x-3 -rotate-8",
-                    }
-                  : undefined
-              }
-              onClick={() => handleBadgeClick(day)}
-            />
+        <div className="grid grid-cols-3 space-y-5 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 xl:gap-x-15">
+          {badges.map((badge, index) => (
+            <div
+              key={badge.key}
+              className={`${
+                index >= 4 && index <= 7
+                  ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
+                  : ""
+              }`}
+            >
+              {badge}
+            </div>
           ))}
         </div>
       </div>
@@ -89,7 +124,7 @@ const TechmasPromp = () => {
           className="block w-full object-cover lg:hidden"
         />
         {/* Jumping Deer */}
-        <div className="absolute right-6 bottom-12 z-30 h-29 w-auto lg:right-10 md:bottom-24 lg:bottom-6 md:h-40 lg:h-36 xl:right-16 xl:bottom-10 xl:h-44 2xl:right-20 2xl:bottom-16 2xl:h-50">
+        <div className="absolute right-6 bottom-12 z-30 h-29 w-auto md:bottom-24 md:h-40 lg:right-10 lg:bottom-6 lg:h-36 xl:right-16 xl:bottom-10 xl:h-44 2xl:right-20 2xl:bottom-16 2xl:h-50">
           <Image
             src="/promo/jumping-deer.png"
             alt="deer"
@@ -148,4 +183,3 @@ const TechmasPromp = () => {
 };
 
 export default TechmasPromp;
-// // //missed, claimed, locked, 
