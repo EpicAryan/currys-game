@@ -7,7 +7,7 @@ import CircleBackground from "./ui/circular-bg";
 import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
 import { PRIZE_CONFIGS } from "@/lib/promo-prizes";
 
-const TechmasPromp = () => {
+const TechmasPromo = () => {
   const { gifts } = useCurrentCampaign();
   const [activeDay, setActiveDay] = React.useState<number | null>(null);
 
@@ -72,7 +72,7 @@ const TechmasPromp = () => {
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 w-full pt-20 text-center lg:pt-12 xl:pt-16 2xl:pt-20">
+      <div className="font-currys relative z-10 w-full pt-20 text-center lg:pt-12  2xl:pt-20">
         <h1
           className="text-3xl font-semibold tracking-wide text-white md:text-5xl xl:text-6xl 2xl:text-7xl"
           style={{
@@ -182,4 +182,4 @@ const TechmasPromp = () => {
   );
 };
 
-export default TechmasPromp;
+export default TechmasPromo;

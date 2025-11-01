@@ -35,28 +35,23 @@ export default function CircleBackground() {
     window.addEventListener("resize", resizeCanvas);
 
     const themeColors = [
-      "rgba(255, 255, 255, 0.3)",
-      "rgba(207, 200, 247, 0.4)",
-      "rgba(157, 142, 220, 0.3)",
-      "rgba(124, 116, 156, 0.25)",
-      "rgba(255, 255, 255, 0.5)",
-      "rgba(181, 170, 230, 0.35)",
-      "rgba(103, 89, 150, 0.3)",
+      "rgba(76,63,142, 1)",
+      "rgba(76,63,142, 0.95)",
     ];
 
     const initCircles = () => {
       circlesRef.current = [];
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < 130; i++) {
         let size;
         const sizeRandom = Math.random();
         if (sizeRandom < 0.3) {
-          size = Math.random() * 15 + 10;
+          size = Math.random() * 10 + 8;
         } else if (sizeRandom < 0.6) {
-          size = Math.random() * 20 + 25;
+          size = Math.random() * 10 + 10;
         } else if (sizeRandom < 0.85) {
-          size = Math.random() * 25 + 45;
+          size = Math.random() * 15 + 15;
         } else {
-          size = Math.random() * 30 + 60;
+          size = Math.random() * 20 + 20;
         }
 
         circlesRef.current.push({
@@ -65,7 +60,7 @@ export default function CircleBackground() {
           velocityX: (Math.random() - 0.5) * 0.5,
           velocityY: Math.random() * 0.4 + 0.2,
           size: size,
-          opacity: Math.random() * 0.3 + 0.2,
+          opacity: Math.random() * 0.3 + 0.7,
           color: themeColors[Math.floor(Math.random() * themeColors.length)],
           floatPhase: Math.random() * Math.PI * 2,
           swayAmplitude: Math.random() * 0.6 + 0.3,

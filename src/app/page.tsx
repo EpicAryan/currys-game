@@ -1,10 +1,11 @@
-import TechmasPromp from "@/components/techmas-promo";
+import TechmasPromo from "@/components/techmas-promo";
+
 
 
 export default function Home() {
   return (
     <div>
-      <TechmasPromp/>
+      <TechmasPromo/>
     </div>
   );
 }
