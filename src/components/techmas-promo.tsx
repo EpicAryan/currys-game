@@ -1,15 +1,17 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Badge } from "./promo-badge";
 import BackButton from "./ui/back-button";
 import CircleBackground from "./ui/circular-bg";
 import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
 import { PRIZE_CONFIGS } from "@/lib/promo-prizes";
+import { PromoPrizeModal } from "./ui/promo-prize-modal";
 
 const TechmasPromo = () => {
   const { gifts } = useCurrentCampaign();
-  const [activeDay, setActiveDay] = React.useState<number | null>(null);
+  const [activeDay, setActiveDay] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleBadgeClick = (
     day: number,
@@ -18,7 +20,7 @@ const TechmasPromo = () => {
   ) => {
     if (available && !missed) {
       setActiveDay(day);
-      console.log(`Opened day ${day}`);
+      setIsModalOpen(true);
       // TODO: Navigate to game/claim page
     } else if (missed) {
       console.log(`Day ${day} was missed`);
@@ -29,13 +31,24 @@ const TechmasPromo = () => {
     }
   };
 
-  const giftMap = React.useMemo(() => {
+  const giftMap = useMemo(() => {
     const map = new Map();
     gifts.forEach((gift) => {
       map.set(gift.dayNumber, gift);
     });
     return map;
   }, [gifts]);
+
+  useEffect(() => {
+    if (activeDay === null && gifts.length > 0) {
+      const firstAvailable = gifts.find(
+        (gift) => gift.available && !gift.missed
+      );
+      if (firstAvailable) {
+        setActiveDay(firstAvailable.dayNumber);
+      }
+    }
+  }, [gifts, activeDay]);
 
   const badges = Array.from({ length: 12 }, (_, i) => {
     const day = i + 1;
@@ -57,6 +70,8 @@ const TechmasPromo = () => {
     );
   });
 
+  const currentPrize = activeDay ? PRIZE_CONFIGS[activeDay] : undefined;
+
   return (
     <section className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
       <CircleBackground />
@@ -65,33 +80,42 @@ const TechmasPromo = () => {
       </div>
 
       {/* Currys Logo */}
-      <div className="absolute top-0 right-8 z-40 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white md:right-12 md:size-32 lg:right-[10vw] xl:size-44 2xl:size-50">
+      <div className="absolute top-0 right-8 z-40 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white md:right-12 md:size-34 lg:right-[10vw] xl:size-44 2xl:size-50">
         <h5 className="font-currys text-2xl font-semibold tracking-wide text-[#3D2683] md:text-4xl lg:text-5xl xl:text-6xl">
           currys
         </h5>
+        <div className="absolute -right-16 md:-right-24 lg:-right-30 xl:-right-40 -bottom-[120%] md:-bottom-[100%] lg:-bottom-[110%] 2xl:-bottom-[100%] -z-10 h-44 md:h-64 w-auto lg:h-70 xl:h-96 2xl:h-[408px] rotate-90">
+          <Image
+            src="/promo/magic-cluster-b.png"
+            alt="magic cluster"
+            width={408}
+            height={408}
+            className="object-fit h-full w-full"
+          />
+        </div>
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 w-full pt-20 text-center lg:pt-12  2xl:pt-20">
+      <div className="font-currys relative z-10 w-full pt-20 text-center lg:pt-12 2xl:pt-20 flex flex-col items-center">
         <h1
-          className="text-3xl font-semibold tracking-wide text-white md:text-5xl xl:text-6xl 2xl:text-7xl"
+          className="text-3xl font-semibold tracking-wide text-white md:text-5xl 2xl:text-7xl text-nowrap"
           style={{
             textShadow: "4px 4px 4px rgba(11, 4, 44, 0.12)",
           }}
         >
           12 Days of Techmas
         </h1>
-        <p className="pt-3 text-sm leading-tight text-[#CFC8F7] md:text-xl xl:text-2xl 2xl:text-3xl">
-          Come back daily to unwrap your chance to win.
-        </p>
-        <p className="text-sm leading-tight font-semibold text-[#CFC8F7] md:text-xl xl:text-2xl 2xl:text-3xl">
-          Every day is a new prize.
+        <p className="pt-3 text-sm leading-tight text-[#CFC8F7] md:text-xl 2xl:text-2xl text-center max-w-xs md:max-w-4xl">
+          Play for a chance to win a different prize every day!
+          <br />
+          Play all 12 days and you will be entered into a draw for a{" "}
+          <span className="font-semibold">€1,000 Currys voucher.</span>
         </p>
       </div>
 
       {/* Badge Grid */}
-      <div className="relative z-30 mx-auto mt-12 max-w-6xl overflow-visible">
-        <div className="grid grid-cols-3 space-y-5 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 xl:gap-x-15">
+      <div className="relative z-30 mx-auto mt-12 max-w-6xl overflow-visible xl:mt-6 2xl:mt-12 ">
+        <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 2xl:space-y-5 2xl:gap-x-15">
           {badges.map((badge, index) => (
             <div
               key={badge.key}
@@ -102,6 +126,28 @@ const TechmasPromo = () => {
               }`}
             >
               {badge}
+              {index === 7 && (
+                <div className="hidden lg:block absolute -right-20 -top-32 lg:-right-40 lg:-top-32 xl:-right-44 xl:-top-36 2xl:-right-50 2xl:-top-45 -z-10 h-64 w-auto lg:h-72 xl:h-80 2xl:h-92">
+                  <Image
+                    src="/promo/magic-cluster-b.png"
+                    alt="magic cluster"
+                    width={408}
+                    height={408}
+                    className="object-fit h-full w-full"
+                  />
+                </div>
+              )}
+              {index === 5 && (
+                <div className="lg:hidden absolute -right-14 md:right-10 top-16 md:top-18  -z-10 w-auto h-40 md:h-64 rotate-45">
+                  <Image
+                    src="/promo/magic-cluster-b.png"
+                    alt="magic cluster"
+                    width={408}
+                    height={408}
+                    className="object-fit h-full w-full"
+                  />
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -178,6 +224,12 @@ const TechmasPromo = () => {
           className="object-fit h-full w-full"
         />
       </div>
+      <PromoPrizeModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        day={activeDay}
+        prize={currentPrize}
+      />
     </section>
   );
 };
