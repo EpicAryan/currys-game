@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCampaignConfig, CampaignConfig } from "../actions/campaign";
+import { getCampaignConfig, CampaignConfig } from "@/actions/campaign";
 import { getCurrentCampaignDay } from "../utils/campaignDates";
+import { currentDayAtom } from "@/store/currentDay";
+import { useSetAtom } from "jotai";
 
 export interface GiftRenderStatus {
   dayNumber: number;
@@ -34,7 +36,7 @@ export function useCurrentCampaign(): CampaignStatus {
   const [currentDay, setCurrentDay] = useState<number>(0);
   const [gifts, setGifts] = useState<GiftRenderStatus[]>([]);
   const [isActive, setIsActive] = useState<boolean>(false);
-
+  const setCurrentDayAtom = useSetAtom(currentDayAtom);
   useEffect(() => {
     async function loadCampaignStatus() {
       try {
@@ -55,6 +57,7 @@ export function useCurrentCampaign(): CampaignStatus {
         // Calculate current campaign day
         const day = getCurrentCampaignDay(new Date(config.campaign_start_date));
         setCurrentDay(day);
+        setCurrentDayAtom(day);        
 
         // Generate status for all 12 days
         const giftStatuses: GiftRenderStatus[] = [];
