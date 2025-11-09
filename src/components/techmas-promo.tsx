@@ -6,7 +6,6 @@ import BackButton from "./ui/back-button";
 import CircleBackground from "./ui/circular-bg";
 import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
 import { PRIZE_CONFIGS } from "@/lib/promo-prizes";
-<<<<<<< HEAD
 import { PromoPrizeModal } from "./ui/promo-prize-modal";
 
 const TechmasPromo = () => {
@@ -14,14 +13,6 @@ const TechmasPromo = () => {
   const [activeDay, setActiveDay] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-=======
-import { useRouter } from "next/navigation";
-
-const TechmasPromo = () => {
-  const { gifts } = useCurrentCampaign();
-  const [activeDay, setActiveDay] = React.useState<number | null>(null);
-  const router = useRouter(); 
->>>>>>> f4e568f (claim coupon)
   const handleBadgeClick = (
     day: number,
     available: boolean,
@@ -29,12 +20,7 @@ const TechmasPromo = () => {
   ) => {
     if (available && !missed) {
       setActiveDay(day);
-<<<<<<< HEAD
       setIsModalOpen(true);
-=======
-      console.log(`Opened day ${day}`);
-      router.push(`/sample/game`);
->>>>>>> f4e568f (claim coupon)
       // TODO: Navigate to game/claim page
     } else if (missed) {
       console.log(`Day ${day} was missed`);
