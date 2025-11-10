@@ -3,7 +3,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { X } from "lucide-react";
 import {
   Dialog,
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { useRouter } from "next/navigation";
 
 export interface PrizeConfig {
   src: string;
@@ -34,6 +34,7 @@ export function PromoPrizeModal({
   day,
   prize,
 }: PromoPrizeModalProps) {
+  const router = useRouter();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogOverlay
@@ -82,7 +83,7 @@ export function PromoPrizeModal({
             </div>
           </div>
 
-          <Link href="/reveal" className="w-full">
+          {/* <Link href="/reveal" className="w-full">
             <Button
               size="lg"
               className="
@@ -93,7 +94,22 @@ export function PromoPrizeModal({
             >
               Play now
             </Button>
-          </Link>
+          </Link> */}
+          
+            <Button
+            onClick={() => {
+              onOpenChange(false);
+              router.push("/sample/game");
+            }}
+              size="lg"
+              className="
+                w-full font-semibold
+                bg-white/10 text-white hover:bg-white/20
+                border border-white/20
+              "
+            >
+              Play now
+            </Button>
         </div>
       </DialogContent>
     </Dialog>
