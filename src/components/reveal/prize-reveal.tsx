@@ -1,61 +1,106 @@
 // components/reveal/prize-reveal.tsx
-"use client"
-import React from 'react'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
+"use client";
+import React from "react";
+import Image from "next/image";
 
 const PrizeReveal = () => {
   return (
-    <div className="relative z-30 bg-gradient-to-b from-[#B5A8D6] to-[#C8BFE0] py-16">
-      <div className="mx-auto max-w-6xl px-6 md:px-12">
-        <div className="grid items-center gap-8 md:grid-cols-2">
-          {/* Left side - Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-          >
-            <h2 className="font-currys text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl">
-              You've also unlocked the prize of the day!
-            </h2>
-            <p className="mt-4 text-lg text-gray-700 md:text-xl">
-              The latest Alexa speaker is here!
-            </p>
-            <p className="text-lg text-gray-700 md:text-xl">
-              We'll reach out if you win.
-            </p>
-          </motion.div>
+    <div className="relative bg-[#CFC8F7] py-12 lg:py-20">
+      <div className="z-30 container mx-auto flex w-full flex-col px-6 pb-28 md:flex-row xl:px-12">
+        <div className="font-currys flex flex-1 flex-col space-y-6">
+          <h2 className="text-center text-2xl font-semibold text-black md:mt-8 md:text-3xl lg:text-start xl:text-5xl">
+            You have also been entered <br />
+            into today&apos;s lucky draw.
+          </h2>
 
-          {/* Right side - Prize Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.7, type: 'spring' }}
-            className="relative flex justify-center"
-          >
-            <div className="relative h-64 w-64 md:h-80 md:w-80">
+          <div className="flex items-center justify-center py-6 lg:hidden">
+            <div className="h-auto w-44 md:w-60">
               <Image
-                src="https://images.unsplash.com/photo-1543512214-318c7553f230?w=800&q=80"
-                alt="Alexa Speaker"
-                fill
-                className="object-contain drop-shadow-2xl"
+                src="/alexa.jpg"
+                alt="product"
+                width={230}
+                height={290}
+                className="h-full w-full object-contain"
               />
             </div>
-          </motion.div>
+          </div>
+
+          <p className="w-full max-w-lg place-self-center text-center text-base text-[#3C3C3C] md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
+            Check your email in the next 72 hours to see if you have won Alexa
+            speaker.
+          </p>
+
+          <div className="z-20 w-full max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base lg:mt-8 lg:place-self-start">
+            Play ALL 12 days to be entered into the Grand Prize Draw for €1,000
+            in Currys vouchers!
+          </div>
+        </div>
+
+        <div className="z-40 hidden flex-1 items-center justify-center lg:flex">
+          <div className="h-auto w-60 lg:w-56 xl:w-60">
+            <Image
+              src="/alexa.jpg"
+              alt="product"
+              width={230}
+              height={290}
+              className="h-full w-full object-contain"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Gift boxes decoration - reuse from your TechmasPromo */}
-      <div className="absolute bottom-0 left-0 h-24 w-24 md:h-32 md:w-32">
+      {/* Snow Drift Bottom */}
+      <div className="absolute bottom-0 z-10 h-auto w-full">
         <Image
-          src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=200&q=80"
+          src="/promo/snow-drift.png"
+          alt="snow drift"
+          width={2892}
+          height={1972}
+          className="hidden w-full object-cover lg:block"
+        />
+        <Image
+          src="/promo/snow-drift-mobile.png"
+          alt="snow drift"
+          width={910}
+          height={552}
+          className="block w-full object-cover lg:hidden"
+        />
+      </div>
+
+      {/* Snow Drift Right */}
+      <div className="absolute -right-1/2 bottom-14 h-auto w-full translate-x-1/16 translate-y-1/2 md:bottom-26 lg:bottom-8 2xl:bottom-10">
+        <Image
+          src="/promo/snow-drift-2.png"
+          alt="snow drift"
+          width={1446}
+          height={986}
+          className="w-[70vw] object-cover"
+        />
+      </div>
+
+      {/* Gift Box 2 */}
+      <div className="absolute bottom-24 left-0 z-10 h-20 w-auto md:h-30 lg:bottom-40 lg:h-22">
+        <Image
+          src="/promo/gift-box-2.png"
           alt="gift box"
-          fill
-          className="object-contain"
+          width={108}
+          height={108}
+          className="object-fit h-full w-full"
+        />
+      </div>
+
+      {/* Gift Box 1 */}
+      <div className="absolute bottom-8 left-8 z-10 h-20 w-auto lg:bottom-4 lg:left-10 lg:h-30 xl:h-35">
+        <Image
+          src="/promo/gift-box-1.png"
+          alt="gift box"
+          width={163}
+          height={163}
+          className="object-fit h-full w-full"
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PrizeReveal
+export default PrizeReveal;
