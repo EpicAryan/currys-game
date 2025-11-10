@@ -2,31 +2,40 @@
 
 import { useEffect, useState } from "react";
 import { getCampaignConfig, CampaignConfig } from "@/actions/campaign";
+import { getGifts } from "@/actions/gifts"; // <-- 1. Import getGifts
 import { getCurrentCampaignDay } from "../utils/campaignDates";
 import { currentDayAtom } from "@/store/currentDay";
 import { useSetAtom } from "jotai";
 
-export interface GiftRenderStatus {
+// 2. Interface for the data from getGifts()
+export interface Gift {
+  id: number;
+  day_number: number;
+  gift_name: string;
+  image_url: string;
+}
+
+// 3. Renamed and updated interface
+export interface CampaignGift {
   dayNumber: number;
   missed: boolean;
   locked: boolean;
   available: boolean;
+  gift_name: string | null; // <-- Added
+  image_url: string | null; // <-- Added
 }
 
 export interface CampaignStatus {
   isLoading: boolean;
   campaignConfig: CampaignConfig | null;
   currentDay: number;
-  gifts: GiftRenderStatus[];
+  gifts: CampaignGift[]; // <-- Use new interface
   isActive: boolean;
 }
 
 /**
  * Hook to manage campaign gift rendering logic
- * Returns status for all 12 days to determine if they should be rendered as:
- * - missed: Past days that weren't claimed
- * - locked: Future days not yet available
- * - available: Current day that can be claimed
+ * Returns status and gift details for all 12 days.
  */
 export function useCurrentCampaign(): CampaignStatus {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,16 +43,20 @@ export function useCurrentCampaign(): CampaignStatus {
     null
   );
   const [currentDay, setCurrentDay] = useState<number>(0);
-  const [gifts, setGifts] = useState<GiftRenderStatus[]>([]);
+  const [gifts, setGifts] = useState<CampaignGift[]>([]); // <-- Use new interface
   const [isActive, setIsActive] = useState<boolean>(false);
   const setCurrentDayAtom = useSetAtom(currentDayAtom);
+
   useEffect(() => {
     async function loadCampaignStatus() {
       try {
         setIsLoading(true);
 
-        // Fetch campaign configuration
-        const config = await getCampaignConfig();
+        // 4. Fetch campaign config and all gifts in parallel
+        const [config, allGifts] = await Promise.all([
+          getCampaignConfig(),
+          getGifts(),
+        ]);
 
         if (!config) {
           setIsActive(false);
@@ -57,21 +70,28 @@ export function useCurrentCampaign(): CampaignStatus {
         // Calculate current campaign day
         const day = getCurrentCampaignDay(new Date(config.campaign_start_date));
         setCurrentDay(day);
-        setCurrentDayAtom(day);        
+        setCurrentDayAtom(day);
 
-        // Generate status for all 12 days
-        const giftStatuses: GiftRenderStatus[] = [];
+        // 5. Generate status and merge gift details for all 12 days
+        const giftStatuses: CampaignGift[] = [];
 
         for (let dayNumber = 1; dayNumber <= 12; dayNumber++) {
-          const missed = dayNumber < day; // Days before current day are missed
-          const locked = dayNumber > day; // Days after current day are locked
-          const available = dayNumber === day; // Current day is available
+          const missed = dayNumber < day;
+          const locked = dayNumber > day;
+          const available = dayNumber === day;
+
+          // Find the matching gift details from the fetched data
+          const giftDetails = allGifts.find(
+            (g) => g.day_number === dayNumber
+          );
 
           giftStatuses.push({
             dayNumber,
             missed,
             locked,
             available,
+            gift_name: giftDetails?.gift_name || null, // <-- Add gift name
+            image_url: giftDetails?.image_url || null, // <-- Add image url
           });
         }
 
@@ -85,7 +105,7 @@ export function useCurrentCampaign(): CampaignStatus {
     }
 
     loadCampaignStatus();
-  }, []);
+  }, [setCurrentDayAtom]); // Added dependency
 
   return {
     isLoading,
@@ -97,7 +117,7 @@ export function useCurrentCampaign(): CampaignStatus {
 }
 
 /**
- * Helper hook to get status for a specific day
+ * 6. Helper hook to get status and details for a specific day
  */
 export function useGiftStatus(dayNumber: number) {
   const { gifts, isLoading } = useCurrentCampaign();
@@ -109,5 +129,7 @@ export function useGiftStatus(dayNumber: number) {
     missed: giftStatus?.missed ?? false,
     locked: giftStatus?.locked ?? false,
     available: giftStatus?.available ?? false,
+    gift_name: giftStatus?.gift_name || null, // <-- Return gift name
+    image_url: giftStatus?.image_url || null, // <-- Return image url
   };
 }

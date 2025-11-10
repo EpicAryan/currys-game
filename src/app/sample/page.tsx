@@ -168,6 +168,8 @@ export default function SamplePage() {
                   missed: g.missed,
                   locked: g.locked,
                   available: g.available,
+                  image_url: g.image_url,
+                  gift_name: g.gift_name,
                 })),
               },
               null,
