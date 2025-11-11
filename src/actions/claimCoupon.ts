@@ -13,8 +13,14 @@ export async function claimCouponAction(userEmail: string, todayDayNumber: numbe
     if (error) throw new Error(error.message);
 
     return { success: true, coupon: data };
-  } catch (err: any) {
-    console.error('claimCouponAction error:', err.message);
-    return { success: false, error: err.message };
+  } catch (err: unknown) {
+    let errorMessage = "An unexpected error occurred";
+
+    if (err instanceof Error) {
+      errorMessage = err.message;
+    }
+
+    console.error("claimCouponAction error:", errorMessage);
+    return { success: false, error: errorMessage };
   }
 }
