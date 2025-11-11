@@ -16,3 +16,42 @@ export async function getGifts() {
   console.log(data);
   return data;
 }
+
+export async function enrollUserForGift(userId: string, dayNumber: number) {
+  try {
+    // 1️⃣ Find the gift for the given day number
+    const { data: gift, error: giftError } = await supabase
+      .from("gifts")
+      .select("id")
+      .eq("day_number", dayNumber)
+      .single();
+
+    if (giftError || !gift) {
+      return { success: false, error: "Gift not found for the given day." };
+    }
+
+    // 2️⃣ Insert enrollment entry (unique constraint ensures one per day per user)
+    const { data, error } = await supabase
+      .from("user_gift_enrollments")
+      .insert({
+        user_id: userId,
+        gift_id: gift.id,
+        day_number: dayNumber,
+      })
+      .select("id, user_id, gift_id, day_number, enrolled_at")
+      .single();
+
+    if (error) {
+      // Handle unique violation cleanly
+      if (error.code === "23505") {
+        return { success: false, error: "User already enrolled for this day." };
+      }
+      throw error;
+    }
+
+    return { success: true, data };
+  } catch (err: any) {
+    console.error("Enrollment error:", err);
+    return { success: false, error: "Unexpected server error." };
+  }
+}
