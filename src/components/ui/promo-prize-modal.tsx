@@ -11,7 +11,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { DialogTitle } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 
 export interface PrizeConfig {
@@ -44,7 +43,7 @@ export function PromoPrizeModal({
           data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
         "
       />
-      <DialogTitle>Techmas</DialogTitle>
+      {/* <DialogTitle>Techmas</DialogTitle> */}
       <DialogContent
         className="z-[101] min-w-screen h-full grid place-items-center bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566] border-none rounded-none outline-none"
       >

@@ -7,9 +7,12 @@ import CircleBackground from "./ui/circular-bg";
 import { useCurrentCampaign } from "../hooks/useCurrentCampaign";
 import { PRIZE_CONFIGS } from "@/lib/promo-prizes";
 import { PromoPrizeModal } from "./ui/promo-prize-modal";
+import LightParticles from "./ui/nebula-forgery";
+import { motion } from 'motion/react';
+import BadgeGridSkeleton from "./ui/badge-grid-skeleton";
 
 const TechmasPromo = () => {
-  const { gifts } = useCurrentCampaign();
+  const { gifts, isLoading } = useCurrentCampaign(); 
   const [activeDay, setActiveDay] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -84,14 +87,8 @@ const TechmasPromo = () => {
         <h5 className="font-currys text-2xl font-semibold tracking-wide text-[#3D2683] md:text-4xl lg:text-5xl xl:text-6xl">
           currys
         </h5>
-        <div className="absolute -right-16 md:-right-24 lg:-right-30 xl:-right-40 -bottom-[120%] md:-bottom-[100%] lg:-bottom-[110%] 2xl:-bottom-[100%] -z-10 h-44 md:h-64 w-auto lg:h-70 xl:h-96 2xl:h-[408px] rotate-90">
-          <Image
-            src="/promo/magic-cluster-b.png"
-            alt="magic cluster"
-            width={408}
-            height={408}
-            className="object-fit h-full w-full"
-          />
+        <div className="absolute -right-16 md:-right-16 lg:-right-20 bottom-0 lg:-bottom-3 2xl:bottom-0 -z-10 h-20 w-24 md:h-30 md:w-30 lg:h-36 lg:w-36 2xl:h-40 2xl:w-40 rotate-90">
+          <LightParticles />
         </div>
       </div>
 
@@ -113,44 +110,41 @@ const TechmasPromo = () => {
         </p>
       </div>
 
-      {/* Badge Grid */}
-      <div className="relative z-30 mx-auto mt-12 max-w-6xl overflow-visible xl:mt-6 2xl:mt-12 ">
-        <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 2xl:space-y-5 2xl:gap-x-15">
-          {badges.map((badge, index) => (
-            <div
-              key={badge.key}
-              className={`${
-                index >= 4 && index <= 7
-                  ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
-                  : ""
-              }`}
-            >
-              {badge}
-              {index === 7 && (
-                <div className="hidden lg:block absolute -right-20 -top-32 lg:-right-40 lg:-top-32 xl:-right-44 xl:-top-36 2xl:-right-50 2xl:-top-45 -z-10 h-64 w-auto lg:h-72 xl:h-80 2xl:h-92">
-                  <Image
-                    src="/promo/magic-cluster-b.png"
-                    alt="magic cluster"
-                    width={408}
-                    height={408}
-                    className="object-fit h-full w-full"
-                  />
-                </div>
-              )}
-              {index === 5 && (
-                <div className="lg:hidden absolute -right-14 md:right-10 top-16 md:top-18  -z-10 w-auto h-40 md:h-64 rotate-45">
-                  <Image
-                    src="/promo/magic-cluster-b.png"
-                    alt="magic cluster"
-                    width={408}
-                    height={408}
-                    className="object-fit h-full w-full"
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      {/* Badge Grid with Loading State */}
+      <div className="relative z-30 mx-auto mt-12 max-w-6xl overflow-visible xl:mt-6 2xl:mt-12">
+        {isLoading ? (
+          <BadgeGridSkeleton />
+        ) : (
+          <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 2xl:space-y-5 2xl:gap-x-15">
+            {badges.map((badge, index) => (
+              <div
+                key={badge.key}
+                className={`${
+                  index >= 4 && index <= 7
+                    ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
+                    : ""
+                }`}
+              >
+                {badge}
+                {index === 7 && (
+                  <div className="hidden lg:block absolute -right-5 -top-16 2xl:-top-20 -z-10 h-26 w-20 xl:h-30 xl:w-20 2xl:h-40 2xl:w-30">
+                    <LightParticles />
+                  </div>
+                )}
+                {index === 5 && (
+                  <div className="absolute right-4 md:right-[20vw] top-16 md:top-24 -z-10 w-16 h-20 md:h-30 md:w-16 rotate-30 lg:-top-12 lg:right-0">
+                    <LightParticles />
+                  </div>
+                )}
+                {index === 4 && (
+                  <div className="lg:hidden absolute right-1/2 translate-x-3/4 md:translate-x-14 top-16 md:top-24 -z-10 w-10 h-16 md:h-24 md:w-12 -rotate-20">
+                    <LightParticles />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Snow Drift Bottom */}
@@ -160,6 +154,8 @@ const TechmasPromo = () => {
           alt="snow drift"
           width={2892}
           height={1972}
+          priority
+          sizes="100vw"
           className="hidden w-full object-cover lg:block"
         />
         <Image
@@ -167,6 +163,8 @@ const TechmasPromo = () => {
           alt="snow drift"
           width={910}
           height={552}
+          priority
+          sizes="100vw"
           className="block w-full object-cover lg:hidden"
         />
         {/* Jumping Deer */}
@@ -176,6 +174,7 @@ const TechmasPromo = () => {
             alt="deer"
             width={400}
             height={400}
+            sizes="(max-width: 768px) 116px, (max-width: 1024px) 160px, (max-width: 1280px) 144px, (max-width: 1536px) 176px, 200px"
             className="object-fit h-full w-full"
           />
         </div>
@@ -188,42 +187,105 @@ const TechmasPromo = () => {
           alt="snow drift"
           width={1446}
           height={986}
+          sizes="70vw"
           className="w-[70vw] object-cover"
         />
       </div>
 
       {/* Magic Cluster Bottom Left */}
-      <div className="absolute -bottom-2 left-2 z-30 h-64 w-auto lg:-left-2 lg:h-88 xl:h-96 2xl:h-[408px]">
-        <Image
-          src="/promo/magic-cluster-b.png"
-          alt="magic cluster"
-          width={408}
-          height={408}
-          className="object-fit h-full w-full"
-        />
+      <div className="absolute bottom-20 md:bottom-36 lg:bottom-28 z-30 left-0 h-28 w-20 md:h-36 md:w-30 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">
+        <LightParticles />
       </div>
 
       {/* Gift Box 2 */}
-      <div className="absolute bottom-24 left-0 z-30 h-20 w-auto md:h-30 lg:bottom-40 lg:h-22 2xl:h-[108px]">
+      <div className="absolute bottom-24 left-0 z-30 h-20 w-auto md:bottom-48 lg:bottom-40 md:h-22 2xl:h-[108px]">
         <Image
           src="/promo/gift-box-2.png"
           alt="gift box"
           width={108}
           height={108}
+          sizes="(max-width: 768px) 80px, (max-width: 1024px) 88px, 108px"
           className="object-fit h-full w-full"
         />
       </div>
 
       {/* Gift Box 1 */}
-      <div className="absolute bottom-8 left-8 z-30 h-20 w-auto lg:bottom-4 lg:left-10 lg:h-30 xl:h-35 2xl:h-[163px]">
+      <div className="absolute bottom-8 left-8 z-30 h-20 w-auto md:bottom-20 lg:bottom-4 lg:left-10 md:h-30 xl:h-35 2xl:h-[163px]">
         <Image
           src="/promo/gift-box-1.png"
           alt="gift box"
           width={163}
           height={163}
+          sizes="(max-width: 768px) 80px, (max-width: 1024px) 120px, (max-width: 1280px) 140px, 163px"
           className="object-fit h-full w-full"
         />
       </div>
+
+      {/* star 1 */}
+      <motion.div
+        className="hidden md:block absolute top-1/2 left-1/10 xl:left-1/7 z-30 aspect-square size-13 xl:size-15"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{
+          duration: 2.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{ willChange: "transform" }}
+      >
+        <Image
+          src="/promo/star.webp"
+          alt="star"
+          width={61}
+          height={61}
+          sizes="(max-width: 768px) 0px, (max-width: 1280px) 52px, 60px"
+          className="object-fit h-full w-full"
+        />
+      </motion.div>
+
+      {/* star 2 */}
+      <motion.div
+        className="hidden md:block absolute top-1/2 -translate-y-20 left-1/8 xl:left-1/6 xl:translate-x-10 z-30 aspect-square size-10 xl:size-12"
+        animate={{ scale: [1, 1.15, 1] }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.4,
+        }}
+        style={{ willChange: "transform" }}
+      >
+        <Image
+          src="/promo/star.webp"
+          alt="star"
+          width={61}
+          height={61}
+          sizes="(max-width: 768px) 0px, (max-width: 1280px) 40px, 48px"
+          className="object-fit h-full w-full"
+        />
+      </motion.div>
+
+      {/* star 3 */}
+      <motion.div
+        className="hidden md:block absolute bottom-1/4 right-1/7 xl:right-1/5 z-30 aspect-square size-8 xl:size-10"
+        animate={{ scale: [1, 1.25, 1] }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 0.8,
+        }}
+        style={{ willChange: "transform" }}
+      >
+        <Image
+          src="/promo/star.webp"
+          alt="star"
+          width={61}
+          height={61}
+          sizes="(max-width: 768px) 0px, (max-width: 1280px) 32px, 40px"
+          className="object-fit h-full w-full"
+        />
+      </motion.div>
+
       <PromoPrizeModal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
