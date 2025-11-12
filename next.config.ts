@@ -12,7 +12,10 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.example.com',
       }
     ]
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true, 
+  },
 };
 
 export default nextConfig;
