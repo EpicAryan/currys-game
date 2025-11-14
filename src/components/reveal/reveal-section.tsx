@@ -4,6 +4,7 @@ import React from "react";
 import StreakIndicator from "./streak-indicator";
 import CongratulationsCard from "./congratulations-card";
 import PrizeReveal from "./prize-reveal";
+import CTA from "./cta";
 
 const RevealSection = () => {
   return (
@@ -16,6 +17,7 @@ const RevealSection = () => {
 
       {/* Prize Reveal Section */}
       <PrizeReveal />
+      <CTA/>
     </div>
   );
 };

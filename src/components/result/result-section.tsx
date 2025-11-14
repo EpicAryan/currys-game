@@ -5,12 +5,14 @@ import React, { useState } from "react";
 import CircleBackground from "../ui/circular-bg";
 import LightParticlesFast from "../ui/nebula-forgery";
 import {motion} from 'motion/react';
+import { useRouter } from "next/navigation";
 
 const ResultSection = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const router = useRouter();
+  
   // Comprehensive email validation
   const validateEmail = (email: string): boolean => {
     // Check if email is empty
@@ -200,6 +202,7 @@ const ResultSection = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
+                  onClick={() => router.push('/reveal')}
                   className="font-currys lg:mt-2 w-full cursor-pointer rounded-full bg-[#C6B5FF] px-8 py-3.5 text-sm leading-[120%] font-semibold text-[#4C12A1] transition-all hover:bg-[#D5C8FF] focus:outline-none active:scale-98 disabled:cursor-not-allowed disabled:opacity-70 lg:text-base xl:py-4 xl:text-lg 2xl:text-xl"
                 >
                   {isSubmitting ? "Checking..." : "Reveal my prize"}
@@ -281,7 +284,6 @@ const ResultSection = () => {
           alt="gift box"
           width={378}
           height={518}
-          quality={100}
           sizes="(max-width: 768px) 80px, (max-width: 1024px) 120px, (max-width: 1280px) 256px, 378px"
           className="object-fit h-full w-full"
         />
