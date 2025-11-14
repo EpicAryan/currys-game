@@ -76,10 +76,23 @@ export default function ConfettiBackground() {
 
     pathsRef.current = pathDefinitions.map((def) => new Path2D(def.d));
 
+    const calculateParticleCount = () => {
+      const canvasArea = canvas.width * canvas.height;
+      const density = 12000; 
+      
+      const count = Math.floor(canvasArea / density);
+      
+      const minParticles = 40;
+      const maxParticles = 80;
+      
+      return Math.max(minParticles, Math.min(maxParticles, count));
+    };
+
     const initConfetti = () => {
+      const particleCount = calculateParticleCount();
       confettiRef.current = [];
       
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < particleCount; i++) {
         const pathIndex = Math.floor(Math.random() * pathDefinitions.length);
         const pathDef = pathDefinitions[pathIndex];
         

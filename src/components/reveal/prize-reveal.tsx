@@ -25,12 +25,12 @@ const PrizeReveal = () => {
             </div>
           </div>
 
-          <p className="w-full max-w-lg place-self-center text-center text-base text-[#3C3C3C] md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
+          <p className="w-full max-w-xs md:max-w-lg place-self-center text-center text-base text-[#3C3C3C] md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
             Check your email in the next 72 hours to see if you have won Alexa
             speaker.
           </p>
 
-          <div className="z-20 w-full max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base lg:mt-8 lg:place-self-start">
+          <div className="z-20 w-full max-w-xs md:max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base lg:mt-8 lg:place-self-start text-center lg:text-start">
             Play ALL 12 days to be entered into the Grand Prize Draw for €1,000
             in Currys vouchers!
           </div>
