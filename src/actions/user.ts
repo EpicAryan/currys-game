@@ -11,3 +11,17 @@ export async function checkExisting(email: string) {
     console.log("data", data);
     return data as string;
 }
+
+export async function getUserCampaignData(email: string) {
+    
+  const { data, error } = await supabase.rpc("get_user_campaign_data", {
+    user_email: email,
+  });
+
+  if (error) {
+    console.error("RPC Error:", error);
+    throw error;
+  }
+
+  return data;
+}

@@ -1,16 +1,13 @@
-const USER_UUID_KEY = "currys_game_user_uuid";
+"use client";
 
-export function getUserUUID(): string | null {
+const USER_EMAIL_KEY = "user_email";
+
+export function getUserEmail(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem(USER_UUID_KEY);
+  return localStorage.getItem(USER_EMAIL_KEY);
 }
 
-export function setUserUUID(uuid: string): void {
+export function setUserEmail(email: string): void {
   if (typeof window === "undefined") return;
-  localStorage.setItem(USER_UUID_KEY, uuid);
-}
-
-export function removeUserUUID(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(USER_UUID_KEY);
+  localStorage.setItem(USER_EMAIL_KEY, email);
 }

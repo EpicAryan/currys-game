@@ -55,3 +55,17 @@ export async function enrollUserForGift(userId: string, dayNumber: number) {
     return { success: false, error: "Unexpected server error." };
   }
 }
+
+export async function getGiftDetailsByDay(dayNumber: number) {
+  const { data, error } = await supabase
+    .from("gifts")
+    .select("id, gift_name, image_url")
+    .eq("day_number", dayNumber)
+    .single();
+
+  if (error) {
+    console.error("Error fetching gift details:", error);
+    return null;
+  }
+  return data;
+}

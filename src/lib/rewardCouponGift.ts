@@ -1,4 +1,4 @@
-import { checkExisting } from "@/actions/checkExisting";
+import { checkExisting } from "@/actions/user";
 import { claimCouponAction } from "@/actions/claimCoupon";
 import { enrollUserForGift } from "@/actions/gifts";
 import { markParticipation } from "@/actions/markParticipation";
