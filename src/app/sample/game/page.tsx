@@ -9,7 +9,7 @@ export default function GamePage() {
   console.log("currentDay", currentDay);
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <button className="bg-blue-500 text-white p-2 rounded-md mt-4 " onClick={() => rewardCouponGift({score: 15, email: "test1a2@test.com", currentDay})}>Reward Coupon Gift</button>
+      <button className="bg-blue-500 text-white p-2 rounded-md mt-4 " onClick={() => rewardCouponGift({score: 15, email: "garv@test.com", currentDay})}>Reward Coupon Gift</button>
     </div>
   );
 }

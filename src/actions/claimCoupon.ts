@@ -2,11 +2,11 @@
 
 import { supabase } from "@/utils/supabase/server";
 
-export async function claimCouponAction(userEmail: string, todayDayNumber: number) {
+export async function claimCouponAction(user_id: string, todayDayNumber: number) {
 
   try {
     const { data, error } = await supabase.rpc('claim_coupon', {
-      user_email: userEmail,
+      user_id: user_id,
       day_number: todayDayNumber,
     });
 

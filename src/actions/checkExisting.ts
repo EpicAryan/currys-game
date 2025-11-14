@@ -9,5 +9,5 @@ export async function checkExisting(email: string) {
         throw new Error(error.message);
     }
     console.log("data", data);
-    return data;
+    return data as string;
 }
