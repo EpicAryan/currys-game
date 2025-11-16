@@ -56,7 +56,7 @@ export default function StripesBackground({
     <svg
       ref={svgRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 w-full h-full -z-10 -translate-y-28"
+      className="pointer-events-none absolute inset-0 w-full h-full -z-10 -translate-y-28 "
       xmlns="http://www.w3.org/2000/svg"
     >
       <g transform={`translate(${center.x} ${center.y})`} shapeRendering="geometricPrecision">

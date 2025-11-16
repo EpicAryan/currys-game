@@ -303,7 +303,7 @@ const CongratulationsCard = ({
 
   if (isEligibleForDraw && !hasWonCoupon) {
     return (
-      <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center">
+      <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center overflow-hidden ">
        <div className="absolute inset-0 overflow-hidden w-full h-[190%]">
         <StripesBackground gap={105} count={24} fill="#3A308C" />
         </div>
@@ -318,7 +318,7 @@ const CongratulationsCard = ({
   }
 
   return (
-    <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center">
+    <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 overflow-hidden w-full h-[190%]">
         <StripesBackground gap={105} count={24} fill="#3A308C" />
         </div>
