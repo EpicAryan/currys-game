@@ -1,27 +1,91 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, Suspense, useEffect, useMemo } from "react";
 import CircleBackground from "../ui/circular-bg";
 import LightParticlesFast from "../ui/nebula-forgery";
-import {motion} from 'motion/react';
-import { useRouter } from "next/navigation";
+import { motion } from "motion/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { verifySignature } from "@/lib/hmac";
+import { rewardCouponGift } from "@/lib/rewardCouponGift";
 
-const ResultSection = () => {
+function ResultContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const day = searchParams.get("day") || "";
+  const score = searchParams.get("score") || "";
+  const timestamp = searchParams.get("t") || "";
+  const signature = searchParams.get("s") || "";
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
-  
-  // Comprehensive email validation
+
+  const [isVerified, setIsVerified] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(true);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("curry_user_mail");
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+  }, []);
+
+  const scoreMessage = useMemo(() => {
+    const scoreNum = parseInt(score, 10);
+
+    if (scoreNum === 0) {
+      return {
+        line1: "No gifts made it down the chimney",
+        line2: "this time - try again another day!",
+      };
+    } else if (scoreNum > 0 && scoreNum < 20) {
+      return {
+        line1: "Santa loves a trier!",
+        line2: "Better luck next sled.",
+      };
+    } else if (scoreNum >= 20 && scoreNum < 60) {
+      return {
+        line1: "A few presents in the snow, but you",
+        line2: "delivered some Christmas joy!",
+      };
+    } else {
+      return {
+        line1: "Solid sleigh control!",
+        line2: "Santa would be proud.",
+      };
+    }
+  }, [score]);
+
+  useEffect(() => {
+    async function verify() {
+      if (!day || !score || !timestamp || !signature) {
+        alert("Invalid URL - missing required parameters");
+        router.push("/");
+        return;
+      }
+
+      const isValid = await verifySignature(day, score, timestamp, signature);
+
+      if (!isValid) {
+        alert("🚨 Security Alert: URL has been tampered with or expired!");
+        router.push("/");
+        return;
+      }
+      setIsVerified(true);
+      setIsVerifying(false);
+    }
+
+    verify();
+  }, [day, score, timestamp, signature, router]);
+
   const validateEmail = (email: string): boolean => {
-    // Check if email is empty
     if (!email.trim()) {
       setError("Email is required");
       return false;
     }
 
-    // Comprehensive email regex pattern
     const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (!emailRegex.test(email)) {
@@ -29,28 +93,23 @@ const ResultSection = () => {
       return false;
     }
 
-    // Additional checks
     const [localPart, domain] = email.split("@");
 
-    // Check local part length
     if (localPart.length > 64) {
       setError("Email local part is too long");
       return false;
     }
 
-    // Check domain length
     if (domain.length > 255) {
       setError("Email domain is too long");
       return false;
     }
 
-    // Check for consecutive dots
     if (email.includes("..")) {
       setError("Email cannot contain consecutive dots");
       return false;
     }
 
-    // Check if domain has at least one dot
     if (!domain.includes(".")) {
       setError("Email domain must contain a dot");
       return false;
@@ -61,43 +120,89 @@ const ResultSection = () => {
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+
+    if (newEmail.trim()) {
+      localStorage.setItem("curry_user_mail", newEmail);
+    }
+
     if (error) {
-      setError(""); // Clear error on typing
+      setError("");
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
-    if (validateEmail(email)) {
-      setIsSubmitting(true);
-      // Handle form submission logic here
-      console.log("Valid email:", email);
+  if (!validateEmail(email)) {
+    return;
+  }
 
-      // Simulate API call
-      setTimeout(() => {
-        setIsSubmitting(false);
-        alert(`Prize check initiated for: ${email}`);
-      }, 1000);
-    }
-  };
+  setIsSubmitting(true);
+
+  try {
+    const dayNumber = parseInt(day.replace(/^day/, ""), 10);
+    const scoreNum = parseInt(score, 10);
+
+    await rewardCouponGift({
+      score: scoreNum,
+      email: email,
+      currentDay: dayNumber,
+    });
+
+    // ✅ Save email to localStorage
+    localStorage.setItem("curry_user_mail", email);
+
+    // ✅ Simple redirect - no URL params needed!
+    router.push("/reveal");
+    
+  } catch (error) {
+    console.error("❌ Failed to reward gift:", error);
+    alert("Something went wrong. Please try again.");
+    setIsSubmitting(false);
+  }
+};
+
+
+  if (isVerifying) {
+    return (
+      <section className="relative h-screen w-full overflow-hidden">
+        <CircleBackground />
+        <div className="flex h-full items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
+            <p className="font-currys text-xl text-white md:text-2xl">
+              Verifying your score...
+            </p>
+            <p className="font-currys mt-2 text-sm text-gray-300 md:text-base">
+              Please wait
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!isVerified) {
+    return null;
+  }
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <CircleBackground />
-      <div className="hidden lg:block absolute size-10 rotate-150 lg:left-0 xl:top-0 xl:size-12 2xl:size-16">
+      <div className="absolute hidden size-10 rotate-150 lg:left-0 lg:block xl:top-0 xl:size-12 2xl:size-16">
         <LightParticlesFast />
       </div>
-      <div className="absolute -right-14 top-1/8 -z-10 size-16 -translate-x-1/2 rotate-0 lg:-right-16 lg:size-16 lg:top-0 lg:left-2/5 xl:size-20 2xl:size-24">
+      <div className="absolute top-1/8 -right-14 -z-10 size-16 -translate-x-1/2 rotate-0 lg:top-0 lg:-right-16 lg:left-2/5 lg:size-16 xl:size-20 2xl:size-24">
         <LightParticlesFast />
       </div>
-      <div className="absolute left-0 top-1/4 -z-10 size-16 -translate-x-1/4 rotate-90 lg:-right-16 lg:size-16 lg:top-1/7 lg:left-1/5 xl:size-20 2xl:size-28">
+      <div className="absolute top-1/4 left-0 -z-10 size-16 -translate-x-1/4 rotate-90 lg:top-1/7 lg:-right-16 lg:left-1/5 lg:size-16 xl:size-20 2xl:size-28">
         <LightParticlesFast />
       </div>
 
       <motion.div
-        className=" absolute top-1/6 right-1/5 lg:left-8 2xl:left-1/14 2xl:top-1/4 z-30 aspect-square size-9 md:size-11 lg:size-9 xl:size-15"
+        className="absolute top-1/6 right-1/5 z-30 aspect-square size-9 md:size-11 lg:left-8 lg:size-9 xl:size-15 2xl:top-1/4 2xl:left-1/14"
         animate={{ scale: [1, 1.2, 1] }}
         transition={{
           duration: 2.5,
@@ -133,7 +238,7 @@ const ResultSection = () => {
         />
       </div>
 
-      {/* Main Container - Changed from grid to flex */}
+      {/* Main Container */}
       <div className="relative z-20 mx-auto flex h-full items-center px-6 lg:px-12">
         <div className="flex h-fit w-full flex-col gap-[16vh] lg:flex-row lg:gap-16">
           {/* Left Side - Score Section */}
@@ -145,16 +250,16 @@ const ResultSection = () => {
 
               <div className="relative">
                 <h1 className="font-currys text-[80px] leading-none font-semibold tracking-wider text-[#E5006D] text-shadow-md md:text-[90px] xl:text-[120px] 2xl:text-[140px]">
-                  60
+                  {score}
                 </h1>
               </div>
 
-              <div className="lg:space-y-1 text-center lg:text-start">
+              <div className="text-center lg:space-y-1 lg:text-start">
                 <p className="font-currys text-base font-medium text-white md:text-xl xl:text-2xl 2xl:text-3xl">
-                  Solid sleigh control!
+                  {scoreMessage.line1}
                 </p>
                 <p className="font-currys text-base font-medium text-white md:text-xl xl:text-2xl 2xl:text-3xl">
-                  Santa would be proud.
+                  {scoreMessage.line2}
                 </p>
               </div>
 
@@ -168,7 +273,7 @@ const ResultSection = () => {
           </div>
 
           {/* Right Side - Form Section */}
-          <div className="z-40 flex flex-1 items-center justify-center mb-12">
+          <div className="z-40 mb-5 flex flex-1 items-center justify-center md:mb-12">
             <div className="flex h-full w-full max-w-3xs flex-col justify-center space-y-6 md:max-w-xs xl:max-w-sm 2xl:max-w-md 2xl:space-y-10">
               <h2 className="font-currys text-center text-sm leading-snug text-gray-200 md:text-lg lg:text-start xl:text-xl 2xl:text-2xl">
                 Santa is checking his list, enter your email to reveal if you
@@ -182,12 +287,14 @@ const ResultSection = () => {
                     value={email}
                     onChange={handleEmailChange}
                     placeholder="mks1204@gmail.com"
-                    className={`font-currys w-full rounded-lg bg-gray-100 px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:ring-purple-400 focus:outline-none md:px-6 md:py-3 md:text-base lg:rounded-xl xl:rounded-2xl xl:py-3.5 2xl:py-4 2xl:text-lg ${
+                    disabled={isSubmitting}
+                    className={`font-currys w-full rounded-lg bg-gray-100 px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:ring-purple-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-3 md:text-base lg:rounded-xl xl:rounded-2xl xl:py-3.5 2xl:py-4 2xl:text-lg ${
                       error ? "ring-2 ring-red-500" : ""
                     }`}
                     aria-label="Email address"
                     aria-invalid={!!error}
                     aria-describedby={error ? "email-error" : undefined}
+                    required
                   />
                   {error && (
                     <p
@@ -202,13 +309,12 @@ const ResultSection = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  onClick={() => router.push('/reveal')}
-                  className="font-currys lg:mt-2 w-full cursor-pointer rounded-full bg-[#C6B5FF] px-8 py-3.5 text-sm leading-[120%] font-semibold text-[#4C12A1] transition-all hover:bg-[#D5C8FF] focus:outline-none active:scale-98 disabled:cursor-not-allowed disabled:opacity-70 lg:text-base xl:py-4 xl:text-lg 2xl:text-xl"
+                  className="font-currys w-full cursor-pointer rounded-full bg-[#C6B5FF] px-8 py-3.5 text-sm leading-[120%] font-semibold text-[#4C12A1] transition-all hover:bg-[#D5C8FF] focus:outline-none active:scale-98 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:scale-100 lg:mt-2 lg:text-base xl:py-4 xl:text-lg 2xl:text-xl"
                 >
                   {isSubmitting ? "Checking..." : "Reveal my prize"}
                 </button>
 
-                <div className="text-center -mt-3">
+                <div className="-mt-3 text-center">
                   <a
                     href="#"
                     className="font-currys text-xs leading-[120%] text-white underline transition-colors hover:text-purple-200 md:text-sm lg:text-base 2xl:text-lg"
@@ -222,28 +328,27 @@ const ResultSection = () => {
         </div>
       </div>
 
-      {/* Background Circle */}
-      <div className="absolute -left-12 md:-left-14 -bottom-15 md:-bottom-1/3  z-10 aspect-square h-auto w-[120vw] md:w-[115vw] lg:top-1/2 lg:left-2/5 lg:w-[90vw] lg:translate-x-0 lg:-translate-y-1/2 overflow-auto">
+      {/* All decorative elements */}
+      <div className="absolute -bottom-15 -left-12 z-10 aspect-square h-auto w-[120vw] overflow-auto md:-bottom-1/3 md:-left-14 md:w-[115vw] lg:top-1/2 lg:left-2/5 lg:w-[90vw] lg:translate-x-0 lg:-translate-y-1/2">
         <Image
           src="/result/bg-circle.webp"
           alt="background decoration"
           width={2000}
           height={2000}
-          className="hidden lg:block h-full w-full object-cover"
+          className="hidden h-full w-full object-cover lg:block"
         />
         <Image
           src="/result/mobile-bg-circle.webp"
           alt="background decoration"
           width={600}
           height={595}
-          className="lg:hidden h-full w-full object-contain"
+          className="h-full w-full object-contain lg:hidden"
         />
         <div className="absolute -right-16 bottom-0 -z-10 h-20 w-24 -translate-x-1/4 -translate-y-1/2 rotate-180 md:-right-16 md:h-30 md:w-30 lg:-bottom-3 lg:left-1/9 lg:h-36 lg:w-36 2xl:top-1/2 2xl:size-12">
           <LightParticlesFast />
         </div>
       </div>
 
-      {/* Snow Drift Bottom */}
       <div className="pointer-events-none absolute bottom-0 z-30 h-auto w-full">
         <Image
           src="/promo/snow-drift.png"
@@ -265,7 +370,6 @@ const ResultSection = () => {
         />
       </div>
 
-      {/* Snow Drift Right */}
       <div className="absolute -right-1/2 bottom-14 z-20 h-auto w-full translate-x-1/16 translate-y-1/2 md:bottom-26 lg:bottom-8 lg:-z-10 2xl:bottom-10">
         <Image
           src="/promo/snow-drift-2.png"
@@ -277,8 +381,7 @@ const ResultSection = () => {
         />
       </div>
 
-      {/* Santa */}
-      <div className="absolute top-1/2 right-4 z-30 aspect-[27/37] h-auto w-32 -translate-y-1/2 md:right-10 md:w-46 lg:w-50 lg:left-1/2 lg:-translate-x-1/2 2xl:-translate-x-2/3 lg:translate-y-0 xl:w-64 lg:top-0 2xl:w-[378px]">
+      <div className="absolute top-1/2 right-4 z-30 aspect-[27/37] h-auto w-32 -translate-y-1/2 md:right-10 md:w-46 lg:top-0 lg:left-1/2 lg:w-50 lg:-translate-x-1/2 lg:translate-y-0 xl:w-64 2xl:w-[378px] 2xl:-translate-x-2/3">
         <Image
           src="/result/santa.webp"
           alt="gift box"
@@ -288,7 +391,7 @@ const ResultSection = () => {
           className="object-fit h-full w-full"
         />
       </div>
-      {/* Gift Box 1 */}
+
       <div className="absolute bottom-8 left-8 z-30 h-20 w-auto md:bottom-20 md:h-24 lg:bottom-4 lg:left-10 xl:h-30 2xl:h-[163px]">
         <Image
           src="/promo/gift-box-1.png"
@@ -299,7 +402,7 @@ const ResultSection = () => {
           className="object-fit h-full w-full"
         />
       </div>
-      {/* Gift Box 2 */}
+
       <div className="absolute bottom-24 left-0 z-30 h-20 w-auto md:bottom-30 md:h-16 xl:bottom-36 xl:h-20 2xl:bottom-40 2xl:h-[108px]">
         <Image
           src="/promo/gift-box-2.png"
@@ -314,8 +417,7 @@ const ResultSection = () => {
         </div>
       </div>
 
-      {/* Candy Stick */}
-      <div className="absolute right-8 bottom-8 z-10 h-auto -translate-x-3/4 md:bottom-20 lg:bottom-8 md:w-30 lg:left-1/2 lg:z-0 xl:bottom-16 2xl:bottom-24 2xl:w-[154px]">
+      <div className="absolute right-8 bottom-8 z-10 h-auto -translate-x-3/4 md:bottom-20 md:w-30 lg:bottom-8 lg:left-1/2 lg:z-0 xl:bottom-16 2xl:bottom-24 2xl:w-[154px]">
         <Image
           src="/result/candy-stick.webp"
           alt="gift box"
@@ -329,6 +431,23 @@ const ResultSection = () => {
         </div>
       </div>
     </section>
+  );
+}
+
+const ResultSection = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent"></div>
+            <p className="font-currys text-lg text-white">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <ResultContent />
+    </Suspense>
   );
 };
 

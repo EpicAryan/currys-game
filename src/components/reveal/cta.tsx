@@ -1,12 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const CTA = () => {
-  const [userScore] = useState(0); 
-  const hasScore = userScore > 0;
+interface CTAProps {
+  giftName: string 
+  giftImageUrl: string
+  isEligibleForDraw?: boolean
+}
+
+const CTA = ({ giftName, giftImageUrl, isEligibleForDraw = false}: CTAProps) => {
+  const hasScore = isEligibleForDraw;
 
   return (
     <section className="relative z-50 w-full">
@@ -37,7 +42,7 @@ const CTA = () => {
                 : "Didn't win anything today?"}
             </h2>
             <p className="font-currys mb-6 text-4xl leading-tight text-[#4C12A1] xl:text-[44px]">
-              Buy the Alexa now and get <br />
+              Buy the {giftName} now and get <br />
               <span className="font-semibold">FREE delivery </span> today only!*
             </p>
             <motion.button
@@ -47,6 +52,7 @@ const CTA = () => {
             >
               Buy now
             </motion.button>
+          </motion.div>
             <p
               className={`font-currys absolute text-xl xl:text-2xl text-black ${
                 hasScore ? "bottom-6 xl:bottom-10" : "bottom-1/5"
@@ -54,10 +60,8 @@ const CTA = () => {
             >
               * Offer expires at midnight
             </p>
-          </motion.div>
         </div>
 
-       
         {!hasScore && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -67,8 +71,8 @@ const CTA = () => {
             className="absolute top-1/2 right-[15%] w-[280px] -translate-y-1/2 lg:w-[350px]"
           >
             <Image
-              src="/reveal/alexa-product.webp"
-              alt="Alexa Device"
+              src={giftImageUrl}
+              alt={giftName}
               width={350}
               height={350}
               className="h-auto w-full drop-shadow-2xl"
@@ -91,7 +95,7 @@ const CTA = () => {
           className="h-auto w-full"
           priority
         />
-        <div className="absolute inset-0 flex flex-col items-center md:items-start container mx-auto   px-6 md:px-12 py-8 font-currys">
+        <div className="absolute inset-0 flex flex-col items-center md:items-start container mx-auto px-6 md:px-12 py-8 font-currys">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -105,7 +109,7 @@ const CTA = () => {
                 : "Didn't win anything today?"}
             </h2>
             <p className="mb-4 text-[#4C12A1] text-2xl leading-tight sm:text-3xl ">
-              Buy the Alexa now and get{" "}<br/>
+              Buy the {giftName} now and get{" "}<br/>
               <span className="font-semibold">FREE delivery </span>today only!*
             </p>
             <motion.button
@@ -115,12 +119,12 @@ const CTA = () => {
             >
               Buy now
             </motion.button>
-            <p className="mt-3 text-base text-black absolute bottom-5">
-              * Offer expires at midnight
-            </p>
             
           </motion.div>
 
+            <p className="mt-3 text-base text-black absolute bottom-5">
+              * Offer expires at midnight
+            </p>
           {!hasScore && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -130,8 +134,8 @@ const CTA = () => {
               className="mt-6 w-[180px] sm:w-[220px]"
             >
               <Image
-                src="/reveal/alexa-product.webp"
-                alt="Alexa Device"
+                src={giftImageUrl}
+                alt={giftName}
                 width={220}
                 height={220}
                 className="h-auto w-full drop-shadow-2xl"

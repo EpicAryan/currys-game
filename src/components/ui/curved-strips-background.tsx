@@ -13,27 +13,41 @@ type Props = {
 };
 
 export default function StripesBackground({
-  gap = 60,         
-  count = 1,        
+  gap = 60,
+  count = 1,
   fill = "#3A308C",
   opacity = 1,
 }: Props) {
-   const svgRef = useRef<SVGSVGElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const [center, setCenter] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    if (!svgRef.current) return;
-    const rect = svgRef.current.getBoundingClientRect();
-    setCenter({ x: rect.width / 2, y: rect.height / 2 });
+    const svg = svgRef.current;
+    if (!svg) return;
 
-    const handleResize = () => {
-      if (!svgRef.current) return;
-      const rect = svgRef.current.getBoundingClientRect();
+    const updateCenter = () => {
+      const rect = svg.getBoundingClientRect();
       setCenter({ x: rect.width / 2, y: rect.height / 2 });
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    updateCenter();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(() => {
+        updateCenter();
+      });
+
+      observer.observe(svg);
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+
+    window.addEventListener("resize", updateCenter);
+    return () => {
+      window.removeEventListener("resize", updateCenter);
+    };
   }, []);
 
   const indices = Array.from({ length: count * 2 + 1 }, (_, i) => i - count);
@@ -42,10 +56,9 @@ export default function StripesBackground({
     <svg
       ref={svgRef}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 w-full h-full -z-10"
+      className="pointer-events-none absolute inset-0 w-full h-full -z-10 -translate-y-28"
       xmlns="http://www.w3.org/2000/svg"
     >
-
       <g transform={`translate(${center.x} ${center.y})`} shapeRendering="geometricPrecision">
         {indices.map((k) => (
           <path

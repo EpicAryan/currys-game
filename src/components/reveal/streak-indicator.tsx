@@ -1,4 +1,3 @@
-// components/reveal/streak-indicator.tsx
 "use client"
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
@@ -8,26 +7,39 @@ import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Check } from 'lucide-react'
 
+interface StreakDay {
+  dayNumber: number
+  played: boolean
+  missed: boolean
+  playedAt?: string | null
+  coupon?: { 
+    coupon_code: string
+    coupon_title: string
+  } | null
+}
+
 interface StreakIndicatorProps {
   currentStreak: number
   totalDays: number
+  streak: StreakDay[]
+  currentDay: number
 }
 
-const StreakIndicator = ({ currentStreak, totalDays }: StreakIndicatorProps) => {
+const StreakIndicator = ({ currentStreak, totalDays, streak, currentDay }: StreakIndicatorProps) => {
   const [copiedStates, setCopiedStates] = useState<{ [key: number]: boolean }>({})
   
-  // Dummy data 
-  const couponCodes: { [key: number]: string } = {
-    0: '30CURRYS2025',
-    2: '30CURRYS2025', 
-  }
+  const couponCodes: { [key: number]: string } = {}
+  streak.forEach((day) => {
+    if (day.coupon && day.coupon.coupon_code) {
+      couponCodes[day.dayNumber - 1] = day.coupon.coupon_code
+    }
+  })
 
   const handleCopy = async (code: string, dayIndex: number) => {
     try {
       await navigator.clipboard.writeText(code)
       setCopiedStates(prev => ({ ...prev, [dayIndex]: true }))
       
-      // Reset after 2 seconds
       setTimeout(() => {
         setCopiedStates(prev => ({ ...prev, [dayIndex]: false }))
       }, 2000)
@@ -54,13 +66,21 @@ const StreakIndicator = ({ currentStreak, totalDays }: StreakIndicatorProps) => 
 
         <div className="flex flex-col gap-3 items-center md:items-start">
           <h2 className="font-currys text-xl text-white xl:text-2xl">
-            {currentStreak} days in a row! Your streak is on fire.
+            {currentStreak} {currentStreak === 1 ? 'day' : 'days'} in a row! Your streak is on fire.
           </h2>
           
           <div className="flex items-center gap-1.5 md:gap-3">
             {Array.from({ length: totalDays }).map((_, index) => {
+              const dayNumber = index + 1
               const hasCoupon = couponCodes[index]
-              const isUnlocked = index < currentStreak
+              const dayData = streak[index]
+              const isPlayed = dayData?.played || false
+              const isMissed = dayData?.missed || false
+              const isFuture = dayNumber > currentDay
+
+              const isUnlocked = isPlayed
+              const isLocked = isFuture
+              const isMissedDay = isMissed && !isFuture
 
               return (
                 <Popover key={index}>
@@ -77,11 +97,16 @@ const StreakIndicator = ({ currentStreak, totalDays }: StreakIndicatorProps) => 
                           src="/reveal/streak-bg.webp"
                           alt=""
                           fill
-                          className="object-cover"
+                          className={`object-cover ${
+                            isMissedDay 
+                              ? 'opacity-30 grayscale'
+                              : isLocked 
+                              ? 'opacity-50'
+                              : 'opacity-100'
+                          }`}
                         />
                       </div>
                       
-                      {/* Pulsing dot indicator for coupon */}
                       {hasCoupon && (
                         <motion.div
                           className="absolute bottom-0 right-0 size-1.5 md:size-2.5 bg-[#E5006D] rounded-full z-20"
@@ -104,6 +129,20 @@ const StreakIndicator = ({ currentStreak, totalDays }: StreakIndicatorProps) => 
                           ) : (
                             <FireIcon className="size-3 md:size-5" />
                           )
+                        ) : isMissedDay ? (
+                          <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                            className="size-3 md:size-5 text-red-400"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                          </svg>
                         ) : (
                           <LockIcon className="size-3 md:size-5 text-white/40" />
                         )}
@@ -119,7 +158,7 @@ const StreakIndicator = ({ currentStreak, totalDays }: StreakIndicatorProps) => 
                       sideOffset={10}
                     >
                       <div className="flex items-center gap-2 md:gap-3">
-                        <code className="font-currys text-[10px] md:text-lg font-medium text-white tracking-wider">
+                        <code className="font-currys text-[10px] md:text-lg font-medium text-white tracking-wider max-w-3xs lg:max-w-lg">
                           {couponCodes[index]}
                         </code>
                         

@@ -1,23 +1,41 @@
-// components/reveal/prize-reveal.tsx
 "use client";
 import React from "react";
 import Image from "next/image";
 
-const PrizeReveal = () => {
+interface PrizeRevealProps {
+  giftName: string
+  giftImageUrl: string
+  hasWonCoupon: boolean
+  isEligibleForDraw?: boolean
+}
+
+const PrizeReveal = ({ 
+  giftName, 
+  giftImageUrl,
+  hasWonCoupon,
+  isEligibleForDraw= false
+}: PrizeRevealProps) => {
+  if (!isEligibleForDraw) {
+    return null;
+  }
+
+  const headingText = hasWonCoupon 
+    ? "You have also been entered into today's lucky draw."
+    : "You've entered today's lucky draw.";
+
   return (
     <div className="relative bg-[#CFC8F7] py-12 lg:py-20">
       <div className="z-30 container mx-auto flex w-full flex-col px-6 pb-28 md:flex-row xl:px-12">
         <div className="font-currys flex flex-1 flex-col space-y-6">
           <h2 className="text-center text-2xl font-semibold text-black md:mt-8 md:text-3xl lg:text-start xl:text-5xl">
-            You have also been entered <br />
-            into today&apos;s lucky draw.
+            {headingText}
           </h2>
 
           <div className="flex items-center justify-center py-6 lg:hidden">
             <div className="h-auto w-44 md:w-60">
               <Image
-                src="/alexa.jpg"
-                alt="product"
+                src={giftImageUrl}
+                alt={giftName}
                 width={230}
                 height={290}
                 className="h-full w-full object-contain"
@@ -26,8 +44,7 @@ const PrizeReveal = () => {
           </div>
 
           <p className="w-full max-w-xs md:max-w-lg place-self-center text-center text-base text-[#3C3C3C] md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
-            Check your email in the next 72 hours to see if you have won Alexa
-            speaker.
+            Check your email in the next 72 hours to see if you have won {giftName}.
           </p>
 
           <div className="z-20 w-full max-w-xs md:max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base lg:mt-8 lg:place-self-start text-center lg:text-start">
@@ -37,13 +54,13 @@ const PrizeReveal = () => {
         </div>
 
         <div className="z-40 hidden flex-1 items-center justify-center lg:flex">
-          <div className="h-auto w-60 lg:w-56 xl:w-60">
+          <div className="absolute h-auto w-60 lg:w-56 xl:w-100">
             <Image
-              src="/alexa.jpg"
-              alt="product"
-              width={230}
-              height={290}
-              className="h-full w-full object-contain"
+              src={giftImageUrl}
+              alt={giftName}
+              width={1000}
+              height={1000}
+              className="h-full w-full object-cover"
             />
           </div>
         </div>
