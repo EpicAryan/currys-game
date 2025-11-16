@@ -7,17 +7,78 @@ interface PrizeRevealProps {
   giftImageUrl: string
   hasWonCoupon: boolean
   isEligibleForDraw?: boolean
+  currentDay: number
 }
 
 const PrizeReveal = ({ 
   giftName, 
   giftImageUrl,
   hasWonCoupon,
-  isEligibleForDraw= false
+  isEligibleForDraw = false,
+  currentDay 
 }: PrizeRevealProps) => {
   if (!isEligibleForDraw) {
     return null;
   }
+
+  const PRIZE_SIZE_OVERRIDES: Record<number, { 
+    mobile: string; 
+    desktop: string;
+  }> = {
+    1: { 
+      mobile: "w-124 md:w-170", 
+      desktop: "w-88 lg:w-140 xl:w-180"
+    },
+    2: { 
+      mobile: "w-52 md:w-64", 
+      desktop: "w-88 lg:w-64 xl:w-72" 
+    },
+    3: { 
+       mobile: "w-110 md:w-130", 
+      desktop: "w-88 lg:w-130 xl:w-150" 
+    },
+    4: { 
+      mobile: "w-90 md:w-100", 
+      desktop: "w-88 lg:w-100 xl:w-120" 
+    },
+    5: { 
+      mobile: "w-136 md:w-180", 
+      desktop: "w-88 lg:w-150 xl:w-190" 
+    },
+    6: { 
+      mobile: "w-100 md:w-110", 
+      desktop: "w-88 lg:w-100 xl:w-140"
+    },
+    7: { 
+     mobile: "w-90 md:w-110", 
+      desktop: "w-88 lg:w-100 xl:w-140" 
+    },
+    8: { 
+       mobile: "w-90 md:w-100 translate-y-6", 
+      desktop: "w-88 lg:w-100 xl:w-130 translate-y-10"  
+    },
+    9: { 
+       mobile: "w-120 md:w-140", 
+      desktop: "w-88 lg:w-140 xl:w-160" 
+    },
+    10: { 
+   mobile: "w-120 md:w-140", 
+      desktop: "w-88 lg:w-130 xl:w-160"  
+    },
+    11: { 
+       mobile: "w-90 md:w-120", 
+      desktop: "w-88 lg:w-100 xl:w-120"  
+    },
+    12: { 
+      mobile: "w-90 md:w-120", 
+      desktop: "w-88 lg:w-100 xl:w-130" 
+    },
+  };
+
+  const config = PRIZE_SIZE_OVERRIDES[currentDay] || {
+    mobile: "w-56 md:w-72",
+    desktop: "w-80 lg:w-92 xl:w-100"
+  };
 
   const headingText = hasWonCoupon 
     ? "You have also been entered into today's lucky draw."
@@ -31,14 +92,15 @@ const PrizeReveal = ({
             {headingText}
           </h2>
 
-          <div className="flex items-center justify-center py-6 lg:hidden">
-            <div className="h-auto w-44 md:w-60">
+          <div className="relative flex items-center justify-center py-6 lg:hidden h-64 md:h-80">
+            <div className={`absolute ${config.mobile} aspect-square`}>
               <Image
                 src={giftImageUrl}
                 alt={giftName}
-                width={230}
-                height={290}
-                className="h-full w-full object-contain"
+                fill
+                sizes="(max-width: 768px) 288px, 384px"
+                className="object-contain"
+                priority
               />
             </div>
           </div>
@@ -53,14 +115,15 @@ const PrizeReveal = ({
           </div>
         </div>
 
-        <div className="z-40 hidden flex-1 items-center justify-center lg:flex">
-          <div className="absolute h-auto w-60 lg:w-56 xl:w-100">
+        <div className="z-40 hidden flex-1 lg:flex relative items-center justify-center">
+          <div className={`absolute ${config.desktop} aspect-square`}>
             <Image
               src={giftImageUrl}
               alt={giftName}
-              width={1000}
-              height={1000}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 1024px) 480px, (max-width: 1280px) 560px, 640px"
+              className="object-contain"
+              priority
             />
           </div>
         </div>
