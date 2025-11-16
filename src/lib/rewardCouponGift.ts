@@ -8,9 +8,12 @@ import { isLucky } from "./couponProbabilityCheck";
 export async function rewardCouponGift({score, email, currentDay}: {score: number, email: string, currentDay: number}) {
 
     const  user_id  = await checkExisting(email);
-    await markParticipation(user_id, currentDay);
-
-    if(score >= 10) {
+    const { success, error } = await markParticipation(user_id, currentDay);
+    if(!success) {
+        alert(error);
+        return;
+    }
+    if(score >= 10 && success) {
         const { success, error } = await enrollUserForGift(user_id, currentDay);
         if(isLucky()) {
             const { success, coupon, error } = await claimCouponAction(user_id, currentDay);
