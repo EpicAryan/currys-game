@@ -303,10 +303,13 @@ const CongratulationsCard = ({
 
   if (isEligibleForDraw && !hasWonCoupon) {
     return (
-      <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12">
+      <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center">
+       <div className="absolute inset-0 overflow-hidden w-full h-[190%]">
         <StripesBackground gap={105} count={24} fill="#3A308C" />
+        </div>
+
         <div className="relative z-20 flex items-center justify-center">
-          <h2 className="font-currys text-center text-2xl font-semibold text-white md:text-3xl lg:text-4xl px-6">
+          <h2 className="font-currys text-center text-2xl font-semibold text-white lg:text-3xl xl:text-4xl px-6">
             No prize today, but you&apos;re still in the running!
           </h2>
         </div>
@@ -315,10 +318,13 @@ const CongratulationsCard = ({
   }
 
   return (
-    <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12">
-      <StripesBackground gap={105} count={24} fill="#3A308C" />
+    <div className="relative z-40 h-full w-full bg-[#9286C5]/80 py-12 min-h-58 md:min-h-0 flex items-center justify-center">
+      <div className="absolute inset-0 overflow-hidden w-full h-[190%]">
+        <StripesBackground gap={105} count={24} fill="#3A308C" />
+        </div>
+
       <div className="relative z-20 flex items-center justify-center">
-        <h2 className="font-currys text-center text-2xl font-semibold text-white md:text-3xl lg:text-4xl px-6">
+        <h2 className="font-currys text-center text-2xl font-semibold text-white lg:text-3xl xl:text-4xl px-6">
           No prize today, but try again tomorrow for more treats!
         </h2>
       </div>
