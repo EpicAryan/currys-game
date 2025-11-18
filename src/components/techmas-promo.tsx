@@ -19,106 +19,235 @@ const TechmasPromo = () => {
   const [activeDay, setActiveDay] = useState<number | null>(null);
   const [scope, animate] = useAnimate();
 
-  const handleBadgeClick = async (
-    day: number,
-    available: boolean,
-    missed: boolean,
-  ) => {
-    if (available && !missed) {
-      setActiveDay(day);
+  // const handleBadgeClick = async (
+  //   day: number,
+  //   available: boolean,
+  //   missed: boolean,
+  // ) => {
+  //   if (available && !missed) {
+  //     setActiveDay(day);
 
-      let secureURL = "";
-      try {
-        const result = await generateGameAccessURL(day);
-        if (result.error || !result.url) {
-          alert("Failed to access game. Please try again.");
-          return;
-        }
-        secureURL = result.url;
-      } catch (error) {
-        console.error("Failed to generate game URL:", error);
+  //     let secureURL = "";
+  //     try {
+  //       const result = await generateGameAccessURL(day);
+  //       if (result.error || !result.url) {
+  //         alert("Failed to access game. Please try again.");
+  //         return;
+  //       }
+  //       secureURL = result.url;
+  //     } catch (error) {
+  //       console.error("Failed to generate game URL:", error);
+  //       alert("Failed to access game. Please try again.");
+  //       return;
+  //     }
+
+  //     await new Promise((resolve) => setTimeout(resolve, 50));
+
+  //     const badgeElement = document.querySelector(
+  //       `[data-badge-day="${day}"]`,
+  //     ) as HTMLElement;
+
+  //     if (!badgeElement) {
+  //       router.push(secureURL);
+  //       return;
+  //     }
+
+  //     const rect = badgeElement.getBoundingClientRect();
+  //     const centerX = rect.left + rect.width / 2;
+  //     const centerY = rect.top + rect.height / 2;
+
+  //     const viewportCenterX = window.innerWidth / 2;
+  //     const viewportCenterY = window.innerHeight / 2;
+
+  //     const translateX = viewportCenterX - centerX;
+  //     const translateY = viewportCenterY - centerY;
+
+  //     const scaleX = window.innerWidth / rect.width;
+  //     const scaleY = window.innerHeight / rect.height;
+  //     const scale = Math.max(scaleX, scaleY) * 2;
+
+  //     // Create overlay
+  //     const overlay = document.createElement("div");
+  //     overlay.style.cssText = `
+  //     position: fixed;
+  //     inset: 0;
+  //     background: #4A3566;
+  //     z-index: 9998;
+  //     opacity: 0;
+  //     pointer-events: none;
+  //   `;
+  //     overlay.id = "page-transition-overlay";
+  //     document.body.appendChild(overlay);
+
+  //     const badgeClone = badgeElement.cloneNode(true) as HTMLElement;
+  //     badgeClone.style.position = "fixed";
+  //     badgeClone.style.top = `${rect.top}px`;
+  //     badgeClone.style.left = `${rect.left}px`;
+  //     badgeClone.style.width = `${rect.width}px`;
+  //     badgeClone.style.height = `${rect.height}px`;
+  //     badgeClone.style.zIndex = "9999";
+  //     badgeClone.style.pointerEvents = "none";
+  //     document.body.appendChild(badgeClone);
+
+  //     badgeElement.style.opacity = "0";
+
+  //     try {
+  //       const overlayAnimation = animate(
+  //         overlay,
+  //         { opacity: 1 },
+  //         { duration: 0.7, ease: "easeIn" },
+  //       );
+
+  //       await animate(
+  //         badgeClone,
+  //         {
+  //           x: translateX,
+  //           y: translateY,
+  //           scale: scale,
+  //           filter: ["blur(0px)", "blur(0px)", "blur(4px)"],
+  //           opacity: 1,
+  //         },
+  //         {
+  //           duration: 0.8,
+  //           ease: [0.76, 0, 0.24, 1],
+  //         },
+  //       );
+
+  //       await overlayAnimation;
+  //       await new Promise((resolve) => setTimeout(resolve, 50));
+  //     } catch (error) {
+  //       console.error("Animation error:", error);
+  //     } finally {
+  //       // Clean up the clone
+  //       badgeClone.remove();
+  //     }
+
+  //     router.push(secureURL);
+  //   } else if (missed) {
+  //     console.log(`Day ${day} was missed`);
+  //   } else {
+  //     console.log(`Day ${day} is still locked`);
+  //   }
+  // };
+
+const handleBadgeClick = async (
+  day: number,
+  available: boolean,
+  missed: boolean,
+) => {
+  if (available && !missed) {
+    setActiveDay(day);
+
+    let secureURL = "";
+    try {
+      const result = await generateGameAccessURL(day);
+      if (result.error || !result.url) {
         alert("Failed to access game. Please try again.");
         return;
       }
-
-      await new Promise((resolve) => setTimeout(resolve, 50));
-
-      const badgeElement = document.querySelector(
-        `[data-badge-day="${day}"]`,
-      ) as HTMLElement;
-
-      if (!badgeElement) {
-        router.push(secureURL);
-        return;
-      }
-
-      const rect = badgeElement.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-
-      const viewportCenterX = window.innerWidth / 2;
-      const viewportCenterY = window.innerHeight / 2;
-
-      const translateX = viewportCenterX - centerX;
-      const translateY = viewportCenterY - centerY;
-
-      const scaleX = window.innerWidth / rect.width;
-      const scaleY = window.innerHeight / rect.height;
-      const scale = Math.max(scaleX, scaleY) * 2;
-
-      const overlay = document.createElement("div");
-      overlay.style.cssText = `
-        position: fixed;
-        inset: 0;
-        background: #4A3566;
-        z-index: 9998;
-        opacity: 0;
-        pointer-events: none;
-      `;
-      overlay.id = "page-transition-overlay";
-      document.body.appendChild(overlay);
-
-      badgeElement.style.position = "fixed";
-      badgeElement.style.top = `${rect.top}px`;
-      badgeElement.style.left = `${rect.left}px`;
-      badgeElement.style.width = `${rect.width}px`;
-      badgeElement.style.height = `${rect.height}px`;
-      badgeElement.style.zIndex = "9999";
-
-      try {
-        const overlayAnimation = animate(
-          overlay,
-          { opacity: 1 },
-          { duration: 0.7, ease: "easeIn" },
-        );
-
-        await animate(
-          badgeElement,
-          {
-            x: translateX,
-            y: translateY,
-            scale: scale,
-            filter: ["blur(0px)", "blur(0px)", "blur(4px)"],
-            opacity: 1,
-          },
-          {
-            duration: 0.8,
-            ease: [0.76, 0, 0.24, 1],
-          },
-        );
-
-        await overlayAnimation;
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      } catch (error) {
-        console.error("Animation error:", error);
-      }
-      router.push(secureURL);
-    } else if (missed) {
-      console.log(`Day ${day} was missed`);
-    } else {
-      console.log(`Day ${day} is still locked`);
+      secureURL = result.url;
+    } catch (error) {
+      console.error("Failed to generate game URL:", error);
+      alert("Failed to access game. Please try again.");
+      return;
     }
-  };
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    const badgeElement = document.querySelector(
+      `[data-badge-day="${day}"]`,
+    ) as HTMLElement;
+
+    if (!badgeElement) {
+      // Extract timestamp and signature from secureURL
+      const url = new URL(secureURL, window.location.origin);
+      const timestamp = url.searchParams.get("t");
+      const signature = url.searchParams.get("s");
+      router.push(`/qualifio/day${day}?t=${timestamp}&s=${signature}`);
+      return;
+    }
+
+    const rect = badgeElement.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const viewportCenterX = window.innerWidth / 2;
+    const viewportCenterY = window.innerHeight / 2;
+
+    const translateX = viewportCenterX - centerX;
+    const translateY = viewportCenterY - centerY;
+
+    const scaleX = window.innerWidth / rect.width;
+    const scaleY = window.innerHeight / rect.height;
+    const scale = Math.max(scaleX, scaleY) * 2;
+
+    // Create overlay
+    const overlay = document.createElement("div");
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: #4A3566;
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+    `;
+    overlay.id = "page-transition-overlay";
+    document.body.appendChild(overlay);
+
+    const badgeClone = badgeElement.cloneNode(true) as HTMLElement;
+    badgeClone.style.position = "fixed";
+    badgeClone.style.top = `${rect.top}px`;
+    badgeClone.style.left = `${rect.left}px`;
+    badgeClone.style.width = `${rect.width}px`;
+    badgeClone.style.height = `${rect.height}px`;
+    badgeClone.style.zIndex = "9999";
+    badgeClone.style.pointerEvents = "none";
+    document.body.appendChild(badgeClone);
+
+    badgeElement.style.opacity = "0";
+
+    try {
+      const overlayAnimation = animate(
+        overlay,
+        { opacity: 1 },
+        { duration: 0.7, ease: "easeIn" },
+      );
+
+      await animate(
+        badgeClone,
+        {
+          x: translateX,
+          y: translateY,
+          scale: scale,
+          filter: ["blur(0px)", "blur(0px)", "blur(4px)"],
+          opacity: 1,
+        },
+        {
+          duration: 0.8,
+          ease: [0.76, 0, 0.24, 1],
+        },
+      );
+
+      await overlayAnimation;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    } catch (error) {
+      console.error("Animation error:", error);
+    } finally {
+      badgeClone.remove();
+    }
+
+    // Navigate to Qualifio page instead of game
+    const url = new URL(secureURL, window.location.origin);
+    const timestamp = url.searchParams.get("t");
+    const signature = url.searchParams.get("s");
+    router.push(`/qualifio/day${day}?t=${timestamp}&s=${signature}`);
+  } else if (missed) {
+    console.log(`Day ${day} was missed`);
+  } else {
+    console.log(`Day ${day} is still locked`);
+  }
+};
+
 
   const giftMap = useMemo(() => {
     const map = new Map();
@@ -230,12 +359,14 @@ const TechmasPromo = () => {
         >
           12 Days of Techmas
         </h1>
-        <p className="max-w-2xs pt-3 text-center text-sm leading-tight text-[#CFC8F7] md:max-w-4xl md:text-xl 2xl:text-2xl font-light">
+        <p className="max-w-2xs pt-3 text-center text-sm leading-tight font-light text-[#CFC8F7] md:max-w-4xl md:text-xl 2xl:text-2xl">
           Play for a chance to win a different prize every day!
-          <br className="hidden md:block"/>
+          <br className="hidden md:block" />
           Play all 12 days and you will be entered into a draw for a
         </p>
-        <p className="text-lg md:text-2xl 2xl:text-4xl font-semibold text-center text-[#CFC8F7]">€1,000 Currys voucher</p>
+        <p className="text-center text-lg font-semibold text-[#CFC8F7] md:text-2xl 2xl:text-4xl">
+          €1,000 Currys voucher
+        </p>
       </div>
 
       {/* Badge Grid with Loading State */}
@@ -252,6 +383,9 @@ const TechmasPromo = () => {
                     ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
                     : ""
                 }`}
+                style={{
+                  isolation: "isolate", // Create new stacking context
+                }}
               >
                 {badge}
               </div>

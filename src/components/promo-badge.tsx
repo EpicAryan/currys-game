@@ -203,7 +203,7 @@ export const Badge: React.FC<BadgeProps> = ({
       }
       style={{
         position: "relative",
-        zIndex: activeDay === day ? 9999 : 1,
+        zIndex: activeDay === day ? 50 : 1,
         willChange: shouldPulse ? "transform" : "auto",
       }}
     >
@@ -253,7 +253,7 @@ export const Badge: React.FC<BadgeProps> = ({
                   /* Top highlight */
                   radial-gradient(circle at 50% 10%, rgba(255,255,255,0.22), transparent 55%)
                 `,
-                              boxShadow: `
+                  boxShadow: `
                   /* Outer drop shadow */
                   0 16px 28px rgba(0,0,0,0.4),
 
@@ -411,16 +411,16 @@ export const Badge: React.FC<BadgeProps> = ({
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
             <div
               ref={dayBadgeRef}
-              className="day-badge absolute -right-1 bottom-0 z-50 flex size-7 items-center justify-center overflow-hidden rounded-full shadow-lg md:-right-2 md:size-11 lg:size-9 xl:size-11 2xl:-right-1 2xl:bottom-1 2xl:size-13 lg:-right-1"
+              className="day-badge absolute -right-1 bottom-0 z-50 flex size-7 items-center justify-center overflow-hidden rounded-full shadow-lg md:-right-2 md:size-11 lg:-right-1 lg:size-9 xl:size-11 2xl:-right-1 2xl:bottom-1 2xl:size-13"
               style={dayBadgeInitialStyle}
             >
               {isMissed && (
-            <>
-              <div
-                className="pointer-events-none absolute inset-0 z-20 rounded-full bg-gray-600"
-                style={{
-                  transform: "translateZ(0)",
-                  backgroundImage: `
+                <>
+                  <div
+                    className="pointer-events-none absolute inset-0 z-20 rounded-full bg-gray-600"
+                    style={{
+                      transform: "translateZ(0)",
+                      backgroundImage: `
                   /* Main bottom spherical shadow */
                   radial-gradient(circle at 50% 135%, rgba(0,0,0,0.65), transparent 60%),
 
@@ -430,7 +430,7 @@ export const Badge: React.FC<BadgeProps> = ({
                   /* Top highlight */
                   radial-gradient(circle at 50% 10%, rgba(255,255,255,0.22), transparent 55%)
                 `,
-                              boxShadow: `
+                      boxShadow: `
                   /* Outer drop shadow */
                   0 16px 28px rgba(0,0,0,0.4),
 
@@ -443,10 +443,10 @@ export const Badge: React.FC<BadgeProps> = ({
                   /* Inner top highlight */
                   inset 0 60px 50px rgba(255,255,255,0.18)
                 `,
-                }}
-              />
-            </>
-          )}
+                    }}
+                  />
+                </>
+              )}
               <div className="absolute inset-0 overflow-hidden rounded-full">
                 <Image
                   src={dayBadgeCircleImage}

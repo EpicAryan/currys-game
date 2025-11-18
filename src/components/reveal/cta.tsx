@@ -163,7 +163,7 @@ const CTA = ({
           className="h-auto w-full"
           priority
         />
-        <div className="absolute inset-0 flex flex-col items-start container mx-auto px-6 md:px-12 py-12 font-currys">
+        <div className="absolute inset-0 flex flex-col items-start container mx-auto px-6 md:px-12 py-8 font-currys">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
