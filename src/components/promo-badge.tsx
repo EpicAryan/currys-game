@@ -53,9 +53,7 @@ export const Badge: React.FC<BadgeProps> = ({
       ? "/promo/inactive-circle.webp"
       : "/promo/currys-circle.webp";
 
-  const dayBadgeCircleImage = isMissed
-    ? "/promo/inactive-circle.webp"
-    : "/promo/currys-circle.webp";
+  const dayBadgeCircleImage = "/promo/currys-circle.webp";
 
   const showLockedVisuals =
     isLocked ||
@@ -217,7 +215,7 @@ export const Badge: React.FC<BadgeProps> = ({
 
         {/* Main Badge Circle */}
         <div
-          className={`relative flex size-20 items-center justify-center rounded-full md:size-30 lg:size-26 xl:size-35 2xl:size-40 ${
+          className={`relative flex size-20 items-center justify-center rounded-full md:size-30 lg:size-26 xl:size-32 2xl:size-40 ${
             showPrize ? "overflow-visible" : "overflow-hidden"
           }`}
           style={{ transform: "translateZ(0)" }}
@@ -343,7 +341,7 @@ export const Badge: React.FC<BadgeProps> = ({
           {/* Product layer */}
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
             <div
-              className="pointer-events-none absolute z-30 flex h-auto w-full items-center justify-center"
+              className="pointer-events-none absolute z-30 mb-6 flex h-auto w-full items-center justify-center"
               style={{ transform: "translateZ(0)" }}
             >
               {prize ? (
@@ -408,56 +406,41 @@ export const Badge: React.FC<BadgeProps> = ({
           </span>
 
           {/* Day badge */}
+
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
             <div
               ref={dayBadgeRef}
-              className="day-badge absolute -right-1 bottom-0 z-50 flex size-7 items-center justify-center overflow-hidden rounded-full shadow-lg md:-right-2 md:size-11 lg:-right-1 lg:size-9 xl:size-11 2xl:-right-1 2xl:bottom-1 2xl:size-13"
-              style={dayBadgeInitialStyle}
+              className="day-badge absolute -bottom-2 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full px-3 py-1 md:py-1.5 shadow-lg md:-bottom-2.5 md:px-4 lg:-bottom-2.5 lg:px-3.5"
+              style={{
+                ...dayBadgeInitialStyle,
+                background:
+                  "linear-gradient(180deg, rgba(67, 40, 129, 0.60) -24.62%, rgba(30, 18, 59, 0.60) 100%), rgba(255, 255, 255, 0.26)",
+                backdropFilter: "blur(6px)",
+                minHeight: "24px",
+              }}
             >
-              {isMissed && (
-                <>
-                  <div
-                    className="pointer-events-none absolute inset-0 z-20 rounded-full bg-gray-600"
-                    style={{
-                      transform: "translateZ(0)",
-                      backgroundImage: `
-                  /* Main bottom spherical shadow */
-                  radial-gradient(circle at 50% 135%, rgba(0,0,0,0.65), transparent 60%),
-
-                  /* Mid-bottom soft curve */
-                  radial-gradient(circle at 50% 95%, rgba(0,0,0,0.05), transparent 65%),
-
-                  /* Top highlight */
-                  radial-gradient(circle at 50% 10%, rgba(255,255,255,0.22), transparent 55%)
-                `,
-                      boxShadow: `
-                  /* Outer drop shadow */
-                  0 16px 28px rgba(0,0,0,0.4),
-
-                  /* Deep inner lower shadow (the strongest curvature) */
-                  inset 0 -2px 3px rgba(0,0,0,0.6),
-
-                  /* Subtle inner mid shadow (softens the curve) */
-                  inset 0 -2px 1px rgba(0,0,0,0.25),
-
-                  /* Inner top highlight */
-                  inset 0 60px 50px rgba(255,255,255,0.18)
-                `,
-                    }}
+              {/* Number badge circle with image background */}
+              <div className="relative z-30 flex size-[18px] shrink-0 items-center justify-center overflow-hidden rounded-full md:size-6 lg:size-5.5 xl:size-6 2xl:size-7">
+                <div className="absolute inset-0 overflow-hidden rounded-full">
+                  <Image
+                    src={dayBadgeCircleImage}
+                    alt=""
+                    fill
+                    className="object-cover"
                   />
-                </>
-              )}
-              <div className="absolute inset-0 overflow-hidden rounded-full">
-                <Image
-                  src={dayBadgeCircleImage}
-                  alt=""
-                  fill
-                  className="object-cover"
-                />
+                </div>
+
+                <span className="font-currys relative z-10 text-[11px] font-bold text-[#CFC8F7] md:text-sm 2xl:text-base">
+                  {day}
+                </span>
               </div>
-              <span className="font-currys relative z-30 text-xs font-bold text-white md:text-xl xl:text-2xl 2xl:text-3xl">
-                {day}
-              </span>
+
+              {/* Fixed-width text column – wraps only after this width */}
+              <div className="relative z-30 w-15 text-left lg:w-18 xl:w-[105px] 2xl:w-[125px]">
+                <span className="font-currys block text-[10px] md:text-[11px] leading-3 font-medium tracking-wide text-wrap text-white xl:text-[13px] 2xl:text-sm">
+                  {prize?.name || `Day ${day}`}
+                </span>
+              </div>
             </div>
           )}
         </div>
