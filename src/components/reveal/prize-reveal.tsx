@@ -88,7 +88,7 @@ const PrizeReveal = ({
     : "You've entered today's lucky draw.";
 
   return (
-    <div className="relative bg-[#CFC8F7] py-12 lg:py-20">
+    <div className="relative bg-[#CFC8F7] py-12 xl:py-20">
       <div className="z-30 container mx-auto flex w-full flex-col px-6 pb-28 md:flex-row xl:px-12">
         <div className="font-currys flex flex-1 flex-col space-y-6">
           <h2 className="text-center text-2xl font-semibold text-black md:mt-8 md:text-3xl lg:text-start xl:text-5xl">
@@ -113,7 +113,7 @@ const PrizeReveal = ({
             {giftName}.
           </p>
 
-          <div className="z-20 w-full max-w-xs place-self-center rounded-xl bg-white p-4 text-center text-xs font-semibold text-[#4C12A1] md:max-w-lg md:p-6 md:text-base lg:mt-8 lg:place-self-start lg:text-start">
+          <div className="z-20 w-full max-w-xs md:max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base xl:mt-8 lg:place-self-start text-center lg:text-start">
             Play ALL 12 days to be entered into the Grand Prize Draw for €1,000
             in Currys vouchers!
           </div>
@@ -163,7 +163,7 @@ const PrizeReveal = ({
       </div>
 
       {/* Gift Box 2 */}
-      <div className="absolute bottom-24 left-0 z-10 h-20 w-auto md:h-30 lg:bottom-40 lg:h-22">
+      <div className="absolute bottom-24 left-0 z-10 h-20 w-auto md:bottom-40 lg:bottom-24 md:h-20 xl:bottom-40 lg:h-18 xl:h-22">
         <Image
           src="/promo/gift-box-2.png"
           alt="gift box"
@@ -174,7 +174,7 @@ const PrizeReveal = ({
       </div>
 
       {/* Gift Box 1 */}
-      <div className="absolute bottom-8 left-8 z-10 h-20 w-auto lg:bottom-4 lg:left-10 lg:h-30 xl:h-35">
+      <div className="absolute bottom-8 left-8 z-10 h-20 w-auto md:bottom-20 lg:bottom-4 lg:left-10 md:h-24 lg:h-20 xl:h-35">
         <Image
           src="/promo/gift-box-1.png"
           alt="gift box"

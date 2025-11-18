@@ -8,7 +8,7 @@ interface CTAProps {
   giftName: string 
   giftImageUrl: string
   isEligibleForDraw?: boolean
-  currentDay: number // ✅ Added current day
+  currentDay: number 
 }
 
 const CTA = ({ 
@@ -19,7 +19,6 @@ const CTA = ({
 }: CTAProps) => {
   const hasScore = isEligibleForDraw;
 
-  // ✅ Day-specific image sizes for CTA section
   const CTA_IMAGE_SIZES: Record<number, { 
     mobile: string; 
     desktop: string;
@@ -114,7 +113,7 @@ const CTA = ({
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.92 }}
-              className="cursor-pointer rounded-full bg-[#4C12A1] px-10 xl:px-12 py-3 xl:py-4 text-2xl xl:text-3xl leading-snug text-white shadow-lg transition-all hover:bg-[#4C12A1]/90 hover:shadow-xl"
+              className="cursor-pointer rounded-full bg-[#4C12A1] px-10 xl:px-12 py-3 xl:py-4 text-xl xl:text-3xl leading-snug text-white shadow-lg transition-all hover:bg-[#4C12A1]/90 hover:shadow-xl"
             >
               Buy now
             </motion.button>
@@ -128,7 +127,7 @@ const CTA = ({
           </p>
         </div>
 
-        {/* ✅ Desktop: Absolute positioned image with day-specific size */}
+        {/*  Desktop */}
         {!hasScore && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -194,7 +193,7 @@ const CTA = ({
             * Offer expires at midnight
           </p>
 
-          {/* ✅ Mobile: Absolute positioned image with day-specific size */}
+          {/* Mobile*/}
           {!hasScore && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
