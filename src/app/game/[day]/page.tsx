@@ -147,11 +147,9 @@ export default function GamePage() {
 //   const timestamp = searchParams.get("t") || "";
 //   const signature = searchParams.get("s") || "";
 
-//   // Origin where the game is hosted
-//   // If you host the game elsewhere, update this to that origin.
 //   const GAME_ORIGIN = "https://playcanv.as";
 
-//   // 1) Verify access (same logic as before)
+//   // Verify access
 //   useEffect(() => {
 //     async function verify() {
 //       if (!timestamp || !signature) {
@@ -176,28 +174,23 @@ export default function GamePage() {
 //     verify();
 //   }, [dayNumber, timestamp, signature, router]);
 
-//   // 2) Listen for gameOver messages from the iframe
+//   // Listen for gameOver messages
 //   useEffect(() => {
 //     if (!isVerified) return;
 
 //     const handleMessage = async (event: MessageEvent) => {
-//       // Only accept messages from the game origin
-//       if (event.origin !== GAME_ORIGIN) {
-//         return;
-//       }
+//       if (event.origin !== GAME_ORIGIN) return;
 
 //       const data = event.data as {
 //         type?: string;
 //         finalScore?: number | string;
 //       };
 
-//       if (!data || data.type !== "gameOver") {
-//         return;
-//       }
+//       if (!data || data.type !== "gameOver") return;
 
 //       const numericScore = Number(data.finalScore);
 //       if (!Number.isFinite(numericScore) || numericScore < 0) {
-//         console.warn("Invalid score received from game:", data.finalScore);
+//         console.warn("Invalid score received:", data.finalScore);
 //         return;
 //       }
 
@@ -214,21 +207,7 @@ export default function GamePage() {
 
 //     window.addEventListener("message", handleMessage);
 //     return () => window.removeEventListener("message", handleMessage);
-//   }, [isVerified, dayParam, router]);
-
-//   // 3) Optional: send "startGame" to iframe once it loads
-//   const handleIframeLoad = () => {
-//     if (!iframeRef.current) return;
-
-//     try {
-//       iframeRef.current.contentWindow?.postMessage(
-//         { type: "startGame" },
-//         GAME_ORIGIN
-//       );
-//     } catch (e) {
-//       console.warn("Failed to send startGame message to iframe", e);
-//     }
-//   };
+//   }, [isVerified, dayParam, router, GAME_ORIGIN]);
 
 //   if (isVerifying) {
 //     return (
@@ -244,35 +223,30 @@ export default function GamePage() {
 //     );
 //   }
 
-//   if (!isVerified) {
-//     return null;
-//   }
+//   if (!isVerified) return null;
+
+//   const gameURL = `https://playcanv.as/p/3FSwoGDA/?day=${dayNumber}`;
 
 //   return (
-//     <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
-//       <div className="w-full max-w-3xl rounded-2xl bg-white/10 p-6 backdrop-blur-sm">
-//         <h1 className="mb-4 text-center font-currys text-3xl font-semibold text-white">
-//           {dayParam.charAt(0).toUpperCase() + dayParam.slice(1)} Game
-//         </h1>
+//     <div className="relative h-screen w-screen overflow-hidden">
+//       <iframe
+//         ref={iframeRef}
+//         src={gameURL}
+//         title="Currys Game"
+//         className="absolute inset-0 h-full w-full border-0"
+//         allow="fullscreen; autoplay"
+//       />
 
-//         <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-black/40">
-//           <iframe
-//             ref={iframeRef}
-//             src="https://playcanv.as/b/e5ed750e/" // or your own hosted game URL
-//             title="Currys Game"
-//             className="h-full w-full border-0"
-//             allow="fullscreen; autoplay"
-//             onLoad={handleIframeLoad}
-//           />
-//           {isSubmitting && (
-//             <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-//               <p className="font-currys text-white text-lg">
-//                 Submitting your score...
-//               </p>
-//             </div>
-//           )}
+//       {isSubmitting && (
+//         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80">
+//           <div className="text-center">
+//             <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent mx-auto"></div>
+//             <p className="font-currys text-white text-xl">
+//               Submitting your score...
+//             </p>
+//           </div>
 //         </div>
-//       </div>
+//       )}
 //     </div>
 //   );
 // }

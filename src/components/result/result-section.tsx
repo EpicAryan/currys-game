@@ -132,38 +132,36 @@ function ResultContent() {
     }
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!validateEmail(email)) {
-    return;
-  }
+    if (!validateEmail(email)) {
+      return;
+    }
 
-  setIsSubmitting(true);
+    setIsSubmitting(true);
 
-  try {
-    const dayNumber = parseInt(day.replace(/^day/, ""), 10);
-    const scoreNum = parseInt(score, 10);
+    try {
+      const dayNumber = parseInt(day.replace(/^day/, ""), 10);
+      const scoreNum = parseInt(score, 10);
 
-    await rewardCouponGift({
-      score: scoreNum,
-      email: email,
-      currentDay: dayNumber,
-    });
+      await rewardCouponGift({
+        score: scoreNum,
+        email: email,
+        currentDay: dayNumber,
+      });
 
-    // ✅ Save email to localStorage
-    localStorage.setItem("curry_user_mail", email);
+      // ✅ Save email to localStorage
+      localStorage.setItem("curry_user_mail", email);
 
-    // ✅ Simple redirect - no URL params needed!
-    router.push("/reveal");
-    
-  } catch (error) {
-    console.error("❌ Failed to reward gift:", error);
-    alert("Something went wrong. Please try again.");
-    setIsSubmitting(false);
-  }
-};
-
+      // ✅ Simple redirect - no URL params needed!
+      router.push("/reveal");
+    } catch (error) {
+      console.error("❌ Failed to reward gift:", error);
+      alert("Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    }
+  };
 
   if (isVerifying) {
     return (
@@ -351,7 +349,7 @@ const handleSubmit = async (e: React.FormEvent) => {
 
       <div className="pointer-events-none absolute bottom-0 z-30 h-auto w-full">
         <Image
-          src="/promo/snow-drift.png"
+          src="/promo/snow-drift.webp"
           alt="snow drift"
           width={2892}
           height={1972}
@@ -360,7 +358,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           className="hidden w-full object-cover lg:block"
         />
         <Image
-          src="/promo/snow-drift-mobile.png"
+          src="/promo/snow-drift-mobile.webp"
           alt="snow drift"
           width={910}
           height={552}

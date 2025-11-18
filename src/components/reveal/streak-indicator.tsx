@@ -48,11 +48,31 @@ const StreakIndicator = ({ currentStreak, totalDays, streak, currentDay }: Strea
     }
   }
 
+  const handleShare = async () => {
+  try {
+    const url = window.location.href.replace(/\/reveal$/, "");
+
+    if (navigator.share) {
+      await navigator.share({
+        title: "My Quest",
+        url,
+      });
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert("Link copied!");
+    }
+  } catch (error) {
+    console.error("Share failed:", error);
+  }
+};
+
   return (
     <div className="relative z-50 bg-[#2A234A]">
       <div className='relative container mx-auto px-6 py-6 md:px-12'>
 
-        <button className="hidden group absolute right-6 top-8 md:flex size-12 lg:size-14 items-center justify-center rounded-full md:right-12">
+        <button 
+        onClick={handleShare}
+        className="hidden group absolute right-6 top-8 md:flex size-12 lg:size-14 items-center justify-center rounded-full md:right-12">
           <div className="absolute inset-0 rounded-full">
             <Image
               src="/reveal/streak-bg.webp"
@@ -199,7 +219,9 @@ const StreakIndicator = ({ currentStreak, totalDays, streak, currentDay }: Strea
           </div>
 
           <div className='block md:hidden'>
-            <Button className='font-currys leading-snug bg-transparent border border-[#CFC8F7] text-[#CFC8F7] rounded-4xl !px-5 mt-3'>
+            <Button 
+            onClick={handleShare}
+            className='font-currys leading-snug bg-transparent border border-[#CFC8F7] text-[#CFC8F7] rounded-4xl !px-5 mt-3'>
               Share the quest <ShareIcon className="text-[#CFC8F7] size-5" />
             </Button>
           </div>

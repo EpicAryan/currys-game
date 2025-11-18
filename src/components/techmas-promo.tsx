@@ -149,18 +149,18 @@ const TechmasPromo = () => {
   }, []);
 
   const PRIZE_SIZE_OVERRIDES: Record<number, string> = {
-    1: "w-40 md:w-60 xl:w-72 2xl:w-76",
-    2: "w-16 md:w-24 xl:w-32 2xl:w-36",
-    3: "w-36 md:w-56 xl:w-68 2xl:w-72",
-    4: "w-28 md:w-40 xl:w-48 2xl:w-52",
-    5: "w-40 md:w-60 xl:w-68 2xl:w-72",
-    6: "w-28 md:w-44 xl:w-56 2xl:w-60",
-    7: "w-24 md:w-40 xl:w-52 2xl:w-56",
-    8: "w-28 md:w-40 xl:w-48 2xl:w-52 mt-3 md:mt-5",
-    9: "w-52 md:w-78 xl:w-92 2xl:w-100 rotate-30 ml-5",
-    10: "w-36 md:w-54 xl:w-64 2xl:w-70",
-    11: "w-24 md:w-40 xl:w-48 2xl:w-52",
-    12: "w-24 md:w-38 xl:w-48 2xl:w-52",
+    1: "w-40 md:w-60 lg:w-52 xl:w-72 2xl:w-76",
+    2: "w-16 md:w-24 lg:w-22 xl:w-32 2xl:w-36",
+    3: "w-36 md:w-56 lg:w-48 xl:w-68 2xl:w-72",
+    4: "w-28 md:w-40 lg:w-34 xl:w-48 2xl:w-52",
+    5: "w-40 md:w-60 lg:w-52 xl:w-68 2xl:w-72",
+    6: "w-28 md:w-44 lg:w-38 xl:w-56 2xl:w-60",
+    7: "w-24 md:w-40 lg:w-34 xl:w-52 2xl:w-56",
+    8: "w-28 md:w-40 lg:w-34 xl:w-48 2xl:w-52 mt-3 md:mt-5",
+    9: "w-52 md:w-78 lg:w-70 xl:w-92 2xl:w-100 rotate-30 ml-5",
+    10: "w-36 md:w-54 lg:w-48 xl:w-64 2xl:w-70",
+    11: "w-24 md:w-40 lg:w-34 xl:w-48 2xl:w-52",
+    12: "w-24 md:w-38 lg:w-30 xl:w-48 2xl:w-52",
   };
 
   const badges = Array.from({ length: 12 }, (_, i) => {
@@ -221,7 +221,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-20 text-center lg:pt-12 2xl:pt-20">
+      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-20 text-center lg:pt-8 xl:pt-12 2xl:pt-16">
         <h1
           className="text-3xl font-semibold tracking-wide text-nowrap text-white md:text-5xl 2xl:text-7xl"
           style={{
@@ -230,20 +230,20 @@ const TechmasPromo = () => {
         >
           12 Days of Techmas
         </h1>
-        <p className="max-w-xs pt-3 text-center text-sm leading-tight text-[#CFC8F7] md:max-w-4xl md:text-xl 2xl:text-2xl">
+        <p className="max-w-2xs pt-3 text-center text-sm leading-tight text-[#CFC8F7] md:max-w-4xl md:text-xl 2xl:text-2xl font-light">
           Play for a chance to win a different prize every day!
-          <br />
-          Play all 12 days and you will be entered into a draw for a{" "}
-          <span className="font-semibold">€1,000 Currys voucher.</span>
+          <br className="hidden md:block"/>
+          Play all 12 days and you will be entered into a draw for a
         </p>
+        <p className="text-lg md:text-2xl 2xl:text-4xl font-semibold text-center text-[#CFC8F7]">€1,000 Currys voucher</p>
       </div>
 
       {/* Badge Grid with Loading State */}
-      <div className="badge-container relative z-30 mx-auto mt-12 max-w-6xl overflow-visible xl:mt-6 2xl:mt-12">
+      <div className="badge-container relative z-30 mx-auto mt-12 max-w-6xl overflow-visible lg:mt-6 2xl:mt-12">
         {isLoading ? (
           <BadgeGridSkeleton />
         ) : (
-          <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 xl:space-y-[4vh] 2xl:space-y-5 2xl:gap-x-15">
+          <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 xl:space-y-[3vh] 2xl:space-y-4 2xl:gap-x-15">
             {badges.map((badge, index) => (
               <div
                 key={badge.key}
@@ -263,7 +263,7 @@ const TechmasPromo = () => {
       {/* Snow Drift Bottom */}
       <div className="absolute bottom-0 z-20 h-auto w-full">
         <Image
-          src="/promo/snow-drift.png"
+          src="/promo/snow-drift.webp"
           alt="snow drift"
           width={2892}
           height={1972}
@@ -272,7 +272,7 @@ const TechmasPromo = () => {
           className="hidden w-full object-cover lg:block"
         />
         <Image
-          src="/promo/snow-drift-mobile.png"
+          src="/promo/snow-drift-mobile.webp"
           alt="snow drift"
           width={910}
           height={552}
@@ -350,7 +350,7 @@ const TechmasPromo = () => {
           alt="star"
           width={61}
           height={61}
-          sizes="(max-width: 768px) 0px, (max-width: 1280px) 52px, 60px"
+          sizes="(max-width: 768px) 52px, (max-width: 1280px) 52px, 60px"
           className="object-fit h-full w-full"
         />
       </motion.div>
@@ -372,7 +372,7 @@ const TechmasPromo = () => {
           alt="star"
           width={61}
           height={61}
-          sizes="(max-width: 768px) 0px, (max-width: 1280px) 40px, 48px"
+          sizes="(max-width: 768px) 40px, (max-width: 1280px) 40px, 48px"
           className="object-fit h-full w-full"
         />
       </motion.div>
@@ -394,7 +394,7 @@ const TechmasPromo = () => {
           alt="star"
           width={61}
           height={61}
-          sizes="(max-width: 768px) 0px, (max-width: 1280px) 32px, 40px"
+          sizes="(max-width: 768px) 32px, (max-width: 1280px) 32px, 40px"
           className="object-fit h-full w-full"
         />
       </motion.div>

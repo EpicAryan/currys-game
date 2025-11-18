@@ -3,84 +3,87 @@ import React from "react";
 import Image from "next/image";
 
 interface PrizeRevealProps {
-  giftName: string
-  giftImageUrl: string
-  hasWonCoupon: boolean
-  isEligibleForDraw?: boolean
-  currentDay: number
+  giftName: string;
+  giftImageUrl: string;
+  hasWonCoupon: boolean;
+  isEligibleForDraw?: boolean;
+  currentDay: number;
 }
 
-const PrizeReveal = ({ 
-  giftName, 
+const PrizeReveal = ({
+  giftName,
   giftImageUrl,
   hasWonCoupon,
   isEligibleForDraw = false,
-  currentDay 
+  currentDay,
 }: PrizeRevealProps) => {
   if (!isEligibleForDraw) {
     return null;
   }
 
-  const PRIZE_SIZE_OVERRIDES: Record<number, { 
-    mobile: string; 
-    desktop: string;
-  }> = {
-    1: { 
-      mobile: "w-124 md:w-170", 
-      desktop: "w-88 lg:w-140 xl:w-180"
+  const PRIZE_SIZE_OVERRIDES: Record<
+    number,
+    {
+      mobile: string;
+      desktop: string;
+    }
+  > = {
+    1: {
+      mobile: "w-124 md:w-170",
+      desktop: "w-88 lg:w-140 xl:w-180",
     },
-    2: { 
-      mobile: "w-52 md:w-64", 
-      desktop: "w-88 lg:w-64 xl:w-72" 
+    2: {
+      mobile: "w-52 md:w-64",
+      desktop: "w-88 lg:w-64 xl:w-72",
     },
-    3: { 
-       mobile: "w-110 md:w-130", 
-      desktop: "w-88 lg:w-130 xl:w-150" 
+    3: {
+      mobile: "w-110 md:w-130",
+      desktop: "w-88 lg:w-130 xl:w-150",
     },
-    4: { 
-      mobile: "w-90 md:w-100", 
-      desktop: "w-88 lg:w-100 xl:w-120" 
+    4: {
+      mobile: "w-90 md:w-100",
+      desktop: "w-88 lg:w-100 xl:w-120",
     },
-    5: { 
-      mobile: "w-136 md:w-180", 
-      desktop: "w-88 lg:w-150 xl:w-190" 
+    5: {
+      mobile: "w-136 md:w-180",
+      desktop: "w-88 lg:w-150 xl:w-190",
     },
-    6: { 
-      mobile: "w-100 md:w-110", 
-      desktop: "w-88 lg:w-100 xl:w-140"
+    6: {
+      mobile: "w-100 md:w-110",
+      desktop: "w-88 lg:w-100 xl:w-140",
     },
-    7: { 
-     mobile: "w-90 md:w-110", 
-      desktop: "w-88 lg:w-100 xl:w-140" 
+    7: {
+      mobile: "w-90 md:w-110",
+      desktop: "w-88 lg:w-100 xl:w-140",
     },
-    8: { 
-       mobile: "w-90 md:w-100 translate-y-6", 
-      desktop: "w-88 lg:w-100 xl:w-130 translate-y-10"  
+    8: {
+      mobile: "w-90 md:w-100 translate-y-6",
+      desktop: "w-88 lg:w-100 xl:w-130 translate-y-10",
     },
-    9: { 
-       mobile: "w-120 md:w-140", 
-      desktop: "w-88 lg:w-140 xl:w-160" 
+    9: {
+      mobile: "w-120 md:w-140",
+      desktop: "w-88 lg:w-140 xl:w-160",
     },
-    10: { 
-   mobile: "w-120 md:w-140", 
-      desktop: "w-88 lg:w-130 xl:w-160"  
+    10: {
+      mobile: "w-120 md:w-140",
+      desktop: "w-88 lg:w-130 xl:w-160",
     },
-    11: { 
-       mobile: "w-90 md:w-120", 
-      desktop: "w-88 lg:w-100 xl:w-120"  
+    11: {
+      mobile: "w-90 md:w-120",
+      desktop: "w-88 lg:w-100 xl:w-120",
     },
-    12: { 
-      mobile: "w-90 md:w-120", 
-      desktop: "w-88 lg:w-100 xl:w-130" 
+    12: {
+      mobile: "w-90 md:w-120",
+      desktop: "w-88 lg:w-100 xl:w-130",
     },
   };
 
   const config = PRIZE_SIZE_OVERRIDES[currentDay] || {
     mobile: "w-56 md:w-72",
-    desktop: "w-80 lg:w-92 xl:w-100"
+    desktop: "w-80 lg:w-92 xl:w-100",
   };
 
-  const headingText = hasWonCoupon 
+  const headingText = hasWonCoupon
     ? "You have also been entered into today's lucky draw."
     : "You've entered today's lucky draw.";
 
@@ -92,7 +95,7 @@ const PrizeReveal = ({
             {headingText}
           </h2>
 
-          <div className="relative flex items-center justify-center py-6 lg:hidden h-64 md:h-80">
+          <div className="relative flex h-64 items-center justify-center py-6 md:h-80 lg:hidden">
             <div className={`absolute ${config.mobile} aspect-square`}>
               <Image
                 src={giftImageUrl}
@@ -105,17 +108,18 @@ const PrizeReveal = ({
             </div>
           </div>
 
-          <p className="w-full max-w-xs md:max-w-lg place-self-center text-center text-base text-[#3C3C3C] md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
-            Check your email in the next 72 hours to see if you have won {giftName}.
+          <p className="w-full max-w-xs place-self-center text-center text-base text-[#3C3C3C] md:max-w-lg md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
+            Check your email in the next 72 hours to see if you have won{" "}
+            {giftName}.
           </p>
 
-          <div className="z-20 w-full max-w-xs md:max-w-lg place-self-center rounded-xl bg-white p-4 text-xs font-semibold text-[#4C12A1] md:p-6 md:text-base lg:mt-8 lg:place-self-start text-center lg:text-start">
+          <div className="z-20 w-full max-w-xs place-self-center rounded-xl bg-white p-4 text-center text-xs font-semibold text-[#4C12A1] md:max-w-lg md:p-6 md:text-base lg:mt-8 lg:place-self-start lg:text-start">
             Play ALL 12 days to be entered into the Grand Prize Draw for €1,000
             in Currys vouchers!
           </div>
         </div>
 
-        <div className="z-40 hidden flex-1 lg:flex relative items-center justify-center">
+        <div className="relative z-40 hidden flex-1 items-center justify-center lg:flex">
           <div className={`absolute ${config.desktop} aspect-square`}>
             <Image
               src={giftImageUrl}
@@ -132,14 +136,14 @@ const PrizeReveal = ({
       {/* Snow Drift Bottom */}
       <div className="absolute bottom-0 z-10 h-auto w-full">
         <Image
-          src="/promo/snow-drift.png"
+          src="/promo/snow-drift.webp"
           alt="snow drift"
           width={2892}
           height={1972}
           className="hidden w-full object-cover lg:block"
         />
         <Image
-          src="/promo/snow-drift-mobile.png"
+          src="/promo/snow-drift-mobile.webp"
           alt="snow drift"
           width={910}
           height={552}

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Image from "next/image";
 import { motion, useAnimate } from "motion/react";
@@ -49,11 +49,13 @@ export const Badge: React.FC<BadgeProps> = ({
   const shouldPulse = isUnlocked && isActive && hasUnlocked;
 
   const mainCircleImage =
-    isMissed || isLocked ? "/promo/inactive-circle.webp" : "/promo/currys-circle.png";
+    isMissed || isLocked
+      ? "/promo/inactive-circle.webp"
+      : "/promo/currys-circle.webp";
 
   const dayBadgeCircleImage = isMissed
     ? "/promo/inactive-circle.webp"
-    : "/promo/currys-circle.png";
+    : "/promo/currys-circle.webp";
 
   const showLockedVisuals =
     isLocked ||
@@ -64,24 +66,24 @@ export const Badge: React.FC<BadgeProps> = ({
     isActive && isAvailable && !productRevealed
       ? {
           opacity: 0,
-          transform: "scale3d(0.3, 0.3, 1)", 
+          transform: "scale3d(0.3, 0.3, 1)",
           transformOrigin: "left bottom",
           willChange: "transform, opacity",
         }
-      : { 
+      : {
           transformOrigin: "left bottom",
-          transform: "translateZ(0)", 
+          transform: "translateZ(0)",
         };
 
   const dayBadgeInitialStyle: CSSProperties | undefined =
     isActive && isAvailable && !productRevealed
-      ? { 
-          opacity: 0, 
-          transform: "scale3d(0, 0, 1)", 
+      ? {
+          opacity: 0,
+          transform: "scale3d(0, 0, 1)",
           willChange: "transform, opacity",
         }
-      : { 
-          transform: "translateZ(0)", 
+      : {
+          transform: "translateZ(0)",
         };
 
   useEffect(() => {
@@ -93,37 +95,39 @@ export const Badge: React.FC<BadgeProps> = ({
 
         await Promise.all([
           animate(
-            ".horizontal-left", 
-            { scaleX: 0, opacity: 0 }, 
-            { duration: 0.45, ease: [0.4, 0, 0.2, 1] } 
+            ".horizontal-left",
+            { scaleX: 0, opacity: 0 },
+            { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
           ),
           animate(
-            ".horizontal-right", 
-            { scaleX: 0, opacity: 0 }, 
-            { duration: 0.45, ease: [0.4, 0, 0.2, 1] }
+            ".horizontal-right",
+            { scaleX: 0, opacity: 0 },
+            { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
           ),
           animate(
-            ".vertical-top", 
-            { scaleY: 0, opacity: 0 }, 
-            { duration: 0.45, ease: [0.4, 0, 0.2, 1] }
+            ".vertical-top",
+            { scaleY: 0, opacity: 0 },
+            { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
           ),
           animate(
-            ".vertical-bottom", 
-            { scaleY: 0, opacity: 0 }, 
-            { duration: 0.45, ease: [0.4, 0, 0.2, 1] }
+            ".vertical-bottom",
+            { scaleY: 0, opacity: 0 },
+            { duration: 0.45, ease: [0.4, 0, 0.2, 1] },
           ),
         ]);
 
         await animate(
-          ".star-badge", 
-          { opacity: 0, scale: 0.85 }, 
-          { duration: 0.25, ease: [0.4, 0, 1, 1] }
+          ".star-badge",
+          { opacity: 0, scale: 0.85 },
+          { duration: 0.25, ease: [0.4, 0, 1, 1] },
         );
 
         setHasUnlocked(true);
         setIsUnlocking(false);
 
-        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        await new Promise((r) =>
+          requestAnimationFrame(() => requestAnimationFrame(r)),
+        );
 
         const prizeEl = prizeRef.current;
         const dayEl = dayBadgeRef.current;
@@ -143,16 +147,16 @@ export const Badge: React.FC<BadgeProps> = ({
         if (prizeEl) {
           await animate(
             prizeEl,
-            { 
-              opacity: 1, 
+            {
+              opacity: 1,
               scale: 1,
             },
-            { 
-              duration: 0.65, 
-              ease: [0.34, 1.56, 0.64, 1], 
-            }
+            {
+              duration: 0.65,
+              ease: [0.34, 1.56, 0.64, 1],
+            },
           );
-          prizeEl.style.willChange = "auto"; 
+          prizeEl.style.willChange = "auto";
           setProductRevealed(true);
         } else {
           setProductRevealed(true);
@@ -162,9 +166,9 @@ export const Badge: React.FC<BadgeProps> = ({
           await animate(
             dayEl,
             { opacity: 1, scale: 1 },
-            { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }
+            { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] },
           );
-          dayEl.style.willChange = "auto"; 
+          dayEl.style.willChange = "auto";
         }
       };
 
@@ -188,40 +192,44 @@ export const Badge: React.FC<BadgeProps> = ({
       whileHover={isAvailable ? { scale: 1.05 } : undefined}
       transition={
         shouldPulse
-          ? { 
-              duration: 2, 
-              ease: "easeInOut", 
-              repeat: Infinity, 
-              repeatType: "mirror", 
-              repeatDelay: 0.5 
+          ? {
+              duration: 2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatType: "mirror",
+              repeatDelay: 0.5,
             }
           : { duration: 0.25, ease: [0.4, 0, 0.2, 1] }
       }
-      style={{ 
-        position: 'relative',
+      style={{
+        position: "relative",
         zIndex: activeDay === day ? 9999 : 1,
-        willChange: shouldPulse ? "transform" : "auto" 
+        willChange: shouldPulse ? "transform" : "auto",
       }}
     >
       <div className="relative h-full w-full overflow-visible">
         {isUnlocked && hasUnlocked && (
-          <div 
-            className={`absolute inset-0 -z-10 scale-105 rounded-full bg-[#CFC8F7] opacity-90 blur-sm lg:blur-lg${isActive ? " animate-pulse" : ""}`}
-            style={{ transform: "translateZ(0)" }} 
+          <div
+            className={`absolute inset-0 -z-10 scale-105 rounded-full bg-[#CFC8F7] opacity-90 blur-sm lg:blur-lg${isActive ? "animate-pulse" : ""}`}
+            style={{ transform: "translateZ(0)" }}
           />
         )}
 
         {/* Main Badge Circle */}
         <div
-          className={`relative flex size-20 items-center justify-center rounded-full md:size-30 xl:size-35 2xl:size-40 ${
+          className={`relative flex size-20 items-center justify-center rounded-full md:size-30 lg:size-26 xl:size-35 2xl:size-40 ${
             showPrize ? "overflow-visible" : "overflow-hidden"
           }`}
-          style={{ transform: "translateZ(0)" }} 
+          style={{ transform: "translateZ(0)" }}
         >
           {/* Background Image */}
           <div className="absolute inset-0 overflow-hidden rounded-full">
             <Image
-              src={isActive && !hasUnlocked ? "/promo/inactive-circle.webp" : mainCircleImage}
+              src={
+                isActive && !hasUnlocked
+                  ? "/promo/inactive-circle.webp"
+                  : mainCircleImage
+              }
               alt=""
               fill
               className="object-cover"
@@ -230,17 +238,37 @@ export const Badge: React.FC<BadgeProps> = ({
 
           {/* Missed hatch overlay*/}
           {isMissed && (
-            <div
-              className="pointer-events-none absolute inset-0.5 z-30 rounded-full"
-              style={{
-                backgroundColor: "rgba(0,0,0,0.35)",
-                WebkitMaskImage:
-                  "repeating-linear-gradient(45deg, #000 0 8px, transparent 8px 16px)",
-                maskImage:
-                  "repeating-linear-gradient(45deg, #000 0 8px, transparent 8px 16px)",
-                transform: "translateZ(0)", 
-              }}
-            />
+            <>
+              <div
+                className="pointer-events-none absolute inset-0 z-20 rounded-full bg-gray-600"
+                style={{
+                  transform: "translateZ(0)",
+                  backgroundImage: `
+                  /* Main bottom spherical shadow */
+                  radial-gradient(circle at 50% 135%, rgba(0,0,0,0.65), transparent 60%),
+
+                  /* Mid-bottom soft curve */
+                  radial-gradient(circle at 50% 95%, rgba(0,0,0,0.05), transparent 65%),
+
+                  /* Top highlight */
+                  radial-gradient(circle at 50% 10%, rgba(255,255,255,0.22), transparent 55%)
+                `,
+                              boxShadow: `
+                  /* Outer drop shadow */
+                  0 16px 28px rgba(0,0,0,0.4),
+
+                  /* Deep inner lower shadow (the strongest curvature) */
+                  inset 0 -2px 3px rgba(0,0,0,0.6),
+
+                  /* Subtle inner mid shadow (softens the curve) */
+                  inset 0 -2px 1px rgba(0,0,0,0.25),
+
+                  /* Inner top highlight */
+                  inset 0 60px 50px rgba(255,255,255,0.18)
+                `,
+                }}
+              />
+            </>
           )}
 
           {/* Ribbons */}
@@ -250,23 +278,23 @@ export const Badge: React.FC<BadgeProps> = ({
                 {/* Horizontal halves */}
                 <div className="absolute inset-0 z-40">
                   <div
-                    className="horizontal-left absolute left-0 top-1/2 h-[10%] w-1/2 origin-left -translate-y-1/2"
+                    className="horizontal-left absolute top-1/2 left-0 h-[10%] w-1/2 origin-left -translate-y-1/2"
                     style={{
                       boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
                       background:
                         "linear-gradient(90deg, #393259 2.73%, #7C749C 12.39%, #E0DAFF 45.53%, #DFD8FD 76.52%, #2A234A 97.55%)",
                       willChange: "transform, opacity",
-                      transform: "translateZ(0)", 
+                      transform: "translateZ(0)",
                     }}
                   />
                   <div
-                    className="horizontal-right absolute right-0 top-1/2 h-[10%] w-1/2 origin-right -translate-y-1/2"
+                    className="horizontal-right absolute top-1/2 right-0 h-[10%] w-1/2 origin-right -translate-y-1/2"
                     style={{
                       boxShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
                       background:
                         "linear-gradient(90deg, #393259 2.73%, #7C749C 12.39%, #E0DAFF 45.53%, #DFD8FD 76.52%, #2A234A 97.55%)",
                       willChange: "transform, opacity",
-                      transform: "translateZ(0)", 
+                      transform: "translateZ(0)",
                     }}
                   />
                 </div>
@@ -274,13 +302,13 @@ export const Badge: React.FC<BadgeProps> = ({
                 {/* Vertical halves */}
                 <div className="absolute inset-0 z-40">
                   <div
-                    className="vertical-top absolute left-1/2 top-0 h-1/2 w-[10%] origin-top -translate-x-1/2"
+                    className="vertical-top absolute top-0 left-1/2 h-1/2 w-[10%] origin-top -translate-x-1/2"
                     style={{
                       boxShadow: "2px 0 6px rgba(0, 0, 0, 0.3)",
                       background:
                         "linear-gradient(180deg, #3F385F 2.73%, #7C749C 12.39%, #E0DAFF 45.53%, #DFD8FD 76.52%, #070024 97.55%)",
                       willChange: "transform, opacity",
-                      transform: "translateZ(0)", 
+                      transform: "translateZ(0)",
                     }}
                   />
                   <div
@@ -290,13 +318,13 @@ export const Badge: React.FC<BadgeProps> = ({
                       background:
                         "linear-gradient(180deg, #3F385F 2.73%, #7C749C 12.39%, #E0DAFF 45.53%, #DFD8FD 76.52%, #070024 97.55%)",
                       willChange: "transform, opacity",
-                      transform: "translateZ(0)", 
+                      transform: "translateZ(0)",
                     }}
                   />
                 </div>
 
                 {/* Center icon */}
-                <div 
+                <div
                   className="star-badge relative z-50 aspect-square w-16 md:w-24 2xl:w-30"
                   style={{ willChange: "transform, opacity" }}
                 >
@@ -314,34 +342,34 @@ export const Badge: React.FC<BadgeProps> = ({
 
           {/* Product layer */}
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
-            <div 
-              className="absolute z-30 flex h-auto w-full items-center justify-center pointer-events-none"
-              style={{ transform: "translateZ(0)" }} 
+            <div
+              className="pointer-events-none absolute z-30 flex h-auto w-full items-center justify-center"
+              style={{ transform: "translateZ(0)" }}
             >
               {prize ? (
                 isMissed ? (
                   <div
                     className="relative z-30"
-                    style={{ 
+                    style={{
                       filter: "contrast(0.95) brightness(0.95)",
-                      transform: "translateZ(0)", 
+                      transform: "translateZ(0)",
                     }}
                   >
-                    <div className="prize-image origin-bottom-left ">
+                    <div className="prize-image origin-bottom-left">
                       <Image
                         src={prize.src}
                         alt={prize.name || `Day ${day} prize`}
                         width={prize.width}
                         height={prize.height}
-                        className={`h-auto object-contain drop-shadow-2xl pointer-events-auto ${prize.className || ""}`}
+                        className={`pointer-events-auto h-auto object-contain drop-shadow-2xl ${prize.className || ""}`}
                         style={{ maxWidth: "none" }}
                       />
                     </div>
                   </div>
                 ) : (
-                  <div 
-                    ref={prizeRef} 
-                    className="prize-image origin-bottom-left absolute" 
+                  <div
+                    ref={prizeRef}
+                    className="prize-image absolute origin-bottom-left"
                     style={prizeInitialStyle}
                   >
                     <Image
@@ -371,7 +399,9 @@ export const Badge: React.FC<BadgeProps> = ({
           {/* Large inline day number */}
           <span
             className={`font-currys absolute left-1.5 z-0 transition-opacity duration-300 md:left-3 2xl:left-5 ${
-              showPrize ? "opacity-0" : "text-4xl text-[#686188] md:text-5xl xl:text-6xl 2xl:text-[80px]"
+              showPrize
+                ? "opacity-0"
+                : "text-4xl text-[#686188] md:text-5xl xl:text-6xl 2xl:text-[80px]"
             }`}
           >
             {day}
@@ -381,13 +411,51 @@ export const Badge: React.FC<BadgeProps> = ({
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
             <div
               ref={dayBadgeRef}
-              className="day-badge absolute -right-1 bottom-0 z-50 flex size-7 items-center justify-center overflow-hidden rounded-full shadow-lg md:-right-2 md:size-11 2xl:-right-1 2xl:bottom-1 2xl:size-13"
+              className="day-badge absolute -right-1 bottom-0 z-50 flex size-7 items-center justify-center overflow-hidden rounded-full shadow-lg md:-right-2 md:size-11 lg:size-9 xl:size-11 2xl:-right-1 2xl:bottom-1 2xl:size-13 lg:-right-1"
               style={dayBadgeInitialStyle}
             >
+              {isMissed && (
+            <>
+              <div
+                className="pointer-events-none absolute inset-0 z-20 rounded-full bg-gray-600"
+                style={{
+                  transform: "translateZ(0)",
+                  backgroundImage: `
+                  /* Main bottom spherical shadow */
+                  radial-gradient(circle at 50% 135%, rgba(0,0,0,0.65), transparent 60%),
+
+                  /* Mid-bottom soft curve */
+                  radial-gradient(circle at 50% 95%, rgba(0,0,0,0.05), transparent 65%),
+
+                  /* Top highlight */
+                  radial-gradient(circle at 50% 10%, rgba(255,255,255,0.22), transparent 55%)
+                `,
+                              boxShadow: `
+                  /* Outer drop shadow */
+                  0 16px 28px rgba(0,0,0,0.4),
+
+                  /* Deep inner lower shadow (the strongest curvature) */
+                  inset 0 -2px 3px rgba(0,0,0,0.6),
+
+                  /* Subtle inner mid shadow (softens the curve) */
+                  inset 0 -2px 1px rgba(0,0,0,0.25),
+
+                  /* Inner top highlight */
+                  inset 0 60px 50px rgba(255,255,255,0.18)
+                `,
+                }}
+              />
+            </>
+          )}
               <div className="absolute inset-0 overflow-hidden rounded-full">
-                <Image src={dayBadgeCircleImage} alt="" fill className="object-cover" />
+                <Image
+                  src={dayBadgeCircleImage}
+                  alt=""
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <span className="font-currys relative z-10 text-xs font-bold text-white md:text-xl xl:text-2xl 2xl:text-3xl">
+              <span className="font-currys relative z-30 text-xs font-bold text-white md:text-xl xl:text-2xl 2xl:text-3xl">
                 {day}
               </span>
             </div>

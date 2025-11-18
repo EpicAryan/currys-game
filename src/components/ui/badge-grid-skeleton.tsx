@@ -16,7 +16,7 @@ const BadgeGridSkeleton = () => {
           }`}
         >
           <div className="relative flex w-full items-center justify-center">
-            <div className="relative flex size-20 items-center justify-center rounded-full overflow-hidden md:size-30 xl:size-35 2xl:size-40">
+            <div className="relative flex size-20 items-center justify-center rounded-full overflow-hidden md:size-30 lg:size-26 xl:size-35 2xl:size-40">
               <div className="absolute inset-0 overflow-hidden rounded-full">
                 <Image
                   src="/promo/inactive-circle.webp"
