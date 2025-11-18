@@ -40,12 +40,12 @@ function ResultContent() {
         line1: "No gifts made it down the chimney",
         line2: "this time - try again another day!",
       };
-    } else if (scoreNum > 0 && scoreNum < 20) {
+    } else if (scoreNum > 0 && scoreNum < 11) {
       return {
         line1: "Santa loves a trier!",
         line2: "Better luck next sled.",
       };
-    } else if (scoreNum >= 20 && scoreNum < 60) {
+    } else if (scoreNum >= 10 && scoreNum < 41) {
       return {
         line1: "A few presents in the snow, but you",
         line2: "delivered some Christmas joy!",
@@ -151,10 +151,8 @@ function ResultContent() {
         currentDay: dayNumber,
       });
 
-      // ✅ Save email to localStorage
       localStorage.setItem("curry_user_mail", email);
 
-      // ✅ Simple redirect - no URL params needed!
       router.push("/reveal");
     } catch (error) {
       console.error("❌ Failed to reward gift:", error);

@@ -120,7 +120,7 @@ const CongratulationsCard = ({
                   Congratulations!!
                 </h1>
                 <sub className="font-currys w-full text-center text-base font-semibold tracking-wide text-gray-200 md:text-left md:text-xl lg:text-2xl xl:text-3xl">
-                  You have won a Currys voucher.
+                  You have won a Festive Treat!
                 </sub>
               </div>
             </div>
