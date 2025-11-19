@@ -5,7 +5,7 @@ const BadgeGridSkeleton = () => {
   const skeletonBadges = Array.from({ length: 12 }, (_, i) => i + 1);
   
   return (
-    <div className="grid grid-cols-3 space-y-[2.5vh] gap-x-12 place-self-center overflow-visible md:space-y-[2.8vh] lg:grid-cols-4 lg:space-y-[3vh] lg:gap-x-14 xl:space-y-[3.5vh] 2xl:space-y-8 xl:gap-x-17">
+    <div className="grid grid-cols-3 gap-y-[2.8vh] gap-x-[9.2vw] place-self-center overflow-visible md:gap-y-[2.8vh] lg:grid-cols-4 lg:gap-y-[3vh] lg:gap-x-14 xl:gap-y-[3.5vh] 2xl:gap-y-8 xl:gap-x-17">
       {skeletonBadges.map((day, index) => (
         <div
           key={day}

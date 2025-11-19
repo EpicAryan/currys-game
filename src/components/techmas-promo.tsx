@@ -238,7 +238,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-16 md:pt-20 text-center lg:pt-8 xl:pt-12 2xl:pt-12">
+      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-16 text-center md:pt-20 lg:pt-8 xl:pt-12 2xl:pt-12">
         <h1
           className="text-3xl font-semibold tracking-wide text-nowrap text-white md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[66px]"
           style={{
@@ -248,7 +248,7 @@ const TechmasPromo = () => {
           12 Days of Techmas
         </h1>
         <p className="max-w-2xs pt-3 text-center text-sm leading-tight font-light text-[#CFC8F7] md:max-w-4xl md:text-xl lg:text-lg xl:text-xl 2xl:text-[22px]">
-          Play for a chance to win a different prize every day!{' '}
+          Play for a chance to win a different prize every day!{" "}
           <br className="hidden md:block" />
           Play all 12 days and you will be entered into a draw for a
         </p>
@@ -258,11 +258,11 @@ const TechmasPromo = () => {
       </div>
 
       {/* Badge Grid with Loading State */}
-      <div className="badge-container relative z-30 mx-auto mt-4 md:mt-8 max-w-6xl overflow-visible lg:mt-6 2xl:mt-10">
+      <div className="badge-container relative z-30 mx-auto mt-4 max-w-6xl overflow-visible md:mt-8 lg:mt-6 2xl:mt-10 pb-45 md:pb-24 lg:pb-0">
         {isLoading ? (
           <BadgeGridSkeleton />
         ) : (
-          <div className="grid grid-cols-3 space-y-[2.5vh] gap-x-12 place-self-center overflow-visible md:space-y-[2.8vh] lg:grid-cols-4 lg:space-y-[3vh] lg:gap-x-14 xl:space-y-[3.5vh] 2xl:space-y-8 xl:gap-x-17">
+          <div className="grid grid-cols-3 gap-y-[2.8vh] gap-x-[9.2vw] place-self-center overflow-visible md:gap-y-[2.8vh] lg:grid-cols-4 lg:gap-y-[3vh] lg:gap-x-14 xl:gap-y-[3.5vh] xl:gap-x-17 2xl:gap-y-8">
             {badges.map((badge, index) => (
               <div
                 key={badge.key}
@@ -272,7 +272,7 @@ const TechmasPromo = () => {
                     : ""
                 }`}
                 style={{
-                  isolation: "isolate", 
+                  isolation: "isolate",
                 }}
               >
                 {badge}
@@ -328,12 +328,12 @@ const TechmasPromo = () => {
       </div>
 
       {/* Magic Cluster Bottom Left */}
-      <div className="absolute bottom-20 left-0 z-30 h-18 w-12 md:bottom-36 md:h-36 md:w-30 lg:bottom-20 xl:bottom-28 lg:h-30 lg:w-22 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">
+      <div className="absolute bottom-20 left-0 z-30 h-18 w-12 md:bottom-36 md:h-36 md:w-30 lg:bottom-20 lg:h-30 lg:w-22 xl:bottom-28 xl:h-36 xl:w-36 2xl:h-40 2xl:w-40">
         <LightParticles />
       </div>
 
       {/* Gift Box 2 */}
-      <div className="absolute bottom-24 left-0 z-30 w-8 h-auto md:bottom-48 md:w-12 lg:bottom-28 xl:bottom-40 2xl:w-16">
+      <div className="absolute bottom-24 left-0 z-30 h-auto w-8 md:bottom-48 md:w-12 lg:bottom-28 xl:bottom-40 2xl:w-16">
         <Image
           src="/promo/gift-box-2.png"
           alt="gift box"
@@ -345,7 +345,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Gift Box 1 */}
-      <div className="absolute bottom-8 left-8 z-30 w-18 h-auto md:bottom-20 md:w-26 lg:bottom-4 lg:left-10 xl:w-28 2xl:w-[143px]">
+      <div className="absolute bottom-8 left-8 z-30 h-auto w-18 md:bottom-20 md:w-26 lg:bottom-4 lg:left-10 xl:w-28 2xl:w-[143px]">
         <Image
           src="/promo/gift-box-1.png"
           alt="gift box"

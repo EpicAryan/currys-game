@@ -412,7 +412,7 @@ export const Badge: React.FC<BadgeProps> = ({
           {showPrize && (isMissed || !isActive || hasUnlocked) && (
             <div
               ref={dayBadgeRef}
-              className="day-badge absolute -bottom-2 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full px-3 py-1 md:py-1.5 shadow-lg md:-bottom-2.5 md:px-4 lg:-bottom-2.5 lg:px-3.5"
+              className="day-badge absolute -bottom-2 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full px-2.5 py-1 md:py-1.5 shadow-lg md:-bottom-2.5 md:px-4 lg:-bottom-2.5 lg:px-3.5"
               style={{
                 ...dayBadgeInitialStyle,
                 background:
@@ -439,7 +439,7 @@ export const Badge: React.FC<BadgeProps> = ({
 
               {/* Fixed-width text column – wraps only after this width */}
               <div className="relative z-30 w-15 text-left lg:w-18 xl:w-[105px] 2xl:w-[125px]">
-                <span className="font-currys block text-[10px] lg:text-[11px] leading-3 font-medium tracking-wide text-wrap text-white xl:text-[13px] 2xl:text-sm">
+                <span className="font-currys block text-[9px] lg:text-[11px] leading-3 font-medium tracking-wide text-wrap text-white xl:text-[13px] 2xl:text-sm">
                   {prize?.name || `Day ${day}`}
                 </span>
               </div>
