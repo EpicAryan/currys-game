@@ -238,7 +238,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-16 text-center md:pt-20 lg:pt-8 xl:pt-12 2xl:pt-12">
+      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-14 text-center md:pt-20 lg:pt-8 xl:pt-12 2xl:pt-12">
         <h1
           className="text-3xl font-semibold tracking-wide text-nowrap text-white md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[66px]"
           style={{
@@ -247,7 +247,7 @@ const TechmasPromo = () => {
         >
           12 Days of Techmas
         </h1>
-        <p className="max-w-2xs pt-3 text-center text-sm leading-tight font-light text-[#CFC8F7] md:max-w-4xl md:text-xl lg:text-lg xl:text-xl 2xl:text-[22px]">
+        <p className="max-w-xs pt-1 text-center text-[13px] leading-tight font-light text-[#CFC8F7] md:max-w-4xl md:pt-3 md:text-xl lg:text-lg xl:text-xl 2xl:text-[22px]">
           Play for a chance to win a different prize every day!{" "}
           <br className="hidden md:block" />
           Play all 12 days and you will be entered into a draw for a
@@ -258,26 +258,28 @@ const TechmasPromo = () => {
       </div>
 
       {/* Badge Grid with Loading State */}
-      <div className="badge-container relative z-30 mx-auto mt-4 max-w-6xl overflow-visible md:mt-8 lg:mt-6 2xl:mt-10 pb-45 md:pb-24 lg:pb-0">
+      <div className="badge-container relative z-30 mx-auto mt-4 max-w-6xl overflow-visible pb-45 md:mt-8 md:pb-24 lg:mt-6 lg:pb-0 2xl:mt-10">
         {isLoading ? (
           <BadgeGridSkeleton />
         ) : (
-          <div className="grid grid-cols-3 gap-y-[2.8vh] gap-x-[9.2vw] place-self-center overflow-visible md:gap-y-[2.8vh] lg:grid-cols-4 lg:gap-y-[3vh] lg:gap-x-14 xl:gap-y-[3.5vh] xl:gap-x-17 2xl:gap-y-8">
-            {badges.map((badge, index) => (
-              <div
-                key={badge.key}
-                className={`flex min-w-0 items-center justify-center ${
-                  index >= 4 && index <= 7
-                    ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
-                    : ""
-                }`}
-                style={{
-                  isolation: "isolate",
-                }}
-              >
-                {badge}
-              </div>
-            ))}
+          <div className="flex w-full justify-center">
+            <div className="grid grid-cols-3 gap-x-9 gap-y-6 md:gap-y-8 lg:grid-cols-4 lg:gap-x-14 lg:gap-y-5 xl:gap-x-17 xl:gap-y-7 2xl:gap-y-8">
+              {badges.map((badge, index) => (
+                <div
+                  key={badge.key}
+                  className={`flex min-w-0 items-center justify-center ${
+                    index >= 4 && index <= 7
+                      ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
+                      : ""
+                  }`}
+                  style={{
+                    isolation: "isolate",
+                  }}
+                >
+                  {badge}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -310,7 +310,7 @@ function ResultContent() {
                     href="#"
                     className="font-currys text-xs leading-[120%] text-white underline transition-colors hover:text-purple-200 md:text-sm lg:text-base 2xl:text-lg"
                   >
-                    Take me shopping.
+                    T&Cs apply
                   </a>
                 </div>
               </form>

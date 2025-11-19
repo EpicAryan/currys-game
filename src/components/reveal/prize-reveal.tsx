@@ -111,7 +111,7 @@ const PrizeReveal = ({
       desktop: "h-[110%] w-[110%] translate-y-4 xl:translate-y-12",
     },
     6: {
-      mobile: "h-[100%] w-[75%] md:w-[45%]",
+      mobile: "h-[100%] w-[78%] md:w-[45%]",
       desktop: "h-[160%] w-[160%] translate-y-18 xl:translate-y-30",
     },
     7: {
@@ -154,7 +154,7 @@ const PrizeReveal = ({
     <div className="relative bg-[#CFC8F7] py-12 xl:py-20">
       <div className="z-30 container mx-auto flex w-full flex-col px-6 pb-24 md:flex-row xl:px-12 2xl:pb-28">
         <div className="font-currys flex flex-1 flex-col space-y-4 xl:space-y-6">
-          <h2 className="text-center text-2xl font-semibold text-black md:mt-8 md:text-3xl lg:text-start xl:text-5xl">
+          <h2 className="text-center text-xl font-semibold text-black md:mt-8 md:text-3xl lg:text-start xl:text-5xl">
             {headingText}
           </h2>
 
