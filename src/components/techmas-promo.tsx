@@ -48,7 +48,6 @@ const TechmasPromo = () => {
       ) as HTMLElement;
 
       if (!badgeElement) {
-        // Extract timestamp and signature from secureURL
         const url = new URL(secureURL, window.location.origin);
         const timestamp = url.searchParams.get("t");
         const signature = url.searchParams.get("s");
@@ -68,7 +67,7 @@ const TechmasPromo = () => {
 
       const scaleX = window.innerWidth / rect.width;
       const scaleY = window.innerHeight / rect.height;
-      const scale = Math.max(scaleX, scaleY) * 2;
+      const scale = Math.max(scaleX, scaleY) * 1.5;
 
       // Create overlay
       const overlay = document.createElement("div");
@@ -91,6 +90,7 @@ const TechmasPromo = () => {
       badgeClone.style.height = `${rect.height}px`;
       badgeClone.style.zIndex = "9999";
       badgeClone.style.pointerEvents = "none";
+      badgeClone.style.imageRendering = "high-quality";
       document.body.appendChild(badgeClone);
 
       badgeElement.style.opacity = "0";
@@ -166,18 +166,18 @@ const TechmasPromo = () => {
   }, []);
 
   const PRIZE_SIZE_OVERRIDES: Record<number, string> = {
-    1: "w-40 md:w-60 lg:w-52 xl:w-64 2xl:w-76",
-    2: "w-16 md:w-24 lg:w-22 xl:w-26 2xl:w-36",
-    3: "w-36 md:w-56 lg:w-48 xl:w-60 2xl:w-72",
-    4: "w-28 md:w-40 lg:w-34 xl:w-40 2xl:w-52",
-    5: "w-40 md:w-60 lg:w-52 xl:w-60 2xl:w-72",
-    6: "w-28 md:w-44 lg:w-38 xl:w-48 2xl:w-60",
-    7: "w-24 md:w-40 lg:w-34 xl:w-46 2xl:w-56",
-    8: "w-28 md:w-40 lg:w-34 xl:w-40 2xl:w-52 mt-3 md:mt-5",
-    9: "w-52 md:w-78 lg:w-70 xl:w-80 2xl:w-100 rotate-30 ml-5",
-    10: "w-36 md:w-54 lg:w-48 xl:w-56 2xl:w-70",
-    11: "w-24 md:w-40 lg:w-34 xl:w-40 2xl:w-52",
-    12: "w-24 md:w-38 lg:w-30 xl:w-40 2xl:w-52",
+    1: "w-28 md:w-40 lg:w-36 xl:w-46 2xl:w-56",
+    2: "w-30 md:w-44 lg:w-40 xl:w-50 2xl:w-64",
+    3: "w-20 md:w-32 lg:w-28 xl:w-36 2xl:w-44 -translate-y-2",
+    4: "w-16 md:w-24 lg:w-20 xl:w-28 2xl:w-36",
+    5: "w-24 md:w-36 lg:w-32 xl:w-40 2xl:w-48 translate-y-1",
+    6: "w-18 md:w-26 lg:w-22 xl:w-28 2xl:w-36",
+    7: "w-18 md:w-26 lg:w-22 xl:w-30 2xl:w-38 translate-y-2",
+    8: "w-18 md:w-26 lg:w-22 xl:w-30 2xl:w-38 translate-y-2",
+    9: "w-16 md:w-26 lg:w-22 xl:w-30 2xl:w-38",
+    10: "w-14 md:w-26 lg:w-20 xl:w-26 2xl:w-34 md:-translate-y-1",
+    11: "w-24 md:w-38 lg:w-32 xl:w-40 2xl:w-52 translate-y-1",
+    12: "w-28 md:w-44 lg:w-40 xl:w-48 2xl:w-56",
   };
 
   const badges = Array.from({ length: 12 }, (_, i) => {
@@ -195,8 +195,8 @@ const TechmasPromo = () => {
     const prizeConfig = giftStatus?.image_url
       ? {
           src: giftStatus.image_url,
-          width: 1200,
-          height: 1200,
+          width: 1500,
+          height: 1500,
           className: sizeClass,
           name: giftStatus.gift_name || `Day ${day} Prize`,
         }
@@ -272,7 +272,7 @@ const TechmasPromo = () => {
                     : ""
                 }`}
                 style={{
-                  isolation: "isolate", // Create new stacking context
+                  isolation: "isolate", 
                 }}
               >
                 {badge}

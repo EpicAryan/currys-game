@@ -134,22 +134,18 @@ export default function GamePage() {
 //   const params = useParams();
 //   const searchParams = useSearchParams();
 //   const router = useRouter();
-
-//   const iframeRef = useRef<HTMLIFrameElement | null>(null);
-
-//   const [isSubmitting, setIsSubmitting] = useState(false);
+//   const iframeRef = useRef<HTMLIFrameElement>(null);
+  
 //   const [isVerified, setIsVerified] = useState(false);
 //   const [isVerifying, setIsVerifying] = useState(true);
-
+  
 //   const dayParam = params.day as string;
-//   const dayNumber = dayParam.replace(/^day/, "");
-
+//   const dayNumber = dayParam.replace(/^day/, ""); 
+  
 //   const timestamp = searchParams.get("t") || "";
 //   const signature = searchParams.get("s") || "";
 
-//   const GAME_ORIGIN = "https://playcanv.as";
-
-//   // Verify access
+//   // Step 1: Verify HMAC access
 //   useEffect(() => {
 //     async function verify() {
 //       if (!timestamp || !signature) {
@@ -159,94 +155,130 @@ export default function GamePage() {
 //       }
 
 //       const isValid = await verifyGameAccess(dayNumber, timestamp, signature);
-
+      
 //       if (!isValid) {
 //         alert("🚨 Access expired or invalid! Please start from the promo page.");
 //         router.push("/");
 //         return;
 //       }
-
+      
 //       console.log("✅ Access verified successfully!");
 //       setIsVerified(true);
 //       setIsVerifying(false);
 //     }
-
+    
 //     verify();
 //   }, [dayNumber, timestamp, signature, router]);
 
-//   // Listen for gameOver messages
+//   // Step 2: Send day number to game when iframe loads
 //   useEffect(() => {
-//     if (!isVerified) return;
+//     if (!isVerified || !iframeRef.current) return;
+    
+//     const iframe = iframeRef.current;
+    
+//     const handleIframeLoad = () => {
+//       console.log("📤 Game loaded, sending day number:", dayNumber);
+      
+//       // Send day number to the game
+//       iframe.contentWindow?.postMessage({
+//         type: "setDayNumber",
+//         day: parseInt(dayNumber),
+//         source: "parent-website"
+//       }, "*");
+//     };
+    
+//     iframe.addEventListener("load", handleIframeLoad);
+    
+//     return () => {
+//       iframe.removeEventListener("load", handleIframeLoad);
+//     };
+//   }, [isVerified, dayNumber]);
 
+//   // Step 3: Listen for ALL messages (DEBUG MODE)
+//   useEffect(() => {
+//     console.log("🔍 Message listener attached - waiting for game messages...");
+    
 //     const handleMessage = async (event: MessageEvent) => {
-//       if (event.origin !== GAME_ORIGIN) return;
-
-//       const data = event.data as {
-//         type?: string;
-//         finalScore?: number | string;
-//       };
-
-//       if (!data || data.type !== "gameOver") return;
-
-//       const numericScore = Number(data.finalScore);
-//       if (!Number.isFinite(numericScore) || numericScore < 0) {
-//         console.warn("Invalid score received:", data.finalScore);
+//       console.log("📨 MESSAGE RECEIVED:", {
+//         origin: event.origin,
+//         data: event.data,
+//         type: typeof event.data
+//       });
+      
+//       // ✅ Security check - verify origin first
+//       if (!event.origin.includes("playcanv.as")) {
+//         console.log("⚠️ Message from untrusted origin, ignoring");
 //         return;
 //       }
 
-//       try {
-//         setIsSubmitting(true);
-//         const signedURL = await generateSignedURL(dayParam, String(numericScore));
-//         router.push(signedURL);
-//       } catch (error) {
-//         console.error("Failed to generate URL:", error);
-//         alert("Failed to submit score");
-//         setIsSubmitting(false);
+//       // ✅ Check if data exists and has expected structure
+//       if (!event.data || typeof event.data !== 'object') {
+//         console.log("⚠️ Invalid message data structure");
+//         return;
+//       }
+      
+//       console.log("✅ Message from trusted origin with valid data");
+      
+//       // ✅ Check for gameOver message
+//       if (event.data.type === "gameOver") {
+//         console.log("🎮 GAME OVER DETECTED!");
+//         const finalScore = event.data.finalScore;
+//         console.log("📊 Final Score:", finalScore);
+        
+//         // ✅ Validate score exists
+//         if (finalScore === undefined || finalScore === null) {
+//           console.error("❌ No score provided in gameOver message");
+//           alert("Score data is missing. Please try again.");
+//           return;
+//         }
+        
+//         try {
+//           const signedURL = await generateSignedURL(dayParam, finalScore.toString());
+//           console.log("🔗 Redirecting to:", signedURL);
+//           router.push(signedURL);
+//         } catch (error) {
+//           console.error("❌ Failed to generate signed URL:", error);
+//           alert("Failed to submit score. Please try again.");
+//         }
+//       } else {
+//         console.log("ℹ️ Message type:", event.data.type, "(not gameOver)");
 //       }
 //     };
 
 //     window.addEventListener("message", handleMessage);
-//     return () => window.removeEventListener("message", handleMessage);
-//   }, [isVerified, dayParam, router, GAME_ORIGIN]);
+//     console.log("✅ Event listener added to window");
+    
+//     return () => {
+//       console.log("🧹 Removing message listener");
+//       window.removeEventListener("message", handleMessage);
+//     };
+//   }, [dayParam, router]);
 
+//   // Loading state
 //   if (isVerifying) {
 //     return (
 //       <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
 //         <div className="text-center">
 //           <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent mx-auto"></div>
 //           <p className="font-currys text-white text-lg">Verifying access...</p>
-//           <p className="font-currys text-white text-sm mt-2 opacity-70">
-//             Day {dayNumber}
-//           </p>
+//           <p className="font-currys text-white text-sm mt-2 opacity-70">Day {dayNumber}</p>
 //         </div>
 //       </div>
 //     );
 //   }
 
-//   if (!isVerified) return null;
+//   if (!isVerified) {
+//     return null;
+//   }
 
-//   const gameURL = `https://playcanv.as/p/3FSwoGDA/?day=${dayNumber}`;
-
+//   // Full viewport game
 //   return (
-//     <div className="relative h-screen w-screen overflow-hidden">
-//       <iframe
-//         ref={iframeRef}
-//         src={gameURL}
-//         title="Currys Game"
-//         className="absolute inset-0 h-full w-full border-0"
-//         allow="fullscreen; autoplay"
-//       />
-
-//       {isSubmitting && (
-//         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80">
-//           <div className="text-center">
-//             <div className="mb-4 h-12 w-12 animate-spin rounded-full border-4 border-white border-t-transparent mx-auto"></div>
-//             <p className="font-currys text-white text-xl">
-//               Submitting your score...
-//             </p>
-//           </div>
-//         </div>
-//       )}
-//     </div>
+//     <iframe
+//       ref={iframeRef}
+//       src="https://playcanv.as/p/3FSwoGDA/"
+//       className="fixed top-0 left-0 w-screen h-screen border-none block"
+//       allow="autoplay; fullscreen"
+//       title={`Day ${dayNumber} Game`}
+//     />
 //   );
 // }

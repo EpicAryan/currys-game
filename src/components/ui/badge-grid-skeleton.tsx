@@ -5,18 +5,18 @@ const BadgeGridSkeleton = () => {
   const skeletonBadges = Array.from({ length: 12 }, (_, i) => i + 1);
   
   return (
-    <div className="grid grid-cols-3 space-y-2 gap-x-12 place-self-center overflow-visible lg:grid-cols-4 xl:space-y-[4vh] 2xl:space-y-5 2xl:gap-x-15">
+    <div className="grid grid-cols-3 space-y-[2.5vh] gap-x-12 place-self-center overflow-visible md:space-y-[2.8vh] lg:grid-cols-4 lg:space-y-[3vh] lg:gap-x-14 xl:space-y-[3.5vh] 2xl:space-y-8 xl:gap-x-17">
       {skeletonBadges.map((day, index) => (
         <div
           key={day}
-          className={`flex justify-center ${
+          className={`flex min-w-0 items-center justify-center  ${
             index >= 4 && index <= 7
               ? "lg:translate-x-16 xl:translate-x-20 2xl:translate-x-24"
               : ""
           }`}
         >
           <div className="relative flex w-full items-center justify-center">
-            <div className="relative flex size-20 items-center justify-center rounded-full overflow-hidden md:size-30 lg:size-26 xl:size-35 2xl:size-40">
+            <div className="relative flex size-20 items-center justify-center rounded-full overflow-hidden md:size-30 lg:size-26 xl:size-32 2xl:size-40">
               <div className="absolute inset-0 overflow-hidden rounded-full">
                 <Image
                   src="/promo/inactive-circle.webp"

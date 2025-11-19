@@ -359,6 +359,7 @@ export const Badge: React.FC<BadgeProps> = ({
                         alt={prize.name || `Day ${day} prize`}
                         width={prize.width}
                         height={prize.height}
+                        quality={90}
                         className={`pointer-events-auto h-auto object-contain drop-shadow-2xl ${prize.className || ""}`}
                         style={{ maxWidth: "none" }}
                       />
@@ -375,6 +376,7 @@ export const Badge: React.FC<BadgeProps> = ({
                       alt={prize.name || `Day ${day} prize`}
                       width={prize.width}
                       height={prize.height}
+                      quality={90}
                       className={`h-auto object-contain drop-shadow-2xl ${prize.className || ""}`}
                       style={{ maxWidth: "none" }}
                     />
@@ -437,7 +439,7 @@ export const Badge: React.FC<BadgeProps> = ({
 
               {/* Fixed-width text column – wraps only after this width */}
               <div className="relative z-30 w-15 text-left lg:w-18 xl:w-[105px] 2xl:w-[125px]">
-                <span className="font-currys block text-[10px] md:text-[11px] leading-3 font-medium tracking-wide text-wrap text-white xl:text-[13px] 2xl:text-sm">
+                <span className="font-currys block text-[10px] lg:text-[11px] leading-3 font-medium tracking-wide text-wrap text-white xl:text-[13px] 2xl:text-sm">
                   {prize?.name || `Day ${day}`}
                 </span>
               </div>

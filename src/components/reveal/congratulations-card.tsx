@@ -103,7 +103,7 @@ const CongratulationsCard = ({
         <div className="absolute inset-0 z-0 ">
           <ConfettiBackground />
         </div>
-         <div className="absolute inset-0 overflow-hidden w-full h-[130%]">
+         <div className="absolute inset-0 overflow-hidden w-full h-[130%] md:h-[160%] xl:h-[140%]">
         <StripesBackground gap={105} count={24} fill="#3A308C" />
         </div>
 
@@ -148,11 +148,11 @@ const CongratulationsCard = ({
                   </p>
                 </div>
 
-                <div className="absolute bottom-1/8 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <div className="absolute bottom-1/10 left-1/2 -translate-x-1/2 -translate-y-1/2">
                   <p className="font-currys mb-3 text-center text-[10px] font-semibold tracking-wide text-black uppercase">
                     COUPON CODE:
                   </p>
-                  <p className="font-currys text-center text-xl font-semibold text-black uppercase">
+                  <p className="font-currys text-center text-base font-semibold text-black uppercase">
                     {couponCode}
                   </p>
                 </div>
@@ -239,7 +239,7 @@ const CongratulationsCard = ({
                   <p className="font-currys text-center text-[9px] font-semibold tracking-wide text-black uppercase lg:text-[10px]">
                     COUPON CODE:
                   </p>
-                  <p className="font-currys text-center text-xs font-semibold text-black uppercase lg:text-base xl:text-sm text-wrap max-w-[120px]">
+                  <p className="font-currys text-center text-[10px] font-semibold text-black uppercase lg:text-[11px] xl:text-sm text-wrap max-w-22 lg:max-w-25 xl:max-w-[120px]">
                     {couponCode}
                   </p>
                 </div>

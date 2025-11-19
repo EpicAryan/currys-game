@@ -71,7 +71,7 @@ function RevealContent() {
   }
 
   const shortGiftName = currentDayGift?.gift_name
-    ? currentDayGift.gift_name.split(' ').slice(0, 4).join(' ')
+    ? currentDayGift.gift_name.split(' ').slice(0, 6).join(' ')
     : 'Product';
 
   return (

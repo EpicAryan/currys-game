@@ -44,7 +44,7 @@ export async function enrollUserForGift(userId: string, dayNumber: number) {
     if (error) {
       // Handle unique violation cleanly
       if (error.code === "23505") {
-        return { success: false, error: "User already enrolled for this day." };
+        return { success: false, error: "You are already enrolled for this day." };
       }
       throw error;
     }

@@ -24,52 +24,52 @@ const CTA = ({
     desktop: string;
   }> = {
     1: { 
-       mobile: "w-[70vw]", 
-      desktop: "lg:w-[38vw] translate-x-[7vw]" 
+       mobile: "w-[50vw] bottom-[10%]", 
+      desktop: "lg:w-[30vw] translate-x-[3vw]" 
     },
     2: { 
-      mobile: "w-[32vw] bottom-[18%]", 
-      desktop: "lg:w-[20vw] -translate-x-[2vw]" 
+      mobile: "w-[62vw] bottom-[8%]", 
+      desktop: "lg:w-[42vw] translate-x-[9vw]" 
     },
     3: { 
-      mobile: "w-[60vw] bottom-[7%]", 
-      desktop: "lg:w-[38vw] translate-x-[7vw]" 
+      mobile: "w-[40vw] bottom-[16%]", 
+      desktop: "lg:w-[25vw]" 
     },
     4: { 
-      mobile: "w-[45vw] bottom-[12%]", 
-      desktop: "lg:w-[30vw] translate-x-[3vw]" 
+      mobile: "w-[35vw] bottom-[17%]", 
+      desktop: "lg:w-[22vw] -translate-x-[1vw]" 
     },
     5: { 
-      mobile: "w-[55vw] bottom-[8%]", 
-      desktop: "lg:w-[38vw] translate-x-[7vw]" 
+      mobile: "w-[45vw] bottom-[13%]", 
+      desktop: "lg:w-[30vw] translate-x-[3vw]" 
     },
     6: { 
-      mobile: "w-[55vw] bottom-[8%]", 
-      desktop: "lg:w-[35vw] translate-x-[6vw]" 
+      mobile: "w-[30vw] bottom-[18%]", 
+      desktop: "lg:w-[20vw] -translate-x-[2vw]" 
     },
     7: { 
-      mobile: "w-[48vw] bottom-[10%]", 
-      desktop: "lg:w-[30vw] translate-x-[3vw]" 
+      mobile: "w-[36vw] bottom-[15%]", 
+      desktop: "lg:w-[24vw] translate-x-[1vw]" 
     },
     8: { 
-      mobile: "w-[48vw] bottom-[10%]", 
-      desktop: "lg:w-[30vw] translate-x-[3vw]"
+      mobile: "w-[38vw] bottom-[15%]", 
+      desktop: "lg:w-[24vw] -translate-x-[1vw]"
     },
     9: { 
-    mobile: "w-[64vw] bottom-[5%]", 
-      desktop: "lg:w-[40vw] translate-x-[8vw]"  
+    mobile: "w-[34vw] bottom-[17%]", 
+      desktop: "lg:w-[22vw] -translate-x-[1vw]"  
     },
-    10: { 
-       mobile: "w-[64vw] bottom-[5%]", 
-      desktop: "lg:w-[40vw] translate-x-[8vw]" 
+  10: { 
+       mobile: "w-[36vw] bottom-[17%]", 
+      desktop: "lg:w-[22vw] -translate-x-[1vw]" 
     },
     11: { 
-       mobile: "w-[50vw] bottom-[12%]", 
-      desktop: "lg:w-[30vw] translate-x-[3vw]" 
+       mobile: "w-[52vw] bottom-[11%]", 
+      desktop: "lg:w-[34vw] translate-x-[5vw]" 
     },
     12: { 
-        mobile: "w-[50vw] bottom-[12%]", 
-      desktop: "lg:w-[30vw] translate-x-[3vw]"  
+        mobile: "w-[50vw] bottom-[10%]", 
+      desktop: "lg:w-[32vw] translate-x-[5vw]"  
     },
   };
 
@@ -99,14 +99,14 @@ const CTA = ({
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-lg text-left"
+            className="max-w-2xl text-left"
           >
-            <h2 className="font-currys mb-3 text-xl text-black xl:text-2xl 2xl:text-3xl">
+            <h2 className="font-currys mb-3 text-xl text-black xl:text-2xl">
               {hasScore
                 ? "Don't want to wait to see if you've won?"
                 : "Didn't win anything today?"}
             </h2>
-            <p className="font-currys mb-6 text-3xl leading-tight text-[#4C12A1] xl:text-4xl 2xl:text-[44px] max-w-sm xl:max-w-xl">
+            <p className="font-currys mb-6 text-2xl leading-tight text-[#4C12A1] xl:text-3xl max-w-lg xl:max-w-2xl">
               Buy the {giftName} now and get <br />
               <span className="font-semibold">FREE delivery </span> today only!*
             </p>
@@ -169,14 +169,14 @@ const CTA = ({
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-md text-start"
+            className="max-w-lg text-start"
           >
-            <h2 className="mb-2 text-lg font-normal text-black ">
+            <h2 className="mb-2 text-base md:text-lg font-normal text-black ">
               {hasScore
                 ? "Don't want to wait to see if you've won?"
                 : "Didn't win anything today?"}
             </h2>
-            <p className="mb-4 text-[#4C12A1] text-xl leading-tight sm:text-3xl ">
+            <p className="mb-4 text-[#4C12A1] text-base leading-tight sm:text-2xl ">
               Buy the {giftName} now and get{" "}<br/>
               <span className="font-semibold">FREE delivery </span>today only!*
             </p>
@@ -207,7 +207,7 @@ const CTA = ({
                   src={giftImageUrl}
                   alt={giftName}
                   fill
-                  sizes="(max-width: 640px) 180px, 220px"
+                  sizes="(max-width: 640px) 600px, 1000px"
                   className="object-contain drop-shadow-2xl"
                 />
               </div>

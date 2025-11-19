@@ -8,6 +8,7 @@ import { motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { verifySignature } from "@/lib/hmac";
 import { rewardCouponGift } from "@/lib/rewardCouponGift";
+import MenuButton from "../ui/result-menu-button";
 
 function ResultContent() {
   const searchParams = useSearchParams();
@@ -225,13 +226,7 @@ function ResultContent() {
       </div>
 
       <div className="absolute top-6 right-10 z-40 aspect-square size-[31px] md:right-16 md:size-9 xl:top-8 xl:right-20 xl:size-11">
-        <Image
-          src="/result/menu-button.png"
-          alt="button"
-          width={45}
-          height={45}
-          className="h-full w-full cursor-pointer object-contain transition-all active:scale-95"
-        />
+        <MenuButton/>
       </div>
 
       {/* Main Container */}
