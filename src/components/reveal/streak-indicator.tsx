@@ -250,9 +250,9 @@ const StreakIndicator = ({
               onClick={handleShare}
               className="font-currys mt-3 overflow-visible rounded-4xl border border-[#CFC8F7] bg-transparent !px-6 !pr-8 leading-snug text-[#CFC8F7] [&_svg]:overflow-visible"
             >
-              <span className="flex items-center gap-2.5">
+              <span className="flex items-center gap-2.5 mb-1">
                 Share the quest
-                <ShareIcon className="size-5 flex-shrink-0 overflow-visible text-[#CFC8F7]" />
+                <ShareIcon className="size-5 flex-shrink-0 overflow-visible text-[#CFC8F7] mt-1" />
               </span>
             </Button>
           </div>

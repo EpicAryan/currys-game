@@ -74,7 +74,7 @@ const CongratulationsCard = ({
 
       const canvas = await html2canvas(clonedElement, {
         backgroundColor: null,
-        scale: 1,
+        scale: 2,
         width: element.offsetWidth,
         height: element.offsetHeight,
         useCORS: true,
@@ -137,8 +137,9 @@ const CongratulationsCard = ({
                 <Image
                   src="/reveal/coupon-card-mobile.webp"
                   alt="coupon card"
-                  width={286}
-                  height={500}
+                  width={760}
+                  height={1326}
+                  quality={100}
                   className="h-full w-full object-cover"
                 />
 
@@ -260,8 +261,9 @@ const CongratulationsCard = ({
                 <Image
                   src="/reveal/coupon-card-desktop.webp"
                   alt="coupon card"
-                  width={602}
-                  height={1052}
+                  quality={100}
+                  width={1404}
+                  height={805}
                   className="h-full w-full object-cover"
                 />
 

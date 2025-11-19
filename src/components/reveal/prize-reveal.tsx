@@ -29,52 +29,52 @@ const PrizeReveal = ({
     }
   > = {
     1: {
-      mobile: "w-90 md:w-110",
-      desktop: "w-100 xl:w-140 ",
+      mobile: "w-80 md:w-96",
+      desktop: "w-90 xl:w-130 ",
     },
     2: {
-      mobile: "w-100 md:w-115",
+      mobile: "w-95 md:w-115",
       desktop: "w-100 xl:w-150",
     },
     3: {
-      mobile: "w-66 md:w-84",
+      mobile: "w-56 md:w-68",
       desktop: "w-72 xl:w-100",
     },
     4: {
-      mobile: "w-84 md:w-100",
-      desktop: "w-56 xl:w-72",
+      mobile: "w-48 md:w-62",
+      desktop: "w-56 xl:w-78",
     },
     5: {
-      mobile: "w-80 md:w-100",
-      desktop: "w-80 xl:w-120",
+      mobile: "w-66 md:w-84",
+      desktop: "w-84 xl:w-120",
     },
     6: {
-      mobile: "w-60 md:w-72",
+      mobile: "w-46 md:w-60",
       desktop: "w-60 xl:w-84",
     },
     7: {
-      mobile: "w-64 md:w-80",
-      desktop: "w-70 xl:w-90",
+      mobile: "w-50 md:w-70",
+      desktop: "w-64 xl:w-82 translate-y-3 xl:translate-y-8",
     },
     8: {
-      mobile: "w-60 md:w-74 translate-y-1",
+      mobile: "w-52 md:w-70 translate-y-1",
       desktop: "w-60 xl:w-80 translate-y-4",
     },
     9: {
-      mobile: "w-60 md:w-72",
+      mobile: "w-50 md:w-66",
       desktop: "w-56 xl:w-76",
     },
     10: {
-      mobile: "w-56 md:w-72",
+      mobile: "w-48 md:w-66 -translate-y-3",
       desktop: "w-64 xl:w-82",
     },
     11: {
-      mobile: "w-90 md:w-120",
+      mobile: "w-80 md:w-100",
       desktop: "w-100 xl:w-120",
     },
     12: {
-      mobile: "w-90 md:w-120",
-      desktop: "w-90 xl:w-130",
+      mobile: "w-70 md:w-96 translate-x-2",
+      desktop: "w-86 xl:w-120",
     },
   };
 
@@ -84,62 +84,59 @@ const PrizeReveal = ({
   };
 
   const BG_CIRCLE_OVERRIDES: Record<
-    number,
-    {
-      mobile: string;
-      desktop: string;
-    }
-  > = {
-    1: {
-      mobile: "h-[100%] w-[75%] md:w-[45%]",
-      desktop: "h-[100%] w-[100%] translate-y-0 xl:translate-y-10",
-    },
-    2: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[90%] w-[90%] translate-y-0 xl:translate-y-2",
-    },
-    3: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[120%] w-[120%] translate-y-8 xl:translate-y-14",
-    },
-    4: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[160%] w-[160%] translate-y-16 xl:translate-y-24",
-    },
-    5: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[110%] w-[110%] translate-y-4 xl:translate-y-12",
-    },
-    6: {
-      mobile: "h-[100%] w-[78%] md:w-[45%]",
-      desktop: "h-[160%] w-[160%] translate-y-18 xl:translate-y-30",
-    },
-    7: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[130%] w-[130%] translate-y-8 xl:translate-y-12",
-    },
-    8: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[140%] w-[140%] translate-y-8 xl:translate-y-12",
-    },
-    9: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[160%] w-[160%] translate-y-20 xl:translate-y-28",
-    },
-    10: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[150%] w-[150%] translate-y-20 xl:translate-y-28",
-    },
+  number,
+  { mobile: string; desktop: string }
+> = {
+  1: {
+    mobile: "w-66 h-66 md:w-84 md:h-84", // 70% & 45%
+    desktop: "w-95 h-95 xl:w-130 xl:h-130 translate-y-0 xl:translate-y-2",
+  },
+  2: {
+    mobile: "w-64 h-64 md:w-78 md:h-78",
+    desktop: "w-90 h-90 xl:w-135 xl:h-135 -translate-y-3 xl:translate-y-0",
+  },
+  3: {
+    mobile: "w-64 h-64 md:w-80 md:h-80",
+    desktop: "w-86 h-86 xl:w-120 xl:h-120 translate-y-8 xl:translate-y-14",
+  },
+  4: {
+    mobile: "w-60 h-60 md:w-74 md:h-74",
+    desktop: "w-90 h-90 xl:w-125 xl:h-125 translate-y-12 xl:translate-y-20",
+  },
+  5: {
+    mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-92 h-92 xl:w-124 xl:h-124 translate-y-0 xl:translate-y-2",
+  },
+  6: {
+    mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-96 h-96 xl:w-134 xl:h-134 translate-y-18 xl:translate-y-30",
+  },
+  7: {
+    mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-87 h-87 xl:w-112 xl:h-112 translate-y-3 xl:translate-y-8",
+  },
+  8: {
+    mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-84 h-84 xl:w-112 xl:h-112 translate-y-8 xl:translate-y-12",
+  },
+  9: {
+   mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-90 h-90 xl:w-122 xl:h-122 translate-y-12 xl:translate-y-20",
+  },
+  10: {
+   mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-96 h-96 xl:w-123 xl:h-123 translate-y-20 xl:translate-y-28",
+  },
+  11: {
+   mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-105 h-105 xl:w-126 xl:h-126 translate-y-4 xl:translate-y-6",
+  },
+  12: {
+    mobile: "w-60 h-60 md:w-80 md:h-80",
+    desktop: "w-90 h-90 xl:w-126 xl:h-126 translate-y-2 xl:translate-y-4",
+  },
+};
 
-    11: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[105%] w-[105%] translate-y-12 xl:translate-y-16",
-    },
-    12: {
-      mobile: "h-[100%] w-[70%] md:w-[45%]",
-      desktop: "h-[105%] w-[105%] translate-y-4 xl:translate-y-12",
-    },
-  };
 
   const bgCircleConfig = BG_CIRCLE_OVERRIDES[currentDay] || {
     mobile: "w-64 md:w-72 h-64 md:h-72 translate-x-0 translate-y-0",
@@ -185,7 +182,7 @@ const PrizeReveal = ({
           </div>
         </div>
 
-        <div className="relative z-0 hidden flex-1 items-center justify-center lg:flex lg:translate-y-6">
+        <div className="relative z-0 hidden flex-1 items-center justify-center lg:flex lg:translate-y-8">
           <div className={`absolute ${config.desktop} aspect-square`}>
             <Image
               src={giftImageUrl}
@@ -232,7 +229,7 @@ const PrizeReveal = ({
       </div>
 
       {/* Gift Box 2 */}
-      <div className="absolute bottom-24 left-0 z-10 h-20 w-auto md:bottom-40 md:h-20 lg:bottom-20 lg:h-18 xl:bottom-40 xl:h-22">
+      <div className="absolute bottom-24 left-0 z-10 w-10 h-auto md:bottom-40 md:w-12 lg:bottom-20 xl:bottom-40 xl:w-16">
         <Image
           src="/promo/gift-box-2.png"
           alt="gift box"
@@ -243,7 +240,7 @@ const PrizeReveal = ({
       </div>
 
       {/* Gift Box 1 */}
-      <div className="absolute bottom-8 left-8 z-10 h-20 w-auto md:bottom-20 md:h-24 lg:bottom-4 lg:left-10 lg:h-20 xl:h-35">
+      <div className="absolute bottom-8 left-8 z-10 w-20 h-auto md:bottom-20 md:w-24 lg:bottom-4 xl:bottom-8 lg:left-10 lg:w-20 xl:w-32">
         <Image
           src="/promo/gift-box-1.png"
           alt="gift box"

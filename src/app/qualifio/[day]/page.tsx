@@ -2,7 +2,7 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+// import { motion } from "motion/react";
 
 export default function QualifioPage() {
   const params = useParams();
@@ -99,11 +99,11 @@ export default function QualifioPage() {
     setIsLoading(false);
   };
 
-  const handlePlayNow = () => {
-    if (hasRedirectedRef.current) return;
-    hasRedirectedRef.current = true;
-    router.push(`/game/${dayParam}?t=${timestamp}&s=${signature}`);
-  };
+  // const handlePlayNow = () => {
+  //   if (hasRedirectedRef.current) return;
+  //   hasRedirectedRef.current = true;
+  //   router.push(`/game/${dayParam}?t=${timestamp}&s=${signature}`);
+  // };
 
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
@@ -125,7 +125,7 @@ export default function QualifioPage() {
         onLoad={handleIframeLoad}
       />
 
-      {!isLoading && (
+      {/* {!isLoading && (
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -160,7 +160,7 @@ export default function QualifioPage() {
             </motion.button>
           </div>
         </motion.div>
-      )}
+      )} */}
     </div>
   );
 }
