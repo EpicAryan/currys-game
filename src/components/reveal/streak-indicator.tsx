@@ -140,6 +140,7 @@ const StreakIndicator = ({
                           src="/reveal/streak-bg.webp"
                           alt=""
                           fill
+                          sizes="(min-width:1024px) 40px, (min-width:768px) 32px, 22px"
                           className={`object-cover ${
                             isMissedDay
                               ? "opacity-30 grayscale"
@@ -181,7 +182,7 @@ const StreakIndicator = ({
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            className="size-3 text-red-400 md:size-5"
+                            className="size-3 text-[#F9D2E5] md:size-5"
                           >
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />

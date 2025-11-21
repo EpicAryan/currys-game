@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
         hostname: 'cdn.example.com',
       }
     ],
-    qualities: [70, 75, 80, 85, 90, 100],
+    qualities: [70, 75, 80, 85, 90, 95, 100],
   },
   eslint: {
     ignoreDuringBuilds: true, 

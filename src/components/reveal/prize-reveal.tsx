@@ -172,7 +172,7 @@ const PrizeReveal = ({
           </div>
 
           <p className="w-full max-w-xs place-self-center text-center text-base text-[#3C3C3C] md:max-w-lg md:text-xl lg:place-self-start lg:text-start xl:text-2xl">
-            Check your email in the next 72 hours to see if you have won{" "}
+            Check your email in the next 72 hours to see if you have won the{" "}
             {giftName}.
           </p>
 
@@ -206,6 +206,8 @@ const PrizeReveal = ({
           alt="snow drift"
           width={2892}
           height={1972}
+          priority
+          sizes="100vw"
           className="hidden w-full object-cover lg:block"
         />
         <Image
@@ -213,6 +215,8 @@ const PrizeReveal = ({
           alt="snow drift"
           width={910}
           height={552}
+          priority
+          sizes="100vw"
           className="block w-full object-cover lg:hidden"
         />
       </div>
@@ -224,6 +228,7 @@ const PrizeReveal = ({
           alt="snow drift"
           width={1446}
           height={986}
+          sizes="70vw"
           className="w-[70vw] object-cover"
         />
       </div>
@@ -235,6 +240,7 @@ const PrizeReveal = ({
           alt="gift box"
           width={108}
           height={108}
+          sizes="(min-width:1280px) 64px, (min-width:768px) 48px, 40px"
           className="object-fit h-full w-full"
         />
       </div>
@@ -246,6 +252,7 @@ const PrizeReveal = ({
           alt="gift box"
           width={163}
           height={163}
+          sizes="(min-width:1280px) 128px, (min-width:1024px) 80px, (min-width:768px) 96px, 80px"
           className="object-fit h-full w-full"
         />
       </div>

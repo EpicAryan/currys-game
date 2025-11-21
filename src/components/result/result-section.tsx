@@ -219,14 +219,18 @@ function ResultContent() {
       </motion.div>
 
       {/* Currys Logo */}
-      <div className="absolute top-0 left-8 z-40 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white shadow-xl md:left-12 md:size-28 lg:left-[8vw] xl:size-36 2xl:size-50">
-        <h5 className="font-currys text-2xl font-semibold tracking-wide text-[#3D2683] md:text-4xl xl:text-5xl 2xl:text-6xl">
-          currys
-        </h5>
+      <div className="absolute top-0 left-8 z-40 flex size-24 -translate-y-1/4 items-center justify-center rounded-full md:left-16 md:size-36 lg:left-[8vw] xl:size-48 2xl:left-[10vw] 2xl:size-56">
+        <Image
+          src="/curry-white-logo.png"
+          alt="curry logo"
+          fill
+          quality={85}
+          className="h-full w-full object-contain"
+        />
       </div>
 
       <div className="absolute top-6 right-10 z-40 aspect-square size-[31px] md:right-16 md:size-9 xl:top-8 xl:right-20 xl:size-11">
-        <MenuButton/>
+        <MenuButton />
       </div>
 
       {/* Main Container */}
@@ -326,6 +330,9 @@ function ResultContent() {
           alt="background decoration"
           width={2000}
           height={2000}
+          quality={95}
+          priority
+          sizes="(min-width: 1024px) 90vw, (min-width: 768px) 115vw, 120vw"
           className="hidden h-full w-full object-cover lg:block"
         />
         <Image
@@ -333,6 +340,8 @@ function ResultContent() {
           alt="background decoration"
           width={600}
           height={595}
+          priority
+          sizes="(min-width: 1024px) 90vw, (min-width: 768px) 115vw, 120vw"
           className="h-full w-full object-contain lg:hidden"
         />
         <div className="absolute -right-16 bottom-0 -z-10 h-20 w-24 -translate-x-1/4 -translate-y-1/2 rotate-180 md:-right-16 md:h-30 md:w-30 lg:-bottom-3 lg:left-1/9 lg:h-36 lg:w-36 2xl:top-1/2 2xl:size-12">

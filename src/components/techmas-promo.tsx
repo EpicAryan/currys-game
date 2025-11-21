@@ -228,11 +228,16 @@ const TechmasPromo = () => {
       </div>
 
       {/* Currys Logo */}
-      <div className="absolute top-0 right-8 z-40 flex size-20 -translate-y-1/3 items-center justify-center rounded-full bg-white md:right-12 md:size-34 lg:right-[10vw] xl:size-44 2xl:size-50">
-        <h5 className="font-currys text-2xl font-semibold tracking-wide text-[#3D2683] md:text-4xl lg:text-5xl xl:text-6xl">
-          currys
-        </h5>
-        <div className="absolute -right-16 bottom-0 -z-10 h-20 w-24 rotate-90 md:-right-16 md:h-30 md:w-30 lg:-right-20 lg:-bottom-3 lg:h-36 lg:w-36 2xl:bottom-0 2xl:h-40 2xl:w-40">
+      <div className="absolute top-1 right-7 z-40 flex size-25 -translate-y-2/5 items-center justify-center rounded-full md:right-12 md:size-42 lg:right-20 lg:size-48 xl:right-1/12 xl:size-60 2xl:size-75">
+        <Image
+          src="/curry-white-logo.png"
+          alt="curry logo"
+          fill
+          quality={85}
+          sizes="(min-width:1536px) 300px, (min-width:1280px) 240px, (min-width:1024px) 192px, (min-width:768px) 168px, 100px"
+          className="h-full w-full object-contain"
+        />
+        <div className="absolute -right-10 bottom-8 -z-10 h-16 w-20 rotate-90 md:-right-16 md:h-30 md:w-30 lg:-right-10 lg:bottom-10 lg:h-28 lg:w-30 xl:bottom-16 2xl:bottom-16 2xl:h-40 2xl:w-40">
           <LightParticles />
         </div>
       </div>
