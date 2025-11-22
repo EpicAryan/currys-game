@@ -219,7 +219,7 @@ const TechmasPromo = () => {
   return (
     <section
       ref={scope}
-      className="relative min-h-[100dvh] overflow-hidden bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]"
+      className="relative min-h-[100dvh] overflow-hidden bg-[#2A234A]"
     >
       <CircleBackground />
 
@@ -228,7 +228,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Currys Logo */}
-      <div className="absolute top-1 right-7 z-40 flex size-25 -translate-y-2/5 items-center justify-center rounded-full md:right-12 md:size-42 lg:right-20 lg:size-48 xl:right-1/12 xl:size-60 2xl:size-75">
+      <div className="absolute top-0 right-6 z-40 flex size-25 -translate-y-1/4 items-center justify-center rounded-full md:right-12 md:size-36 lg:right-20 lg:size-42 xl:right-1/12 xl:size-55 2xl:size-65">
         <Image
           src="/curry-white-logo.png"
           alt="curry logo"
@@ -243,7 +243,7 @@ const TechmasPromo = () => {
       </div>
 
       {/* Header Text */}
-      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-14 text-center md:pt-20 lg:pt-8 xl:pt-12 2xl:pt-12">
+      <div className="font-currys relative z-10 flex w-full flex-col items-center pt-15 text-center md:pt-20 lg:pt-8 xl:pt-12 2xl:pt-12">
         <h1
           className="text-3xl font-semibold tracking-wide text-nowrap text-white md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-[66px]"
           style={{

@@ -103,7 +103,7 @@ export default function QualifioPage() {
   // };
 
   return (
-    <div className="relative h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-[#2A1F44] via-[#3D2F5B] to-[#4A3566]">
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-[#2A234A]">
       {isLoading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#2A1F44]">
           <div className="text-center">

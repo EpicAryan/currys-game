@@ -163,13 +163,13 @@ const CTA = ({
           className="h-auto w-full"
           priority
         />
-        <div className="absolute inset-0 flex flex-col items-start container mx-auto px-6 md:px-12 py-8 font-currys">
+        <div className="absolute inset-0 flex flex-col items-center container mx-auto px-6 md:px-12 py-8 font-currys">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="max-w-lg text-start"
+            className="max-w-lg text-center"
           >
             <h2 className="mb-2 text-base md:text-lg font-normal text-black ">
               {hasScore
