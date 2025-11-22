@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import PlausibleProvider from 'next-plausible'
+import PlausibleProvider from "next-plausible";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,8 +41,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
         <PlausibleProvider
-          domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? "localhost"}
+          domain="https://currys-game.vercel.app" 
           trackLocalhost={true}
+          enabled={true} 
           trackOutboundLinks={true}
           trackFileDownloads={true}
         >
