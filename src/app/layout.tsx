@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import { PlausibleProvider } from "@/components/plausible-analytics";
+import PlausibleProvider from 'next-plausible'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 
 const currySansHeadline = localFont({
   src: [
@@ -31,7 +30,6 @@ export const metadata: Metadata = {
   description: "Curry Advent Campaign",
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,8 +40,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
-         <PlausibleProvider />
-        {children}
+        <PlausibleProvider
+          domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? "localhost"}
+          trackLocalhost={true}
+          trackOutboundLinks={true}
+          trackFileDownloads={true}
+        >
+          {children}
+        </PlausibleProvider>
       </body>
     </html>
   );
