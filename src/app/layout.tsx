@@ -41,7 +41,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
         <PlausibleProvider
-          domain="https://currys-game.vercel.app" 
+          domain="currys-game.vercel.app" 
           trackLocalhost={true}
           enabled={true} 
           trackOutboundLinks={true}
