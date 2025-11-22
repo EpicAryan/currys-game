@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import { init } from "@plausible-analytics/tracker";
+import AnalyticsWrapper from "@/components/analytics-wrapper";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,10 +32,7 @@ export const metadata: Metadata = {
   description: "Curry Advent Campaign",
 };
 
-init({
-  domain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN!, // Your production domain
-  captureOnLocalhost: process.env.NODE_ENV === 'development', // Enable on localhost
-});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -45,6 +43,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
+          <AnalyticsWrapper />
         {children}
       </body>
     </html>
