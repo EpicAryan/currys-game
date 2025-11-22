@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import AnalyticsWrapper from "@/components/analytics-wrapper";
-
+import { PlausibleProvider } from "@/components/plausible-analytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,7 +42,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
-          <AnalyticsWrapper />
+         <PlausibleProvider />
         {children}
       </body>
     </html>
