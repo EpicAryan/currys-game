@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import PlausibleProvider from "next-plausible";
+import { QueryProvider } from "@/providers/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,7 +48,7 @@ export default function RootLayout({
           trackOutboundLinks={true}
           trackFileDownloads={true}
         >
-          {children}
+          <QueryProvider>{children}</QueryProvider>
         </PlausibleProvider>
       </body>
     </html>

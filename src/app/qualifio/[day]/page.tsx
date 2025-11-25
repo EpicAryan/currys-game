@@ -2,7 +2,6 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-// import { motion } from "motion/react";
 
 export default function QualifioPage() {
   const params = useParams();
@@ -96,11 +95,6 @@ export default function QualifioPage() {
     setIsLoading(false);
   };
 
-  // const handlePlayNow = () => {
-  //   if (hasRedirectedRef.current) return;
-  //   hasRedirectedRef.current = true;
-  //   router.push(`/game/${dayParam}?t=${timestamp}&s=${signature}`);
-  // };
 
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-[#2A234A]">
@@ -121,43 +115,6 @@ export default function QualifioPage() {
         allow="camera; microphone; geolocation"
         onLoad={handleIframeLoad}
       />
-
-      {/* {!isLoading && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 2.5, duration: 0.5, ease: "easeOut" }}
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-50 bg-gradient-to-t from-[#2A1F44] via-[#2A1F44]/95 to-transparent pb-8 pt-24"
-        >
-          <div className="pointer-events-auto flex flex-col items-center gap-3">
-            <p className="font-currys text-center text-sm text-[#CFC8F7]/70 md:text-base">
-              Or click here to continue
-            </p>
-            <motion.button
-              onClick={handlePlayNow}
-              className="rounded-full bg-[#CFC8F7] px-10 py-4 font-currys text-xl font-semibold text-[#2A1F44] shadow-2xl transition-all hover:scale-105 hover:bg-white active:scale-95 md:px-12 md:py-5 md:text-2xl"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  "0 20px 60px rgba(207, 200, 247, 0.3)",
-                  "0 20px 80px rgba(207, 200, 247, 0.5)",
-                  "0 20px 60px rgba(207, 200, 247, 0.3)",
-                ],
-              }}
-              transition={{
-                boxShadow: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
-              }}
-            >
-              Play 12 Days of Techmas
-            </motion.button>
-          </div>
-        </motion.div>
-      )} */}
     </div>
   );
 }

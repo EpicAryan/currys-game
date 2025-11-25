@@ -311,7 +311,7 @@ function ResultContent() {
 
                 <div className="-mt-3 text-center">
                   <a
-                    href="#"
+                    href="https://www.currys.ie/12-days-of-techmas.html"
                     className="font-currys text-xs leading-[120%] text-white underline transition-colors hover:text-purple-200 md:text-sm lg:text-base 2xl:text-lg"
                   >
                     T&Cs apply
