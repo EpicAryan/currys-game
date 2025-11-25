@@ -44,36 +44,47 @@ export default function GamePage() {
     verify();
   }, [dayNumber, timestamp, signature, router]);
 
-  useEffect(() => {
-    if (!isVerified || !iframeRef.current) return;
-    
-    const iframe = iframeRef.current;
-    const handleIframeLoad = () => {
-      iframe.contentWindow?.postMessage({
+useEffect(() => {
+  if (!isVerified || !iframeRef.current) {
+    return;
+  }
+
+  const iframe = iframeRef.current;
+
+  const postDayNumber = () => {
+
+    iframe.contentWindow?.postMessage(
+      {
         type: "setDayNumber",
         day: parseInt(dayNumber),
-        source: "parent-website"
-      }, "*");
-    };
-    
-    iframe.addEventListener("load", handleIframeLoad);
-    
-    return () => {
-      iframe.removeEventListener("load", handleIframeLoad);
-    };
-  }, [isVerified, dayNumber]);
+        source: "parent-website",
+      },
+      "*"
+    );
+  };
+
+ 
+  postDayNumber();
+
+  iframe.addEventListener("load", () => {
+    postDayNumber();
+  });
+
+  return () => {
+    iframe.removeEventListener("load", postDayNumber);
+  };
+}, [isVerified, dayNumber]);
+
 
   useEffect(() => {
     
     const handleMessage = async (event: MessageEvent) => {
       
       if (!event.origin.includes("playcanv.as")) {
-        console.log("⚠️ Message from untrusted origin, ignoring");
         return;
       }
 
       if (!event.data || typeof event.data !== 'object') {
-        console.log("⚠️ Invalid message data structure");
         return;
       }
       
@@ -93,8 +104,6 @@ export default function GamePage() {
           console.error("❌ Failed to generate signed URL:", error);
           alert("Failed to submit score. Please try again.");
         }
-      } else {
-        console.log("ℹ️ Message type:", event.data.type, "(not gameOver)");
       }
     };
 
@@ -124,7 +133,7 @@ export default function GamePage() {
   return (
     <iframe
       ref={iframeRef}
-      src="https://playcanv.as/p/3FSwoGDA"
+      src="https://playcanv.as/e/p/3FSwoGDA"
       className="fixed top-0 left-0 w-screen h-screen border-none block"
       allow="autoplay; fullscreen"
       title={`Day ${dayNumber} Game`}
