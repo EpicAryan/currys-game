@@ -68,7 +68,7 @@ export function useCurrentCampaign(): CampaignStatus {
         setIsActive(config.is_active);
 
         // Calculate current campaign day
-        const day = getCurrentCampaignDay(new Date(config.campaign_start_date));
+        const day = await getCurrentCampaignDay(new Date(config.campaign_start_date));
         setCurrentDay(day);
         setCurrentDayAtom(day);
 

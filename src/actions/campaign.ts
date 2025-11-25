@@ -1,7 +1,3 @@
-import {
-  getCurrentCampaignDay,
-  isWithinCampaignPeriod,
-} from "../utils/campaignDates";
 import { supabase } from "../utils/supabase/server";
 
 export interface CampaignConfig {
@@ -32,23 +28,23 @@ export async function getCampaignConfig(): Promise<CampaignConfig | null> {
 /**
  * Validate if the campaign is currently active
  */
-export async function validateCampaignActive(): Promise<boolean> {
-  const config = await getCampaignConfig();
-  if (!config) return false;
+// export async function validateCampaignActive(): Promise<boolean> {
+//   const config = await getCampaignConfig();
+//   if (!config) return false;
 
-  return isWithinCampaignPeriod(
-    new Date(),
-    new Date(config.campaign_start_date),
-    new Date(config.campaign_end_date)
-  );
-}
+//   return isWithinCampaignPeriod(
+//     new Date(),
+//     new Date(config.campaign_start_date),
+//     new Date(config.campaign_end_date)
+//   );
+// }
 
 /**
  * Calculate the current day of the campaign
  */
-export async function calculateCurrentDay(): Promise<number> {
-  const config = await getCampaignConfig();
-  if (!config) return 0;
+// export async function calculateCurrentDay(): Promise<number> {
+//   const config = await getCampaignConfig();
+//   if (!config) return 0;
 
-  return getCurrentCampaignDay(new Date(config.campaign_start_date));
-}
+//   return getCurrentCampaignDay(new Date(config.campaign_start_date));
+// }
