@@ -108,6 +108,7 @@ function RevealContent() {
           <CTA 
             giftName={shortGiftName}
             giftImageUrl={currentDayGift.gift_image_url}
+            buyNowLink={currentDayGift?.buy_now_link}
             isEligibleForDraw={isEligibleForDraw}
             currentDay={currentDay || 1} 
           />

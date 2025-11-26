@@ -12,6 +12,7 @@ export default function RevealPage() {
         <p>Streak: {JSON.stringify(streak)}</p>
         <p>Current Day Coupon: {currentDayCoupon?.coupon_code}</p>
         <p>Current Day Gift: {JSON.stringify(currentDayGift)}</p>
+        <p>Current day buy now link: {currentDayCoupon?.buy_now_link}</p>
     </div>
   )
 }

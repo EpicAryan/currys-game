@@ -7,6 +7,7 @@ import Image from "next/image";
 interface CTAProps {
   giftName: string 
   giftImageUrl: string
+  buyNowLink?: string
   isEligibleForDraw?: boolean
   currentDay: number 
 }
@@ -14,6 +15,7 @@ interface CTAProps {
 const CTA = ({ 
   giftName, 
   giftImageUrl, 
+  buyNowLink,
   isEligibleForDraw = false,
   currentDay 
 }: CTAProps) => {
@@ -111,6 +113,11 @@ const CTA = ({
               <span className="font-semibold">FREE delivery </span> today only!*
             </p>
             <motion.button
+              onClick={() => {
+                if (buyNowLink) {
+                  window.open(buyNowLink, "_blank");
+                }
+              }}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.92 }}
               className="cursor-pointer rounded-full bg-[#4C12A1] px-10 xl:px-12 py-3 xl:py-4 text-xl xl:text-3xl leading-snug text-white shadow-lg transition-all hover:bg-[#4C12A1]/90 hover:shadow-xl"
@@ -181,6 +188,11 @@ const CTA = ({
               <span className="font-semibold">FREE delivery </span>today only!*
             </p>
             <motion.button
+              onClick={() => {
+                if (buyNowLink) {
+                  window.open(buyNowLink, "_blank");
+                }
+              }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="rounded-full leading-snug bg-[#4C12A1] px-10 py-3 font-normal text-sm text-white shadow-lg tracking-wide"
