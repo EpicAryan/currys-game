@@ -13,7 +13,6 @@ export async function getGifts() {
     return [];
   }
 
-  console.log(data);
   return data;
 }
 
@@ -59,7 +58,7 @@ export async function enrollUserForGift(userId: string, dayNumber: number) {
 export async function getGiftDetailsByDay(dayNumber: number) {
   const { data, error } = await supabase
     .from("gifts")
-    .select("id, gift_name, image_url")
+    .select("id, gift_name, image_url, buy_now_link")
     .eq("day_number", dayNumber)
     .single();
 

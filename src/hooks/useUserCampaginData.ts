@@ -101,6 +101,7 @@ export function useUserCampaignData(email: string): HookReturn {
             null),
           gift_name: giftInfo?.gift_name || null,
           gift_image_url: giftInfo?.image_url || null,
+          buy_now_link: giftInfo?.buy_now_link || null,
         };
 
         setCurrentDayGift(finalGift);
