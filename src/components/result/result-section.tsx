@@ -64,12 +64,12 @@ function ResultContent() {
   useEffect(() => {
     async function verify() {
       if (!day || !score || !timestamp || !signature) {
-       showAlert(
+        showAlert(
           "Invalid URL",
           "Invalid URL - missing required parameters. Please start from the promo page.",
           () => {
             router.push("/");
-          }
+          },
         );
         setIsVerifying(false);
         return;
@@ -83,7 +83,7 @@ function ResultContent() {
           "🚨 Security Alert: URL has been tampered with or expired!",
           () => {
             router.push("/");
-          }
+          },
         );
         setIsVerifying(false);
         return;
@@ -155,26 +155,33 @@ function ResultContent() {
     }
 
     setIsSubmitting(true);
-
+    localStorage.setItem("curry_user_mail", email);
     try {
       const dayNumber = parseInt(day.replace(/^day/, ""), 10);
       const scoreNum = parseInt(score, 10);
 
-      await rewardCouponGift({
+      const result = await rewardCouponGift({
         score: scoreNum,
         email: email,
         currentDay: dayNumber,
       });
 
-      localStorage.setItem("curry_user_mail", email);
+      if (!result.success) {
+        showAlert(
+          "Already Participated",
+          result.error || "Something went wrong. Please try again.",
+          () => {
+            router.push("/reveal");
+          },
+        );
+        setIsSubmitting(false);
+        return;
+      }
 
       router.push("/reveal");
     } catch (error) {
       console.error("❌ Failed to reward gift:", error);
-      showAlert(
-        "Submission Error",
-        "Something went wrong. Please try again."
-      );
+      showAlert("Submission Error", "Something went wrong. Please try again.");
       setIsSubmitting(false);
     }
   };

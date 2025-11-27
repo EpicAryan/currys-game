@@ -85,10 +85,10 @@ export function AlertDialogProvider({ children }: { children: ReactNode }) {
       <AlertDialog open={alertState.open} onOpenChange={handleOpenChange}>
         <AlertDialogContent className="border-white/20 bg-gradient-to-b from-[#2A1F44] to-[#3D2F5B]">
           <AlertDialogHeader>
-            <AlertDialogTitle className="font-currys text-xl text-[#E5006D]">
+            <AlertDialogTitle className="font-currys text-2xl text-[#E5006D]">
               {alertState.title}
             </AlertDialogTitle>
-            <AlertDialogDescription className="font-currys text-gray-300 tracking-wider">
+            <AlertDialogDescription className="font-currys text-gray-300 tracking-wider ">
               {alertState.description}
             </AlertDialogDescription>
           </AlertDialogHeader>

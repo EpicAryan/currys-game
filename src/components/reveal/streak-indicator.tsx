@@ -16,6 +16,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Check } from "lucide-react";
+import { useAlertDialog } from "../custom-alert-dialog";
 
 interface StreakDay {
   dayNumber: number;
@@ -45,6 +46,7 @@ const StreakIndicator = ({
     {},
   );
 
+  const { showAlert } = useAlertDialog();
   const couponCodes: { [key: number]: string } = {};
   streak.forEach((day) => {
     if (day.coupon && day.coupon.coupon_code) {
@@ -68,22 +70,26 @@ const StreakIndicator = ({
 const handleShare = async () => {
   try {
     const url = "https://www.currys.ie/12-days-of-techmas.html";
-    const message = `Ho ho ho! 🎅❄️🎄
-    Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days!
-    Join the holiday magic: ${url}`;
+    const message = `Ho ho ho! 🎅❄️🎄Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic: ${url}`;
 
     if (navigator.share) {
       await navigator.share({
-        title: "Ho ho ho! 🎅❄️🎄Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic:",
-        text: message,
+        title: `Ho ho ho! 🎅❄️🎄 Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic: ${url}`,
         url,
       });
     } else {
       await navigator.clipboard.writeText(message);
-      alert("Link copied!");
+       showAlert(
+        "Link Copied!",
+        "The Techmas link has been copied to your clipboard. Share the holiday joy! 🎅❄️🎄"
+      );
     }
   } catch (error) {
     console.error("Share failed:", error);
+    showAlert(
+      "Share Failed",
+      "Unable to share at this time. Please try again."
+    );
   }
 };
 
