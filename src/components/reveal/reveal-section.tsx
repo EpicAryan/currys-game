@@ -7,23 +7,30 @@ import CongratulationsCard from "./congratulations-card";
 import PrizeReveal from "./prize-reveal";
 import CTA from "./cta";
 import { useUserCampaignData } from "@/hooks/useUserCampaginData";
+import { useAlertDialog } from "@/components/custom-alert-dialog";
 
 function RevealContent() {
   const router = useRouter();
-  
+  const { showAlert } = useAlertDialog();
+
   const [email, setEmail] = React.useState("");
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("curry_user_mail");
     
     if (!savedEmail) {
-      alert("No email found. Please start from the game.");
-      router.push("/promo");
+      showAlert(
+        "Email Required",
+        "No email found. Please start from the game.",
+        () => {
+          router.push("/");
+        }
+      );
       return;
     }
     
     setEmail(savedEmail);
-  }, [router]);
+  }, [router, showAlert]);
 
   const { user, currentDay, streak, currentDayCoupon, currentDayGift } = useUserCampaignData(email);
 

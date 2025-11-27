@@ -2,7 +2,7 @@
 
 import { createHmac } from "crypto";
 
-const SIGNATURE_VALIDITY_MS = 15 * 60 * 1000; // 5 minutes
+const SIGNATURE_VALIDITY_MS = 3 * 60 * 1000; // 3 minutes
 
 
 export async function generateSignedURL(

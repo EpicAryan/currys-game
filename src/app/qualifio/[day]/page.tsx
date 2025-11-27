@@ -2,13 +2,15 @@
 
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useAlertDialog } from "@/components/custom-alert-dialog";
 
 export default function QualifioPage() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  
+  const { showAlert } = useAlertDialog();
+
   const dayParam = params.day as string;
   const timestamp = searchParams.get("t") || "";
   const signature = searchParams.get("s") || "";
@@ -38,9 +40,15 @@ export default function QualifioPage() {
 
   useEffect(() => {
     if (!timestamp || !signature) {
-      router.push("/");
+       showAlert(
+        "Invalid Access",
+        "🚨 Invalid form access! Please start from the promo page.",
+        () => {
+          router.push("/");
+        }
+      );
     }
-  }, [timestamp, signature, router]);
+  }, [timestamp, signature, router, showAlert]);
 
   useEffect(() => {
     let initialLoadTimer: NodeJS.Timeout;
@@ -95,6 +103,16 @@ export default function QualifioPage() {
     setIsLoading(false);
   };
 
+  const handleIframeError = () => {
+    setIsLoading(false);
+    showAlert(
+      "Form Load Error",
+      "Failed to load the form. Please try again or return to the promo page.",
+      () => {
+        router.push("/");
+      }
+    );
+  };
 
   return (
     <div className="relative h-[100dvh] w-full overflow-hidden bg-[#2A234A]">
@@ -114,6 +132,7 @@ export default function QualifioPage() {
         title="Qualifio Form"
         allow="camera; microphone; geolocation"
         onLoad={handleIframeLoad}
+        onError={handleIframeError}
       />
     </div>
   );

@@ -9,10 +9,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { verifySignature } from "@/lib/hmac";
 import { rewardCouponGift } from "@/lib/rewardCouponGift";
 import MenuButton from "../ui/result-menu-button";
+import { useAlertDialog } from "@/components/custom-alert-dialog";
 
 function ResultContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { showAlert } = useAlertDialog();
 
   const day = searchParams.get("day") || "";
   const score = searchParams.get("score") || "";
@@ -62,16 +64,28 @@ function ResultContent() {
   useEffect(() => {
     async function verify() {
       if (!day || !score || !timestamp || !signature) {
-        alert("Invalid URL - missing required parameters");
-        router.push("/");
+       showAlert(
+          "Invalid URL",
+          "Invalid URL - missing required parameters. Please start from the promo page.",
+          () => {
+            router.push("/");
+          }
+        );
+        setIsVerifying(false);
         return;
       }
 
       const isValid = await verifySignature(day, score, timestamp, signature);
 
       if (!isValid) {
-        alert("🚨 Security Alert: URL has been tampered with or expired!");
-        router.push("/");
+        showAlert(
+          "Security Alert",
+          "🚨 Security Alert: URL has been tampered with or expired!",
+          () => {
+            router.push("/");
+          }
+        );
+        setIsVerifying(false);
         return;
       }
       setIsVerified(true);
@@ -79,7 +93,7 @@ function ResultContent() {
     }
 
     verify();
-  }, [day, score, timestamp, signature, router]);
+  }, [day, score, timestamp, signature, router, showAlert]);
 
   const validateEmail = (email: string): boolean => {
     if (!email.trim()) {
@@ -157,7 +171,10 @@ function ResultContent() {
       router.push("/reveal");
     } catch (error) {
       console.error("❌ Failed to reward gift:", error);
-      alert("Something went wrong. Please try again.");
+      showAlert(
+        "Submission Error",
+        "Something went wrong. Please try again."
+      );
       setIsSubmitting(false);
     }
   };

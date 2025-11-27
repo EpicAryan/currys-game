@@ -65,23 +65,27 @@ const StreakIndicator = ({
     }
   };
 
-  const handleShare = async () => {
-    try {
-      const url = window.location.href.replace(/\/reveal$/, "");
+const handleShare = async () => {
+  try {
+    const url = "https://www.currys.ie/12-days-of-techmas.html";
+    const message = `Ho ho ho! 🎅❄️🎄
+    Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days!
+    Join the holiday magic: ${url}`;
 
-      if (navigator.share) {
-        await navigator.share({
-          title: "My Quest",
-          url,
-        });
-      } else {
-        await navigator.clipboard.writeText(url);
-        alert("Link copied!");
-      }
-    } catch (error) {
-      console.error("Share failed:", error);
+    if (navigator.share) {
+      await navigator.share({
+        title: "Ho ho ho! 🎅❄️🎄Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic:",
+        text: message,
+        url,
+      });
+    } else {
+      await navigator.clipboard.writeText(message);
+      alert("Link copied!");
     }
-  };
+  } catch (error) {
+    console.error("Share failed:", error);
+  }
+};
 
   return (
     <div className="relative z-50 bg-[#2A234A]">

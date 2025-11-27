@@ -4,6 +4,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import PlausibleProvider from "next-plausible";
 import { QueryProvider } from "@/providers/providers";
+import { AlertDialogProvider } from "@/components/custom-alert-dialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,13 +43,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${currySansHeadline.variable} antialiased`}
       >
         <PlausibleProvider
-          domain="currys-game.vercel.app" 
+          domain="currys-game.vercel.app"
           trackLocalhost={true}
-          enabled={true} 
+          enabled={true}
           trackOutboundLinks={true}
           trackFileDownloads={true}
         >
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <AlertDialogProvider>{children}</AlertDialogProvider>
+          </QueryProvider>
         </PlausibleProvider>
       </body>
     </html>

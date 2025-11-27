@@ -11,10 +11,12 @@ import { motion, useAnimate } from "motion/react";
 import BadgeGridSkeleton from "./ui/badge-grid-skeleton";
 import { useRouter } from "next/navigation";
 import { generateGameAccessURL } from "@/lib/game-access";
+import { useAlertDialog } from "@/components/custom-alert-dialog";
 
 const TechmasPromo = () => {
   const router = useRouter();
   const { gifts, isLoading } = useCurrentCampaign();
+  const { showAlert } = useAlertDialog();
 
   const [activeDay, setActiveDay] = useState<number | null>(null);
   const [scope, animate] = useAnimate();
@@ -31,13 +33,19 @@ const TechmasPromo = () => {
       try {
         const result = await generateGameAccessURL(day);
         if (result.error || !result.url) {
-          alert("Failed to access game. Please try again.");
+          showAlert(
+            "Access Failed",
+            "Failed to access game. Please try again."
+          );
           return;
         }
         secureURL = result.url;
       } catch (error) {
         console.error("Failed to generate game URL:", error);
-        alert("Failed to access game. Please try again.");
+        showAlert(
+          "Access Failed",
+          "Failed to access game. Please try again."
+        );
         return;
       }
 
