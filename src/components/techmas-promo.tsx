@@ -12,8 +12,10 @@ import BadgeGridSkeleton from "./ui/badge-grid-skeleton";
 import { useRouter } from "next/navigation";
 import { generateGameAccessURL } from "@/lib/game-access";
 import { useAlertDialog } from "@/components/custom-alert-dialog";
+import { usePlausible } from "next-plausible";
 
 const TechmasPromo = () => {
+  const plausible = usePlausible();
   const router = useRouter();
   const { gifts, isLoading } = useCurrentCampaign();
   const { showAlert } = useAlertDialog();
@@ -59,6 +61,7 @@ const TechmasPromo = () => {
         const url = new URL(secureURL, window.location.origin);
         const timestamp = url.searchParams.get("t");
         const signature = url.searchParams.get("s");
+        plausible("event badge clicked" );
         router.push(`/qualifio/day${day}?t=${timestamp}&s=${signature}`);
         return;
       }
@@ -137,6 +140,7 @@ const TechmasPromo = () => {
       const url = new URL(secureURL, window.location.origin);
       const timestamp = url.searchParams.get("t");
       const signature = url.searchParams.get("s");
+      plausible("event badge clicked" );
       router.push(`/qualifio/day${day}?t=${timestamp}&s=${signature}`);
     } else if (missed) {
       console.log(`Day ${day} was missed`);
