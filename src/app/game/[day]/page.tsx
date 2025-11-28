@@ -158,7 +158,7 @@ export default function GamePage() {
     <iframe
       ref={iframeRef}
       src="https://playcanv.as/e/p/3FSwoGDA"
-      className="fixed top-0 left-0 block h-screen w-screen border-none"
+      className="fixed top-0 left-0 block h-[100dvh] w-screen border-none"
       allow="autoplay; fullscreen"
       title={`Day ${dayNumber} Game`}
     />
