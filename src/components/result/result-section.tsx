@@ -65,8 +65,8 @@ function ResultContent() {
     async function verify() {
       if (!day || !score || !timestamp || !signature) {
         showAlert(
-          "Invalid URL",
-          "Invalid URL - missing required parameters. Please start from the promo page.",
+          "Access Expired",
+          "Your session has timed out. Please refresh to return to the start.",
           () => {
             router.push("/");
           },
@@ -79,8 +79,8 @@ function ResultContent() {
 
       if (!isValid) {
         showAlert(
-          "Security Alert",
-          "🚨 Security Alert: URL has been tampered with or expired!",
+          "Access Expired",
+          "Your session has timed out. Please refresh to return to the start.",
           () => {
             router.push("/");
           },

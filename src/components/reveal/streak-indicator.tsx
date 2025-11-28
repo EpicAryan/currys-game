@@ -67,31 +67,32 @@ const StreakIndicator = ({
     }
   };
 
-const handleShare = async () => {
-  try {
-    const url = "https://www.currys.ie/12-days-of-techmas.html";
-    const message = `Ho ho ho! 🎅❄️🎄Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic: ${url}`;
+  const handleShare = async () => {
+    try {
+      const url = "https://www.currys.ie/12-days-of-techmas.html";
+      const text = `Ho ho ho! 🎅❄️🎄Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic: ${url}`;
 
-    if (navigator.share) {
-      await navigator.share({
-        title: `Ho ho ho! 🎅❄️🎄 Currys 12 Days of Techmas is here! Enjoy the festive fun with daily prizes, coupons, and a chance to win a €1000 Christmas mega-coupon when you play all 12 days! Join the holiday magic: ${url}`,
-        url,
-      });
-    } else {
-      await navigator.clipboard.writeText(message);
-       showAlert(
-        "Link Copied!",
-        "The Techmas link has been copied to your clipboard. Share the holiday joy! 🎅❄️🎄"
+      if (navigator.share) {
+        await navigator.share({
+          title: text,
+          text: text,
+          url: url,
+        });
+      } else {
+        await navigator.clipboard.writeText(text);
+        showAlert(
+          "Link Copied!",
+          "The Techmas link has been copied to your clipboard. Share the holiday joy! 🎅❄️🎄",
+        );
+      }
+    } catch (error) {
+      console.error("Share failed:", error);
+      showAlert(
+        "Share Failed",
+        "Unable to share at this time. Please try again.",
       );
     }
-  } catch (error) {
-    console.error("Share failed:", error);
-    showAlert(
-      "Share Failed",
-      "Unable to share at this time. Please try again."
-    );
-  }
-};
+  };
 
   return (
     <div className="relative z-50 bg-[#2A234A]">
@@ -261,9 +262,9 @@ const handleShare = async () => {
               onClick={handleShare}
               className="font-currys mt-3 overflow-visible rounded-4xl border border-[#CFC8F7] bg-transparent !px-6 !pr-8 leading-snug text-[#CFC8F7] [&_svg]:overflow-visible"
             >
-              <span className="flex items-center gap-2.5 mb-1">
+              <span className="mb-1 flex items-center gap-2.5">
                 Share the quest
-                <ShareIcon className="size-5 flex-shrink-0 overflow-visible text-[#CFC8F7] mt-1" />
+                <ShareIcon className="mt-1 size-5 flex-shrink-0 overflow-visible text-[#CFC8F7]" />
               </span>
             </Button>
           </div>

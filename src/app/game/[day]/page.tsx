@@ -26,8 +26,8 @@ export default function GamePage() {
     async function verify() {
       if (!timestamp || !signature) {
         showAlert(
-          "Invalid Access",
-          "🚨 Invalid access! Please start from the promo page.",
+           "Access Expired",
+        "Your session has timed out. Please refresh to return to the start.",
           () => {
             router.push("/");
           },
@@ -40,8 +40,8 @@ export default function GamePage() {
 
       if (!isValid) {
         showAlert(
-          "Access Expired",
-          "🚨 Access expired or invalid! Please start from the promo page.",
+           "Access Expired",
+        "Your session has timed out. Please refresh to return to the start.",
           () => {
             router.push("/");
           },

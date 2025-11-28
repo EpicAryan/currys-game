@@ -36,8 +36,8 @@ const TechmasPromo = () => {
         const result = await generateGameAccessURL(day);
         if (result.error || !result.url) {
           showAlert(
-            "Access Failed",
-            "Failed to access game. Please try again."
+            "Access Expired",
+            "Your session has timed out. Please refresh to return to the start."
           );
           return;
         }
@@ -45,8 +45,8 @@ const TechmasPromo = () => {
       } catch (error) {
         console.error("Failed to generate game URL:", error);
         showAlert(
-          "Access Failed",
-          "Failed to access game. Please try again."
+          "Access Expired",
+          "Your session has timed out. Please refresh to return to the start."
         );
         return;
       }

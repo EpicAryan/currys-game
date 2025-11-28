@@ -46,8 +46,18 @@ function RevealContent() {
     const isEligible = !!(currentDayGift?.gift_id && currentDayGift?.day_number);
     
     const wonCoupon = !!currentDayCoupon?.coupon_code;
-    const consecutive = streak.filter(day => day.played && !day.missed).length;
+    let consecutive = 0;
 
+    for (let i = currentDay - 1; i >= 0; i--) {
+    const day = streak[i];
+    
+    if (day && day.played && !day.missed) {
+      consecutive++;
+    } 
+    else if (day && (day.missed || !day.played)) {
+      break;
+    }
+  }
     return {
       consecutiveDays: consecutive,
       hasWonCoupon: wonCoupon,

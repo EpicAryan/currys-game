@@ -88,7 +88,7 @@ export function AlertDialogProvider({ children }: { children: ReactNode }) {
             <AlertDialogTitle className="font-currys text-2xl text-[#E5006D]">
               {alertState.title}
             </AlertDialogTitle>
-            <AlertDialogDescription className="font-currys text-gray-300 tracking-wider ">
+            <AlertDialogDescription className="font-currys text-gray-300 tracking-wider text-base md:text-lg xl:text-xl">
               {alertState.description}
             </AlertDialogDescription>
           </AlertDialogHeader>

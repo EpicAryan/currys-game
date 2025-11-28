@@ -41,8 +41,8 @@ export default function QualifioPage() {
   useEffect(() => {
     if (!timestamp || !signature) {
        showAlert(
-        "Invalid Access",
-        "🚨 Invalid form access! Please start from the promo page.",
+        "Access Expired",
+        "Your session has timed out. Please refresh to return to the start.",
         () => {
           router.push("/");
         }
@@ -107,7 +107,7 @@ export default function QualifioPage() {
     setIsLoading(false);
     showAlert(
       "Form Load Error",
-      "Failed to load the form. Please try again or return to the promo page.",
+      "Failed to load the form. Please try again or return to the advent page.",
       () => {
         router.push("/");
       }
